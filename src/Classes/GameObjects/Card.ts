@@ -1,9 +1,9 @@
-import { CardType } from "../../ZwangInterfaces/CardType";
+import { CardType } from "../../Interfaces/CardType";
 import { GameObject } from "./GameObject";
-import { IdProvider } from "../../ZwangInterfaces/IdProvider";
-import { Action } from "../../ZwangInterfaces/Action";
+import { IdProvider } from "../../Interfaces/IdProvider";
+import { Action } from "../../Interfaces/Action";
 import { GameState } from "../GameState";
-import { Player } from "../../ZwangInterfaces/Player";
+import { Player } from "../../Interfaces/Player";
 
 export class Card extends GameObject {
     constructor(

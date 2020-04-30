@@ -1,4 +1,4 @@
-import { IdProvider } from "../../ZwangInterfaces/IdProvider";
+import { IdProvider } from "../../Interfaces/IdProvider";
 
 export class RandomIdProvider {
     constructor(readonly length: number) {}

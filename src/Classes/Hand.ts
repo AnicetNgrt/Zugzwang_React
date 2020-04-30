@@ -1,7 +1,7 @@
 import { Card } from "./GameObjects/Card";
-import { Player } from "../ZwangInterfaces/Player";
+import { Player } from "../Interfaces/Player";
 import { GameState } from "./GameState";
-import { Action } from "../ZwangInterfaces/Action";
+import { Action } from "../Interfaces/Action";
 
 export class Hand {
     constructor(

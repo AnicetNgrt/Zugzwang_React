@@ -1,4 +1,4 @@
-import { Player } from "../ZwangInterfaces/Player";
+import { Player } from "../Interfaces/Player";
 import { Modifier } from "./Modifier";
 import { Card } from "./GameObjects/Card";
 
@@ -8,5 +8,5 @@ export abstract class Move {
         readonly card:Card,
         readonly modifier:Modifier
         ) {
-        }
+    }
 }

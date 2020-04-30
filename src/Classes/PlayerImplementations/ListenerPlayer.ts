@@ -1,25 +1,25 @@
-import { ListenerPlayer } from "./ListenerPlayer";
-import { SenderPlayer } from "../../ZwangInterfaces/SenderPlayer";
+import { Player } from "../../Interfaces/Player";
 import { Move } from "../Move";
 import { Hand } from "../Hand";
 import { Pawn } from "../GameObjects/Pawn";
 
-export class NodePlayer extends ListenerPlayer implements SenderPlayer {
+export class ListenerPlayer implements Player {
 
     constructor(
-        hand: Hand,
-        pawns: [ Pawn ]
-    ) {
-        super(hand, pawns);
-    }
+        readonly hand: Hand,
+        readonly pawns: [ Pawn ]
+    ) {}
 
+    
     hasLost(): Boolean {
         throw new Error("Method not implemented.");
     }
+    
     play(gameState: import("../GameState").GameState): Promise<Move> {
         throw new Error("Method not implemented.");
     }
-    sendMove(move: Move): void {
+
+    fetchMove(): Promise<Move> {
         throw new Error("Method not implemented.");
     }
 }

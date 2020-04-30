@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './App.scss';
-import CardComponent from './components/card.component';
-import { Hand } from './ZwangClasses/Hand';
-import PcPaneComponent from './components/pcPane.component';
-import BoardComponent from './components/board.omponent';
+import CardComponent from './Components/card.component';
+import { Hand } from './Classes/Hand';
+import PcPaneComponent from './Components/pcPane.component';
+import BoardComponent from './Components/board.omponent';
 
 function App() {
 

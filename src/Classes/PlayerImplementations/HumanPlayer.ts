@@ -1,12 +1,13 @@
-import { SenderPlayer } from "../../ZwangInterfaces/SenderPlayer";
+import { SenderPlayer } from "../../Interfaces/SenderPlayer";
 import { Hand } from "../Hand"
 import { Pawn } from "../GameObjects/Pawn";
 import { Card } from "../GameObjects/Card";
+import { Player } from "../../Interfaces/Player";
 
 export type CardChosenFunc = (card:Card)=>void;
 export type PawnChosenFunc = (pawn:Pawn)=>void;
 
-export class HumanPlayer implements SenderPlayer {
+export class HumanPlayer implements Player{
 
     readonly cardChosenFuncs: CardChosenFunc[] = [];
     readonly pawnChosenFuncs: PawnChosenFunc[] = [];
@@ -15,10 +16,6 @@ export class HumanPlayer implements SenderPlayer {
         readonly hand: Hand,
         readonly pawns: [Pawn]
         ) { }
-
-    sendMove(move: any): void {
-        throw new Error("Method not implemented.");
-    }
     
     hasLost(): Boolean {
         throw new Error("Method not implemented.");
@@ -32,13 +29,15 @@ export class HumanPlayer implements SenderPlayer {
 
     chooseCard(): Promise<Card> {
         return new Promise(async (resolve, reject) => {
-
+            this.onCardChosen((card:Card)=>{
+                resolve(card);
+            })
         })
     }
 
     choosePawn(): Promise<Pawn> {
         return new Promise(async (resolve, reject) => {
-            
+
         })
     }
      

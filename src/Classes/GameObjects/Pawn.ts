@@ -1,5 +1,5 @@
 import { GameObject } from "./GameObject";
-import { IdProvider } from "../../ZwangInterfaces/IdProvider";
+import { IdProvider } from "../../Interfaces/IdProvider";
 
 export enum PawnState {
     FINE = "This pawn is alive",

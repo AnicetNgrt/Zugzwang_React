@@ -1,6 +1,6 @@
 import { Card } from "./GameObjects/Card";
-import { CardType } from "../ZwangInterfaces/CardType";
-import { IdProvider } from "../ZwangInterfaces/IdProvider";
+import { CardType } from "../Interfaces/CardType";
+import { IdProvider } from "../Interfaces/IdProvider";
 import { Hand } from "./Hand";
 
 export enum HandBuilderErrors {
@@ -26,7 +26,7 @@ export class HandBuilder {
     }
 
     addCard(cardType:CardType) {
-        this.weight += cardType.weight;
+        this.weight += cardType.data.weight;
         this.cardTypes.push(cardType);
     }
 

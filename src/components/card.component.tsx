@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import useComponentFocused from "../hooks/useComonentFocused";
 import "./card.component.style.scss";
+import useComponentFocused from "../Hooks/useComponentFocused";
 
 const CardComponent = (props:{
     card:number;

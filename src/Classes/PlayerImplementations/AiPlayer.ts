@@ -1,4 +1,4 @@
-import { SenderPlayer } from "../../ZwangInterfaces/SenderPlayer";
+import { SenderPlayer } from "../../Interfaces/SenderPlayer";
 import { Hand } from "../Hand"
 import { Pawn } from "../GameObjects/Pawn";
 

@@ -1,4 +1,4 @@
-import { GameState } from "../ZwangClasses/GameState";
+import { GameState } from "../Classes/GameState";
 
 export interface Game {
     readonly clock:number;

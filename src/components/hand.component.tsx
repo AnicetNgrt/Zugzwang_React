@@ -1,4 +1,4 @@
-import { Hand } from "../ZwangClasses/Hand";
+import { Hand } from "../Classes/Hand";
 import React from "react";
 
 type HandProps = Hand

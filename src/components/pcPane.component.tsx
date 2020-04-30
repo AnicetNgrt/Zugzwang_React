@@ -1,5 +1,5 @@
 import "./pcPane.component.style.scss";
-import React from "react";
+import React from "./node_modules/react";
 
 function PcPaneComponent() {
     return(

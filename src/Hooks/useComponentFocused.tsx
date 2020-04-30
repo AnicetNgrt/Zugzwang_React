@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from "react";
 
 export default function useComponentFocused(initialIsFocused: any) {
     const [isComponentFocused, setIsComponentFocused] = useState(initialIsFocused);
