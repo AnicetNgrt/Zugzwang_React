@@ -1,5 +1,5 @@
 import { SenderPlayer } from "../../Interfaces/SenderPlayer";
-import { Hand } from "../Hand"
+import { Hand } from "../Other/Hand"
 import { Pawn } from "../GameObjects/Pawn";
 
 export class AiPlayer implements SenderPlayer {
@@ -19,7 +19,7 @@ export class AiPlayer implements SenderPlayer {
         throw new Error("Method not implemented.");
     }
     
-    play(gameState: import("../GameState").GameState): Promise<any> {
+    play(gameState: import("../Other/GameState").GameState): Promise<any> {
         throw new Error("Method not implemented.");
     }
 

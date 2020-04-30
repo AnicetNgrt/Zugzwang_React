@@ -1,6 +1,6 @@
-import { Card } from "./GameObjects/Card";
-import { CardType } from "../Interfaces/CardType";
-import { IdProvider } from "../Interfaces/IdProvider";
+import { Card } from "../GameObjects/Card";
+import { CardType } from "../../Interfaces/CardType";
+import { IdProvider } from "../../Interfaces/IdProvider";
 import { Hand } from "./Hand";
 
 export enum HandBuilderErrors {

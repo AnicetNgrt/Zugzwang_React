@@ -1,6 +1,6 @@
-import { Player } from "../Interfaces/Player";
+import { Player } from "../Abstract/Player";
 import { Modifier } from "./Modifier";
-import { Card } from "./GameObjects/Card";
+import { Card } from "../GameObjects/Card";
 
 export abstract class Move {
     constructor(

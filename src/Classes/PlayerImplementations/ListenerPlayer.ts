@@ -1,6 +1,6 @@
-import { Player } from "../../Interfaces/Player";
-import { Move } from "../Move";
-import { Hand } from "../Hand";
+import { Player } from "../Abstract/Player";
+import { Move } from "../Other/Move";
+import { Hand } from "../Other/Hand";
 import { Pawn } from "../GameObjects/Pawn";
 
 export class ListenerPlayer implements Player {
@@ -15,7 +15,7 @@ export class ListenerPlayer implements Player {
         throw new Error("Method not implemented.");
     }
     
-    play(gameState: import("../GameState").GameState): Promise<Move> {
+    play(gameState: import("../Other/GameState").GameState): Promise<Move> {
         throw new Error("Method not implemented.");
     }
 

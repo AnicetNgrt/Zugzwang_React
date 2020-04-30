@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './App.scss';
-import CardComponent from './Components/card.component';
-import { Hand } from './Classes/Hand';
 import PcPaneComponent from './Components/pcPane.component';
 import BoardComponent from './Components/board.omponent';
 
@@ -13,8 +11,8 @@ function App() {
 
   return (
     <div className="GameWindow">
-      <PcPaneComponent></PcPaneComponent>
-      <BoardComponent></BoardComponent>
+      <PcPaneComponent/>
+      <BoardComponent/>
     </div>
   );
 }

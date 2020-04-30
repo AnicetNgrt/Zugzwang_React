@@ -1,25 +1,11 @@
-import { ShownCardType } from "../extendable/ShownCardType";
-import { Player } from "../../../Interfaces/Player";
-import { Action } from "../../../Interfaces/Action";
-import { GameState } from "../../GameState";
-import { CardTypeData } from "../../../Interfaces/CardType";
-
-export enum Orientation {
-    NORTH = 0,
-    EAST = 1,
-    SOUTH = 2,
-    WEST = 3,
-}
-
-export type Pattern = Orientation[];
-
-export function reOrient(path:Pattern, orientation:Orientation): Orientation[] {
-    const ret: Orientation[] = [];
-    for(var step of path) {
-        ret.push((orientation + step) % 4);
-    }
-    return ret;
-}
+import { ShownCardType } from "./ShownCardType";
+import { Player } from "../Abstract/Player";
+import { Action } from "../../Types/Action";
+import { GameState } from "../Other/GameState";
+import { CardTypeData } from "../../Interfaces/CardType";
+import { Pattern } from "../../Types/Pattern";
+import { Orientation, reOrient } from "../../Enums/Orientation";
+import { Displacement } from "../../Types/Displacement";
 
 export interface DisplacementCardTypeData {
     readonly weight: number,
@@ -28,7 +14,7 @@ export interface DisplacementCardTypeData {
     readonly maxTurn: number,
     readonly maxGame: number,
     readonly fullCircle: boolean,
-    readonly patterns: Pattern[]
+    readonly displacements: Displacement[]
 }
 
 export class DisplacementCardType extends ShownCardType {
@@ -52,10 +38,9 @@ export class DisplacementCardType extends ShownCardType {
 
     rotate(rotation:Orientation) {
         if(this.data.fullCircle) return;
-        for(var i:number = 0; i < this.data.patterns.length; i++) {
-            const pattern:Pattern = this.data.patterns[i];
-            const rotated:Pattern = reOrient(pattern, rotation);
-            this.data.patterns.splice(i, 1, rotated);
+        for(var i:number = 0; i < this.data.displacements.length; i++) {
+            const rotated:Pattern = reOrient(this.data.displacements[i].pattern, rotation);
+            this.data.displacements[i].pattern = rotated;
         }
     }
 

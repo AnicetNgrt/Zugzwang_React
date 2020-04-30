@@ -1,8 +1,8 @@
 import { SenderPlayer } from "../../Interfaces/SenderPlayer";
-import { Hand } from "../Hand"
+import { Hand } from "../Other/Hand"
 import { Pawn } from "../GameObjects/Pawn";
 import { Card } from "../GameObjects/Card";
-import { Player } from "../../Interfaces/Player";
+import { Player } from "../Abstract/Player";
 
 export type CardChosenFunc = (card:Card)=>void;
 export type PawnChosenFunc = (pawn:Pawn)=>void;
@@ -21,7 +21,7 @@ export class HumanPlayer implements Player{
         throw new Error("Method not implemented.");
     }
     
-    play(gameState: import("../GameState").GameState): Promise<any> {
+    play(gameState: import("../Other/GameState").GameState): Promise<any> {
         return new Promise(async (resolve, reject) => {
             
         })

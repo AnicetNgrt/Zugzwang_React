@@ -3,7 +3,7 @@ import React from "react";
 
 function BoardComponent() {
     return(
-        <div className="BoardDiv"></div>
+        <div className="BoardDiv"/>
     )
 }
 

@@ -1,9 +1,9 @@
 import { CardType } from "../../Interfaces/CardType";
 import { GameObject } from "./GameObject";
 import { IdProvider } from "../../Interfaces/IdProvider";
-import { Action } from "../../Interfaces/Action";
-import { GameState } from "../GameState";
-import { Player } from "../../Interfaces/Player";
+import { Action } from "../../Types/Action";
+import { GameState } from "../Other/GameState";
+import { Player } from "../Abstract/Player";
 
 export class Card extends GameObject {
     constructor(

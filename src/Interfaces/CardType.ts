@@ -1,6 +1,6 @@
-import { Action } from "./Action";
-import { GameState } from "../Classes/GameState";
-import { Player } from "./Player";
+import { Action } from "../Types/Action";
+import { GameState } from "../Classes/Other/GameState";
+import { Player } from "../Classes/Abstract/Player";
 
 export interface CardTypeData {
     readonly weight: number,

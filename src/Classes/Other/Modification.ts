@@ -1,4 +1,4 @@
-import { GameObject } from "./GameObjects/GameObject";
+import { GameObject } from "../GameObjects/GameObject";
 
 export class Modification {
     constructor(

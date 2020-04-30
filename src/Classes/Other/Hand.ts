@@ -1,7 +1,7 @@
-import { Card } from "./GameObjects/Card";
-import { Player } from "../Interfaces/Player";
+import { Card } from "../GameObjects/Card";
+import { Player } from "../Abstract/Player";
 import { GameState } from "./GameState";
-import { Action } from "../Interfaces/Action";
+import { Action } from "../../Types/Action";
 
 export class Hand {
     constructor(
