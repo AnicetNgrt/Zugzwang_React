@@ -1,0 +1,20 @@
+$color0: #11143f;
+$color1: #1d4e89;
+$color2: #00b2ca;
+$color3: #7dcfb6;
+$color4: #fbd1a2;
+$color5: #f79256;
+
+$gw: 2000px;
+$gh: 900px;
+$gu: 9px;
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: $color1;
+}

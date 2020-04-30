@@ -14,9 +14,11 @@ export class ListenerPlayer implements Player {
     hasLost(): Boolean {
         throw new Error("Method not implemented.");
     }
+    
     play(gameState: import("../GameState").GameState): Promise<Move> {
         throw new Error("Method not implemented.");
     }
+
     fetchMove(): Promise<Move> {
         throw new Error("Method not implemented.");
     }

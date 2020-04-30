@@ -18,6 +18,7 @@ export class AiPlayer implements SenderPlayer {
     hasLost(): Boolean {
         throw new Error("Method not implemented.");
     }
+    
     play(gameState: import("../GameState").GameState): Promise<any> {
         throw new Error("Method not implemented.");
     }

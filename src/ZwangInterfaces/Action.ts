@@ -1,9 +1,9 @@
 import { Player } from "./Player";
-import { Modifier } from "./Modifier";
+import { ModifierGenerator } from "./ModifierGenerator";
 
 export interface Action {
     readonly cost:number;
-    readonly modifier:Modifier;
+    readonly modifierGenerator:ModifierGenerator;
     
     playableFor(player:Player): boolean;
 }

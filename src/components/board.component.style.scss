@@ -1,0 +1,7 @@
+@import "../styles.scss";
+
+.BoardDiv {
+    background: $color3;
+    height: $gh;
+    width: calc(#{$gh} / 1.5);
+}
