@@ -1,5 +1,6 @@
 import { IdProvider } from "../../Interfaces/IdProvider";
 import { GameObject } from "./GameObject";
+import { CopyIdProvider } from "../IdProviders/CopyIdProvider";
 
 export class PlayerEffect extends GameObject {
 
@@ -22,4 +23,15 @@ export class PlayerEffect extends GameObject {
             super(idProvider);
             this.level = level;
         }  
+
+    copy():PlayerEffect {
+        return new PlayerEffect(
+            this.name,
+            this.description,
+            this.picturePath,
+            this.maxLevel,
+            this.level,
+            CopyIdProvider.getYours(this)
+        );
+    }
 }

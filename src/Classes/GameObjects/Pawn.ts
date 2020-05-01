@@ -1,5 +1,6 @@
 import { GameObject } from "./GameObject";
 import { IdProvider } from "../../Interfaces/IdProvider";
+import { CopyIdProvider } from "../IdProviders/CopyIdProvider";
 
 export enum PawnState {
     FINE = "This pawn is alive",
@@ -9,14 +10,28 @@ export enum PawnState {
 
 export class Pawn extends GameObject {
 
+    state:PawnState
+
     constructor(
         idProvider:IdProvider,
-        readonly state:PawnState
+        state:PawnState,
+        readonly x:number,
+        readonly y:number
         ) {
         super(idProvider);
+        this.state = state;
     }
 
-    static getDefault(idProvider:IdProvider): Pawn {
-        return new Pawn(idProvider, PawnState.FINE);
+    distanceTo(pawn:Pawn) {
+        return Math.abs(pawn.x - this.x) + Math.abs(pawn.y - this.y);
+    }
+
+    copy():Pawn {
+        return new Pawn(
+            CopyIdProvider.getYours(this),
+            this.state,
+            this.x,
+            this.y
+        );
     }
 }

@@ -13,6 +13,7 @@ export abstract class Player extends GameObject {
     constructor(
         readonly hand:Hand,
         readonly pawns: [ Pawn ],
+        readonly team: number,
         idProvider:IdProvider
     ) {
         super(idProvider);

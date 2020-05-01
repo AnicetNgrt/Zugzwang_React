@@ -3,7 +3,7 @@ import { Modification } from "./Modification";
 
 export class Modifier {
     constructor(
-        readonly combinations: {[index:number]:[GameObject]},
+        readonly combination: GameObject[],
         readonly impacts: Modification[]
     ) {
         
