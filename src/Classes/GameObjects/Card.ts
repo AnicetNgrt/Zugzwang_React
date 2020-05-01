@@ -3,7 +3,7 @@ import { GameObject } from "./GameObject";
 import { IdProvider } from "../../Interfaces/IdProvider";
 import { Action } from "../../Types/Action";
 import { GameState } from "../Other/GameState";
-import { Player } from "../Abstract/Player";
+import { Player } from "./Player";
 
 export class Card extends GameObject {
     constructor(

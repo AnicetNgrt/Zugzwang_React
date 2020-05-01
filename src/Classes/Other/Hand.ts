@@ -1,5 +1,5 @@
 import { Card } from "../GameObjects/Card";
-import { Player } from "../Abstract/Player";
+import { Player } from "../GameObjects/Player";
 import { GameState } from "./GameState";
 import { Action } from "../../Types/Action";
 

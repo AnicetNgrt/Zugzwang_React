@@ -1,4 +1,4 @@
-import { FlickeringCardType } from "../Classes/CardTypeImplementations/FlickeringCardType";
+import { FlickeringCardType } from "../Classes/CardTypes/FlickeringCardType";
 
 export const FlickeringCardTypes: {[key:string]:()=>FlickeringCardType} = { 
     "Archer":() => {return new FlickeringCardType({

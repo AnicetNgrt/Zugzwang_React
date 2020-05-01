@@ -3,9 +3,9 @@ import { Modification } from "./Modification";
 
 export class Modifier {
     constructor(
-        readonly parameters: {[index:number]:[GameObject]},
-        readonly impacted: {[index:number]:Modification}
-        ) {
-
-        }
+        readonly combinations: {[index:number]:[GameObject]},
+        readonly impacts: Modification[]
+    ) {
+        
+    }
 }

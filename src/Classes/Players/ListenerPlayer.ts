@@ -1,14 +1,18 @@
-import { Player } from "../Abstract/Player";
+import { Player } from "../GameObjects/Player";
 import { Move } from "../Other/Move";
 import { Hand } from "../Other/Hand";
 import { Pawn } from "../GameObjects/Pawn";
+import { IdProvider } from "../../Interfaces/IdProvider";
 
-export class ListenerPlayer implements Player {
+export class ListenerPlayer extends Player {
 
     constructor(
         readonly hand: Hand,
-        readonly pawns: [ Pawn ]
-    ) {}
+        readonly pawns: [ Pawn ],
+        idProvider:IdProvider
+    ) {
+        super(hand, pawns, idProvider);
+    }
 
     
     hasLost(): Boolean {

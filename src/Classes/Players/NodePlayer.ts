@@ -1,10 +1,10 @@
 import { ListenerPlayer } from "./ListenerPlayer";
-import { SenderPlayer } from "../../Interfaces/SenderPlayer";
 import { Move } from "../Other/Move";
 import { Hand } from "../Other/Hand";
 import { Pawn } from "../GameObjects/Pawn";
+import { MoveSender } from "../../Interfaces/MoveSender";
 
-export class NodePlayer extends ListenerPlayer implements SenderPlayer {
+export class NodePlayer extends ListenerPlayer implements MoveSender {
 
     constructor(
         hand: Hand,

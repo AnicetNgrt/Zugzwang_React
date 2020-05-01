@@ -1,27 +1,33 @@
-import { SenderPlayer } from "../../Interfaces/SenderPlayer";
 import { Hand } from "../Other/Hand"
 import { Pawn } from "../GameObjects/Pawn";
 import { Card } from "../GameObjects/Card";
-import { Player } from "../Abstract/Player";
+import { Player } from "../GameObjects/Player";
+import { MoveSender } from "../../Interfaces/MoveSender";
+import { GameState } from "../Other/GameState";
+import { Move } from "../Other/Move";
+import { IdProvider } from "../../Interfaces/IdProvider";
 
 export type CardChosenFunc = (card:Card)=>void;
 export type PawnChosenFunc = (pawn:Pawn)=>void;
 
-export class HumanPlayer implements Player{
+export class HumanPlayer extends Player {
 
     readonly cardChosenFuncs: CardChosenFunc[] = [];
     readonly pawnChosenFuncs: PawnChosenFunc[] = [];
 
     constructor(
         readonly hand: Hand,
-        readonly pawns: [Pawn]
-        ) { }
-    
+        readonly pawns: [Pawn],
+        idProvider:IdProvider
+        ) {
+            super(hand, pawns, idProvider);
+         }
+
     hasLost(): Boolean {
         throw new Error("Method not implemented.");
     }
     
-    play(gameState: import("../Other/GameState").GameState): Promise<any> {
+    play(gameState: GameState): Promise<any> {
         return new Promise(async (resolve, reject) => {
             
         })

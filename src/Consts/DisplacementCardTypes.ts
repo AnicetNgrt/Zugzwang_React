@@ -1,4 +1,4 @@
-import { DisplacementCardType } from "../Classes/CardTypeImplementations/DisplacementCardType"
+import { DisplacementCardType } from "../Classes/CardTypes/DisplacementCardType"
 import { Patterns } from "./Patterns"
 
 

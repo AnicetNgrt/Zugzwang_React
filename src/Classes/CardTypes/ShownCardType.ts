@@ -1,5 +1,5 @@
 import { CardType, CardTypeData } from "../../Interfaces/CardType";
-import { Player } from "../Abstract/Player";
+import { Player } from "../GameObjects/Player";
 import { GameState } from "../Other/GameState";
 import { Action } from "../../Types/Action";
 

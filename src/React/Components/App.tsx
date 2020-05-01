@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.scss';
-import PcPaneComponent from './Components/pcPane.component';
-import BoardComponent from './Components/board.omponent';
+import PcPaneComponent from './pcPane.component';
+import BoardComponent from './board.omponent';
 
 function App() {
 

@@ -4,5 +4,7 @@ export class Modification {
     constructor(
         readonly before:GameObject,
         readonly after:GameObject
-    ) {}
+    ) {
+        
+    }
 }

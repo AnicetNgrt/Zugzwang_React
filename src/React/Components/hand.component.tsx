@@ -1,4 +1,4 @@
-import { Hand } from "../Classes/Other/Hand";
+import { Hand } from "../../Classes/Other/Hand";
 import React from "react";
 
 type HandProps = Hand
