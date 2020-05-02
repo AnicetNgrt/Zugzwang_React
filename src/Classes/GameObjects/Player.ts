@@ -11,7 +11,7 @@ export abstract class Player extends GameObject {
     readonly effects:{[key:string]:PlayerEffect};
 
     constructor(
-        readonly hand:Hand,
+        readonly hand: Hand,
         readonly pawns: [ Pawn ],
         readonly team: number,
         idProvider:IdProvider

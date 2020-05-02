@@ -1,7 +1,10 @@
-@import "../styles.scss";
+@import "../../styles.scss";
 
-.HandDiv {
-    background: $color2;
+.HandsDiv {
+    display: inline-block;
+    background: $gray1;
     height: 100%;
-    width: 30%;
+    width: calc(100% - calc(#{$gh} / 1.5));
+    padding-left: $m;
+    padding-right: $m;
 }

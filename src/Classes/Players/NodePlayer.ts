@@ -3,14 +3,17 @@ import { Move } from "../Other/Move";
 import { Hand } from "../Other/Hand";
 import { Pawn } from "../GameObjects/Pawn";
 import { MoveSender } from "../../Interfaces/MoveSender";
+import { IdProvider } from "../../Interfaces/IdProvider";
 
 export class NodePlayer extends ListenerPlayer implements MoveSender {
 
     constructor(
-        hand: Hand,
-        pawns: [ Pawn ]
+        readonly hand: Hand,
+        readonly pawns: [ Pawn ],
+        readonly teams: number,
+        idProvider:IdProvider
     ) {
-        super(hand, pawns);
+        super(hand, pawns,teams,idProvider);
     }
 
     hasLost(): Boolean {

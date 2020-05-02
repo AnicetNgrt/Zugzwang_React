@@ -1,7 +1,25 @@
-@import "../styles.scss";
+@import "../../styles.scss";
 
 .BoardDiv {
-    background: $color3;
+    background: $gray2;
     height: $gh;
+    max-height: $gh;
     width: calc(#{$gh} / 1.5);
+    padding: $m;
+    table-layout: fixed;
+}
+
+table {
+    border: 0px;
+    margin: 0px;
+    border-spacing: 0.5 * $m;
+    border-collapse: separate;
+}
+
+.Tile {
+    border-radius: 1.2px;
+    font-size: 3rem;
+    color: $gray2;
+    text-align: center;
+    background-color: $gray3;
 }

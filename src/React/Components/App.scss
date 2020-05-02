@@ -1,4 +1,4 @@
-@import "./styles.scss";
+@import "../../styles.scss";
 
 .GameWindow {
   display:flex;
@@ -6,7 +6,7 @@
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%; 
-  background: $color0;
+  background: $yellow1;
   width: $gw;
   height: $gh;
 }

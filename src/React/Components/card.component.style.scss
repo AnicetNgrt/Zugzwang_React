@@ -1,21 +1,55 @@
+@import "../../styles.scss";
+
+$cs: 23rem;
+
 .CardDiv {
-    display: block;
-    width: 100px;
-    height: 100px;
-    margin-left: 40vw;
-    border: 5px solid #eeeeee;
-    background: #aa7766;
-    z-index: 100;
+    position: relative;
+    font-size: 5rem;
+    padding: $m;
+    font-weight: 500;
+    width: $cs;
+    height: $cs;
+    margin-top: $m;
+    margin-left: $m;
+    display:block;
 }
-  
-.Focused {
-    background: #c0b282;
-    transform: scale(1.2);
-    z-index: 200;
+
+/*.CardDiv:hover {
+    background: $color5;
+}*/
+
+.CardArrow {
+    font-family: 'Roboto';
+    position: absolute;
+    color: white;
+    font-size: 0.37 * $cs;
+    text-align: center;
+    width: $cs;
+    height: $cs;
+    padding-top: 0.2 * $cs;
+    font-weight: 700;
+    background-color: change-color($color: $black, $alpha: 0);
+    box-shadow: 0rem 0rem 2rem $black;
+    top:0%;
+    left:0%;
+    z-index: 1000;
+    opacity: 0;
+    box-sizing: border-box;
 }
-  
-.Unfocused {
-    background: #aa7766;
-    transform: scale(1);
-    z-index: 100;
+
+.Selected .CardArrow {
+    padding-top: 0.6 * $cs;
+}
+
+.CardDiv:hover .CardArrow {
+    opacity: 1;
+    background-color: change-color($color: $black, $alpha: 0.5);
+}
+
+.CardImg {
+    max-width: 100%;
+}
+
+.Selected {
+    background: $yellow4;
 }

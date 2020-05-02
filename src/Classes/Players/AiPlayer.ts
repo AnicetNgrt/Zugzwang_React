@@ -9,9 +9,10 @@ export class AiPlayer extends Player implements MoveSender {
     constructor(
         readonly hand: Hand,
         readonly pawns: [Pawn],
+        readonly team:number,
         idProvider:IdProvider
         ) {
-            super(hand, pawns, idProvider);
+            super(hand, pawns, team, idProvider);
         }
 
     sendMove(move: any): void {

@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 
-export default function useComponentFocused(initialIsFocused: any) {
-    const [isComponentFocused, setIsComponentFocused] = useState(initialIsFocused);
+export default function handleClicked(initialIsClicked: any) {
+    const [isComponentClicked, setIsComponentClicked] = useState(initialIsClicked);
     const ref = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: Event) => {
         if (ref.current && !ref.current.contains(event.target as Node)) {
-            setIsComponentFocused(false);
+            setIsComponentClicked(false);
         } else if(ref.current) {
-            setIsComponentFocused(true);
+            setIsComponentClicked(true);
         }
     };
 
@@ -20,5 +20,5 @@ export default function useComponentFocused(initialIsFocused: any) {
         };
     });
 
-    return { ref, isComponentFocused, setIsComponentFocused };
+    return { ref, isComponentClicked, setIsComponentClicked };
 }
