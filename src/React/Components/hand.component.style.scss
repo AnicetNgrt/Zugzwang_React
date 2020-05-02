@@ -19,6 +19,7 @@
     background: $black;
     width: fit-content;
     padding-left: 2rem;
+    margin-bottom: 1rem;
     padding-right: 2rem;
     border-radius: 2px;
 }
@@ -27,7 +28,7 @@
     float:left;
     margin-top: $m;
     margin-left: $m * 2;
-    width: auto;
+    width: fit-content;
     height:100%;
 }
 
@@ -37,9 +38,13 @@
     overflow-y: auto;
     overflow-x: hidden;
     white-space: nowrap;
+    width: fit-content;
     height: fit-content;
+    float: right;
     max-height: 92.4%;
     border-radius: 2px;
+    padding-bottom: 2* $m;
+    padding-right: $m;
 }
 
 .CardDetailDiv {

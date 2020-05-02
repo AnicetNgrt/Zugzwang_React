@@ -1,0 +1,10 @@
+.BsDiv {
+    position: absolute;
+    top: -10vh;
+    left: -10vw;
+    width: 120vw;
+    height: 120vh;
+    z-index: 200;
+    overflow: hidden;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+}

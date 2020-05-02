@@ -6,11 +6,11 @@ function CardComponent(props:{card:Card, selected:boolean, onClick:()=>void}) {
     
     return (
         <div 
-        className={"CardDiv "+(props.card.shown ? "":"Hidden ")+(props.selected ? "Selected ":"")}
+        className={"CardDiv "+(props.card.shown ? "":"Hidden ")}
         onClick={props.onClick}
         >   
-            <img className={"CardImg"} src="/images/cardsPixel/archer.png"></img>
-            <h1 className={"CardArrow"}>{(props.selected ? "×" : '👁')}</h1>
+            <img className={"CardImg"} src={props.card.type.data.picturePath}></img>
+            <h1 className={"CardArrow"}>{'👁'}</h1>
         </div>
     )
 }

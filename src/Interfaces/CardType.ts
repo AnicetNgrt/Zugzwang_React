@@ -5,7 +5,7 @@ import { Player } from "../Classes/GameObjects/Player";
 export interface CardTypeData {
     readonly weight: number,
     readonly name: string,
-    readonly picturePath: string | null,
+    readonly picturePath: string | undefined,
     readonly maxTurn: number,
     readonly maxGame: number,
     readonly actions: Action[]

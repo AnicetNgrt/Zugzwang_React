@@ -4,7 +4,7 @@ export const FlickeringCardTypes: {[key:string]:()=>FlickeringCardType} = {
     Archer:() => {return new FlickeringCardType({
         weight:3,
         name:"Archer",
-        picturePath: null,
+        picturePath: "/images/cardsPixel/archer.png",
         maxTurn:2,
         maxGame:999,
         actions: []

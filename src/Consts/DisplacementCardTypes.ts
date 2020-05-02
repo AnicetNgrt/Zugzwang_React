@@ -6,7 +6,7 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
     "SmallRivers": () => {return new DisplacementCardType({
         weight:0,
         name:"Small Rivers",
-        picturePath:null,
+        picturePath:undefined,
         maxTurn:999,
         maxGame:999,
         fullCircle:false,
@@ -18,7 +18,7 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
     "Knight": () => {return new DisplacementCardType({
         weight:8,
         name:"Knight",
-        picturePath:null,
+        picturePath:undefined,
         maxTurn:2,
         maxGame:999,
         fullCircle:false,
@@ -34,7 +34,7 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
     "Clockmaker": () => {return new DisplacementCardType({
         weight:7,
         name:"Clockmaker",
-        picturePath:null,
+        picturePath:undefined,
         maxTurn:2,
         maxGame:999,
         fullCircle:false,

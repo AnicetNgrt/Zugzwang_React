@@ -1,0 +1,48 @@
+@import "../../styles.scss";
+
+.CardDetailDiv {
+    position: absolute;
+    width:0;
+    height: 0;
+}
+
+.CardDetailDiv .BsDiv {
+    z-index: 100;
+}
+
+.CardDetail {
+    position: relative;
+    display: in;
+    top: 4vh;
+    left: 30vw;
+    width: 0.7 * 30vw;
+    height: 0.7 * 45vw;
+    box-shadow: 0 0 7rem black;
+    padding: $m;
+    background: $gray2;
+    z-index: 102;
+}
+
+.CardStats {
+    position: absolute;
+    top: 0%;
+    left: 80.5%;
+    width: 20%;
+    height: 100%;
+    background: $gray1;
+}
+
+.CardStats h1 {
+    font-size: 5rem;
+    font-weight: 300;
+    text-align: center;
+}
+
+.CardIllustration {
+    max-width: 80%;
+}
+
+.CardName {
+    font-weight: 300;
+    font-size: 10rem;
+}

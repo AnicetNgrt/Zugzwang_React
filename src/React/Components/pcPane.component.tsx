@@ -1,5 +1,5 @@
 import "./pcPane.component.style.scss";
-import React from "react";
+import React, { useState } from "react";
 import HandComponent from "./hand.component";
 import { Hand } from "../../Classes/Other/Hand";
 import { Card } from "../../Classes/GameObjects/Card";
@@ -39,11 +39,14 @@ const cards2: Card[] = [
 
 const hand2 = new Hand(cards2);
 
-function PcPaneComponent() {
+function PcPaneComponent(props:{onCardClicked:(card:Card)=>void}) {
+
+    const [selected, setSelected] = useState<Card | null>(null);
+
     return(
         <div className="HandsDiv">
-            <HandComponent hand={hand1} playerName="Anicet"></HandComponent>
-            <HandComponent hand={hand2} playerName="Joshua"></HandComponent>
+            <HandComponent hand={hand1} onCardClicked={(card:Card) =>props.onCardClicked(card)} playerName="Anicet"></HandComponent>
+            <HandComponent hand={hand2} onCardClicked={(card:Card) =>props.onCardClicked(card)} playerName="Joshua"></HandComponent>
         </div>
     )
 }
