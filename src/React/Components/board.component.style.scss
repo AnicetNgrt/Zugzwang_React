@@ -1,27 +1,35 @@
 @import "../../styles.scss";
+@import "./App.scss";
 
 .BoardDiv {
+    display:inline-block;
     background: $gray2;
-    height: $gh;
-    max-height: $gh;
-    width: calc(#{$gh} / 1.5);
-    padding: $m;
-    table-layout: fixed;
+    height: $gwh;
+    width: calc(#{$gwh} / 1.5);
+    padding-left: $m;
+    padding-right: $m;
 }
 
 table {
+    table-layout: fixed;
+    border-collapse:collapse;
     border: 0px;
     margin: 0px;
-    border-spacing: 0.5 * $m;
-    border-collapse: separate;
 }
 
 .Tile {
-    border-radius: 1.2px;
+    border-radius: 0.5rem;
     font-size: 3rem;
     color: $gray2;
     text-align: center;
     background-color: $gray3;
+}
+
+td {
+    padding:0;
+    border: solid calc(0.5 * #{$m});
+    width: calc(calc(calc(#{$gwh} / 1.5) / 10) - calc( 0.5 * #{$m}));
+    height: calc(calc(#{$gwh} / 15) - calc( 0.3 * #{$m}));
 }
 
 .Tile:hover {

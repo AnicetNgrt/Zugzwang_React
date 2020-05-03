@@ -7,8 +7,8 @@ $gray1: #49404e;
 $gray2: #887171;
 $gray3: #afa193;
 
-$gw: 98vw;
-$gh: 98vh;
+$gw: 100vw;
+$gh: 99vh;
 $fs: 2vw;
 $gu: 2vw;
 $m: 0.3vw;
@@ -32,7 +32,6 @@ $m: 0.3vw;
 
 body {
   margin: 0;
-  
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -44,6 +43,7 @@ h1 {
   font-family: 'Archive';
   font-size: 5rem;
   color:white;
+  font-weight: 50;
 }
 
 div {
@@ -59,7 +59,7 @@ div {
 ::-webkit-scrollbar-thumb {
   background-color: #887171;
   border: 0.5rem solid transparent;
-  border-radius: 9px;
+  border-radius: 2rem;
   background-clip: content-box;
 }
 

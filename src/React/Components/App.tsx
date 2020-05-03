@@ -14,14 +14,19 @@ function App() {
   const [selected, setSelected] = useState<Card | null>(null);
 
   return (
-    <div className="GameWindow">
-      <BoardComponent board={board}/>
-      <PcPaneComponent onCardClicked={(card:Card) => setSelected(card)}/>
-      {selected != null && 
-        <CardDetailComponent card={selected} onClickOutside={()=>{
-          setSelected(null);
-        }}></CardDetailComponent>
-      }
+    <div>
+      <div className="Header">
+  <h1>REIHENFOLGE <span className="SubTitle">{'▦'}</span></h1>
+      </div>
+      <div className="GameWindow">
+        <BoardComponent board={board}/>
+        <PcPaneComponent onCardClicked={(card:Card) => setSelected(card)}/>
+        {selected != null && 
+          <CardDetailComponent card={selected} onClickOutside={()=>{
+            setSelected(null);
+          }}></CardDetailComponent>
+        }
+      </div>
     </div>
   );
 }
