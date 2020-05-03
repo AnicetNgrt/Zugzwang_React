@@ -19,11 +19,15 @@ $m: 0.3vw;
 
 @font-face {
   font-family: "Archive";
-  src: url("/fonts/Archive-Regular.ttf");
+  src: url("/fonts/Archive/Archive-Regular.ttf");
   src:
-  url("/fonts/Archive-Regular.otf") format("opentype")
+  url("/fonts/Archive/Archive-Regular.otf") format("opentype")
 }
-  
+ 
+@font-face {
+  font-family: 'Marker';
+  src: url("/fonts/PermanentMarker/PermanentMarker-Regular.ttf");
+}
 
 * {
   margin:0px;

@@ -10,8 +10,9 @@
 }
 
 .HandDiv {
+    display: flex;
     float:left;
-    height: fit-content;
+    width: fit-content;
     height:100%;
 }
 
@@ -25,7 +26,8 @@
 }
 
 .SubHand {
-    float:left;
+    overflow-x: clip;
+    display:inline-block;
     margin-top: $m;
     margin-left: $m * 2;
     width: fit-content;
@@ -45,13 +47,4 @@
     border-radius: 0.5rem;
     padding-bottom: 2* $m;
     padding-right: $m;
-}
-
-.CardDetailDiv {
-    float: right;
-    width: calc(50% - #{$m});
-    height: 100%;
-    margin-left: $m;
-    background-color: $gray3;
-    font-size: 10rem;
 }

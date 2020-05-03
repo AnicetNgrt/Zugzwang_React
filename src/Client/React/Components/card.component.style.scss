@@ -22,11 +22,10 @@ $cs: 23rem;
     font-family: 'Roboto';
     position: absolute;
     color: white;
-    font-size: 0.37 * $cs;
+    font-size: 0;
     text-align: center;
     width: $cs;
     height: $cs;
-    padding-top: 0.2 * $cs;
     font-weight: 700;
     background-color: change-color($color: $black, $alpha: 0);
     box-shadow: 0rem 0rem 2rem $black;
@@ -34,6 +33,8 @@ $cs: 23rem;
     left:0%;
     z-index: 10;
     opacity: 0;
+    border-radius: 1rem;
+    padding-top: 0.5 * $cs;
     box-sizing: border-box;
 }
 
@@ -42,6 +43,9 @@ $cs: 23rem;
 }
 
 .CardDiv:hover .CardArrow {
+    transition: font-size 0.3s, padding-top 0.3s;
+    font-size: 0.37 * $cs;
+    padding-top: 0.2 * $cs;
     opacity: 1;
     background-color: change-color($color: $black, $alpha: 0.5);
 }

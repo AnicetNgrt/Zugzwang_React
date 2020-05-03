@@ -1,10 +1,10 @@
 import "./pcPane.component.style.scss";
 import React, { useState } from "react";
 import HandComponent from "./hand.component";
-import { Hand } from "../../Classes/Other/Hand";
-import { Card } from "../../Classes/GameObjects/Card";
-import { FlickeringCardTypes } from "../../Consts/FlickeringCardTypes";
-import { RandomIdProvider } from "../../Classes/IdProviders/RandomIdProvider";
+import { Hand } from "../../../Shared/Classes/Other/Hand";
+import { Card } from "../../../Shared/Classes/GameObjects/Card";
+import { FlickeringCardTypes } from "../../../Shared/Consts/FlickeringCardTypes";
+import { RandomIdProvider } from "../../../Shared/Classes/IdProviders/RandomIdProvider";
 
 const cards1: Card[] = [
     new Card(FlickeringCardTypes.Archer(), 0, 0, new RandomIdProvider(5), true),

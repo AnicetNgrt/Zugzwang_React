@@ -9,12 +9,18 @@
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.37",
     "@types/react": "^16.9.34",
+    "@types/react-beautiful-dnd": "^12.1.2",
     "@types/react-dom": "^16.9.7",
     "react": "^16.13.1",
     "react-aspect-ratio": "^1.0.42",
+    "react-beautiful-dnd": "^13.0.0",
+    "react-dnd": "^10.0.2",
+    "react-dnd-html5-backend": "^10.0.2",
     "react-dom": "^16.13.1",
+    "react-native-easy-dnd": "^1.0.2",
     "react-scripts": "3.4.1",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "typescript-react-draggable": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,6 +44,9 @@
     ]
   },
   "devDependencies": {
+    "electron": "^8.2.5",
     "node-sass": "^4.14.0"
-  }
+  },
+  "homepage": "./",
+  "main": "src/Client/electron-starter.js"
 }

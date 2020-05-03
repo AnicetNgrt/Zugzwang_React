@@ -2,9 +2,7 @@ import { Hand } from "../Other/Hand"
 import { Pawn } from "../GameObjects/Pawn";
 import { Card } from "../GameObjects/Card";
 import { Player } from "../GameObjects/Player";
-import { MoveSender } from "../../Interfaces/MoveSender";
 import { GameState } from "../Other/GameState";
-import { Move } from "../Other/Move";
 import { IdProvider } from "../../Interfaces/IdProvider";
 
 export type CardChosenFunc = (card:Card)=>void;

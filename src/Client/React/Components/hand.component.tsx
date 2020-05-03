@@ -1,6 +1,6 @@
-import { Hand } from "../../Classes/Other/Hand";
+import { Hand } from "../../../Shared/Classes/Other/Hand";
 import React, { useState } from "react";
-import { Card } from "../../Classes/GameObjects/Card";
+import { Card } from "../../../Shared/Classes/GameObjects/Card";
 import CardComponent from "./card.component";
 import "./hand.component.style.scss";
 

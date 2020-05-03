@@ -1,5 +1,14 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "module": "esnext",
+    "noImplicitAny": true,
+    "outDir": "./build/",
+    "baseUrl": "./src",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
     "target": "es5",
     "lib": [
       "dom",
@@ -9,17 +18,23 @@
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react"
+    "noEmit": true
   },
   "include": [
-    "src"
+    "./src/",
+    "./src/Client/*",
+    "./src/Shared/*", "src/react-app-env.d.ts", "src/index.tsx"
+  ],
+  "exclude": [
+    "./src/Server",
+    "node_modules",
+    "**/*.spec.ts",
+    "build",
+    ".idea"
   ]
 }

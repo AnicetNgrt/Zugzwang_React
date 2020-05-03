@@ -3,6 +3,11 @@
 $gwh: calc(0.9 * #{$gh});
 $ghh: calc(0.07 * #{$gh});
 
+.AppDiv {
+  width:$gw;
+  height:$gh;
+}
+
 .GameWindow {
   display:block;
   position: absolute;
@@ -23,12 +28,23 @@ $ghh: calc(0.07 * #{$gh});
 
 .Header h1 {
   color: $yellow4;
+  margin-top: -2rem;
   font-size: 7rem;
-  background-color: black;
   padding-left: $m;
   padding-right: $m;
   width: fit-content;
+}
+
+.Title {
+  background-color: black;
+  padding-left: $m;
+  padding-right: $m;
   border-radius: 0.5rem;
+}
+
+.Prefix {
+  font-family: 'Times';
+  font-size: 10rem;
 }
 
 .SubTitle {

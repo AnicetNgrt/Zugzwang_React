@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./card.component.style.scss";
-import { Card } from "../../Classes/GameObjects/Card";
+import { Card } from "../../../Shared/Classes/GameObjects/Card";
 
 function CardComponent(props:{card:Card, selected:boolean, onClick:()=>void}) {
     

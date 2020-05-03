@@ -1,6 +1,6 @@
 import "./board.component.style.scss";
 import React from "react";
-import { Board } from "../../Classes/GameObjects/Board";
+import { Board } from "../../../Shared/Classes/GameObjects/Board";
 
 function BoardComponent(props:{board:Board}) {
     return(
