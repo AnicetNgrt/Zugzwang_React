@@ -11,6 +11,8 @@
     "@types/react": "^16.9.34",
     "@types/react-beautiful-dnd": "^12.1.2",
     "@types/react-dom": "^16.9.7",
+    "@types/socket.io-client": "^1.4.32",
+    "alm": "^2.39.1",
     "react": "^16.13.1",
     "react-aspect-ratio": "^1.0.42",
     "react-beautiful-dnd": "^13.0.0",
@@ -19,14 +21,15 @@
     "react-dom": "^16.13.1",
     "react-native-easy-dnd": "^1.0.2",
     "react-scripts": "3.4.1",
-    "typescript": "^3.7.5",
+    "socket.io-client": "^2.3.0",
     "typescript-react-draggable": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron ."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,8 +47,13 @@
     ]
   },
   "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/socket.io": "^2.1.4",
     "electron": "^8.2.5",
-    "node-sass": "^4.14.0"
+    "express": "^4.17.1",
+    "node-sass": "^4.14.0",
+    "socketio": "^1.0.0",
+    "typescript": "^3.8.3"
   },
   "homepage": "./",
   "main": "src/Client/electron-starter.js"

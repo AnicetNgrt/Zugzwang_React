@@ -1,0 +1,59 @@
+{
+  "sessions": [
+    {
+      "id": "787d0bd3-09bc-46c7-bca3-c9a2895091fd",
+      "tabLayout": {
+        "type": "stack",
+        "width": 100,
+        "height": 100,
+        "tabs": [],
+        "subItems": [],
+        "activeItemIndex": 0
+      },
+      "lastUsed": 1588539873948,
+      "fileTreeExpanded": true,
+      "errorsExpanded": true,
+      "selectedTabId": null
+    },
+    {
+      "id": "b117a91c-af7e-4bea-894b-1ae092c12026",
+      "tabLayout": {
+        "type": "stack",
+        "width": 100,
+        "height": 100,
+        "tabs": [],
+        "subItems": [],
+        "activeItemIndex": 0
+      },
+      "lastUsed": 1588539432264,
+      "selectedTabId": null
+    },
+    {
+      "id": "1c024bae-454b-4e3c-a351-eb24a120532b",
+      "tabLayout": {
+        "type": "stack",
+        "width": 100,
+        "height": 100,
+        "tabs": [],
+        "subItems": [],
+        "activeItemIndex": 0
+      },
+      "lastUsed": 1588539432261,
+      "selectedTabId": null
+    },
+    {
+      "id": "b0dc1e33-d618-44c9-833f-4ab8477a5c31",
+      "tabLayout": {
+        "type": "stack",
+        "width": 100,
+        "height": 100,
+        "tabs": [],
+        "subItems": [],
+        "activeItemIndex": 0
+      },
+      "lastUsed": 1588539432258,
+      "selectedTabId": null
+    }
+  ],
+  "relativePathToTsconfig": "./tsconfig.json"
+}

@@ -1,0 +1,6 @@
+export enum GamePhase {
+  TEAM_BUILDING,
+  DECK_BUILDING,
+  PAWN_PLACING,
+  CARD_PLAYING
+}
