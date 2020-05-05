@@ -13,13 +13,23 @@ let mainWindow;
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({
+        width: 1920, 
+        height: 1080, 
+        minWidth:896, 
+        minHeight:504,
+        maxWidth:1920,
+        maxHeight:1080,
+        shown:false,
+        autoHideMenuBar: true,
+        resizable: false
+    });
 
     // and load the index.html of the app.
     mainWindow.loadURL("http://localhost:3000/");
 
-    // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    mainWindow.setTitle("Zugwang project pre-alpha");
+    mainWindow.setFullScreen(true);
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
@@ -27,6 +37,10 @@ function createWindow() {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null
+    })
+
+    mainWindow.once('ready-to-show', () => {
+        mainWindow.show()
     })
 }
 
@@ -54,3 +68,4 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+

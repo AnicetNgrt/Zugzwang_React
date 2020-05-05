@@ -5,6 +5,7 @@ $bh: calc(#{$gwh} * 0.9);
 $bw: calc(#{$bh} / 1.38);
 
 .BoardDiv {
+    position: relative;
     float: left;
     display: flex;
     flex-flow: column;
@@ -17,11 +18,19 @@ $bw: calc(#{$bh} / 1.38);
 
 .TableContainer {
     display: flex;
+    position: relative;
+    transform: translate(-50%, -50%);
+    top: 45%;
+    left: 50%;
     width: 100%;
     flex-grow : 1;
 }
 
 table {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
     width: max-content;
     border: 0px;
     margin: 0px;
@@ -36,11 +45,11 @@ table {
 
 td {
     padding:0;
-    border-radius: calc(1.5 * #{$m});
+    border-radius: calc(1 * #{$m});
     border: solid calc(0.5 * #{$m}) rgba($color: $gray1, $alpha: 0);
     white-space: nowrap;
-    width: calc(#{$bw} / 8);
-    height: calc(#{$bh} / 16.5);
+    width: calc(#{$bh} / 14);
+    height: calc(#{$bh} / 16.8);
 }
 
 .Tile:hover {
@@ -60,23 +69,23 @@ td {
 
 .PlayerName {
     position: absolute;
-    top: 8%;
+    top: 15%;
     left: 2.1%;
     font-family: 'Archive';
     font-weight: 200;
     font-size: calc(0.030 * #{$gwh});
-    height: calc(0.035 * #{$gwh});
+    height: calc(0.045 * #{$gwh});
     width: 44%;
     margin-top: $m;
     padding: calc(1*#{$m});
-    padding-top: 0;
+    padding-top: $m;
     box-sizing: border-box;
     text-align: center;
     background-color: none;
     border-radius: calc(1*#{$m});
     color: white;
     //text-shadow: 0 calc(0.6 * #{$m}) calc(0 * #{$m}) $black;
-    box-shadow: 0 $m 0 $black;
+    box-shadow: inset 0 0 calc(3*#{$m}) $black;
 }
 
 /*.Vs {
