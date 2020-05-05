@@ -1,6 +1,6 @@
 import "./carddetail.component.style.scss";
 
-import { Card } from "../../../Shared/Classes/GameObjects/Card";
+import { Card } from "../../../../Shared/Classes/GameObjects/Card";
 import React from "react";
 import { Draggable, DragDropContext, Droppable } from 'react-beautiful-dnd';
 

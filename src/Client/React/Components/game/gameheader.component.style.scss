@@ -1,0 +1,40 @@
+@import "../../../styles.scss";
+@import "../App.scss";
+
+$tfs: calc(0.7 * #{$ghh});
+
+.Header {
+    height: $ghh;
+    //width: calc(calc(#{$gwh} / 1.5) + calc(2 * #{$m}));
+    width: 100%;
+    background-color: $gray1;
+    padding-top:$m;
+  }
+  
+.Header h1 {
+  float: right;
+  background-color: rgba($color: $black, $alpha: 0.8);
+  color: $yellow4;
+  font-size: $tfs;
+  padding-left: $m;
+  padding-right: $m;
+  width: fit-content;
+  border-radius: 0.5rem;
+}
+
+.Title {
+  padding-left: $m;
+  padding-right: $m;
+  
+}
+
+.Prefix {
+  font-family: 'Times';
+  font-size: $tfs;
+}
+
+.SubTitle {
+  color: $gray1;
+  font-family: 'Archive';
+  font-size: $tfs;
+}

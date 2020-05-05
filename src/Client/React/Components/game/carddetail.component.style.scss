@@ -1,5 +1,5 @@
-@import "../../styles.scss";
-@import "./App.scss";
+@import "../../../styles.scss";
+@import "../App.scss";
 
 .CardDetailDiv {
     position: relative;
@@ -27,14 +27,14 @@
 
 .CloseCardButton {
     position: absolute;
-    top: -6%;
-    left: -8%;
+    top: -13%;
+    left: 83%;
     width: 10rem;
     height: 10rem;
     text-align: center;
     opacity: 0.3;
-    background-color: rgba($color: $black, $alpha: 0.3);
-    box-shadow: 0rem 0rem 3rem rgba($color: $black, $alpha: 0.6);
+    background-color: rgba($color: $black, $alpha: 0.5);
+    box-shadow: 0.5rem 0.5rem 1rem rgba($color: $black, $alpha: 0.6);
     border-radius: 0.5rem;
 
     h1 {
@@ -43,19 +43,10 @@
     }
 }
 
-.CardDetail:hover .CloseCardButton {
-    transition: margin-top 0.1s, margin-left 0.1s, width 0.1s, height 0.1s, opacity 0.1s;
-    background-color: rgba($color: $black, $alpha: 0.8);
-    margin-top: 4rem;
-    margin-left: 4rem;
-    width: 15rem;
-    height: 15rem;
-    border-radius: 2rem;
+.CloseCardButton:hover {
+    transition: opacity 0.2s, color 0.2s;
+    background-color: rgba($color: red, $alpha: 0.8);
     opacity: 1;
-
-    h1 {
-        font-size: 12.5rem;
-    }
 }
 
 .CardDetailDiv .BsDiv {

@@ -1,0 +1,10 @@
+@import "../../../styles.scss";
+@import "../App.scss";
+
+.PlayerDiv {
+    float: left;
+    background: $gray1;
+    height: 100%;
+    width: calc(calc(#{$gww} - calc(#{$gwh} / 1.3))/2);
+    padding-right: $m;
+}

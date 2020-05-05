@@ -1,14 +1,10 @@
-import { GameLobby } from "../Shared/Interfaces/GameLobby";
-import { GamePhase } from "../Shared/Enums/GamePhase";
-import { GameState } from "../Shared/Classes/Other/GameState";
+import { GameLobby } from "../Shared/Classes/Abstract/GameLobby";
 
-export class ServerSideGameLobby implements GameLobby {
+export class ServerSideGameLobby extends GameLobby {
 
   constructor(
-    readonly phases: Set<GamePhase>,
-    readonly clock: number,
-    readonly gameStates: GameState[],
-    readonly winner: string,
     readonly players: [string]
-  ) { }
+  ) { 
+    super(players);
+  }
 }

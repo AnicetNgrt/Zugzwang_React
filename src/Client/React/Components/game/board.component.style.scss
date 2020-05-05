@@ -1,0 +1,81 @@
+@import "../../../styles.scss";
+@import "../App.scss";
+
+$bh: calc(#{$gwh} * 0.9);
+$bw: calc(#{$bh} / 1.38);
+
+.BoardDiv {
+    float: left;
+    display: flex;
+    flex-flow: column;
+    background: $black;
+    height: $gwh;
+    width: calc(#{$gwh} / 1.3);
+    padding-left: calc(#{$m} * 1);
+    padding-right: calc(#{$m} * 1);
+    box-sizing: border-box;
+}
+
+.TableContainer {
+    display: flex;
+    width: 100%;
+    flex-grow : 1;
+}
+
+table {
+    width: max-content;
+    border: 0px;
+    margin: 0px;
+    background-color: $gray1;
+}
+
+.Tile {
+    font-size: 3rem;
+    color: $gray2;
+    text-align: center;
+    background-color:black;
+}
+
+td {
+    padding:0;
+    border: solid calc(0.6 * #{$m}) transparent;
+    white-space: nowrap;
+    width: calc(#{$bw} / 8);
+    height: calc(#{$bh} / 16.5);
+}
+
+.Tile:hover {
+    background-color: $gray2;
+}
+
+.GameTitle {
+    position: relative;
+    display: block;
+    padding: calc(3 * #{$m});
+    height: 7.5%;
+    width: 100%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color: $gray1;
+    box-sizing: border-box;
+}
+
+.PlayerName {
+    font-family: 'Roboto';
+    font-weight: 600;
+    font-size: calc(0.015 * #{$gww});
+    height: 100%;
+    width: 40%;
+    padding-top: 2%;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: none;
+}
+
+.Vs {
+    font-size: calc(0.03 * #{$gww});
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

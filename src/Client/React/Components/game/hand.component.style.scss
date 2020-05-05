@@ -1,8 +1,8 @@
-@import "../../styles.scss";
+@import "../../../styles.scss";
+@import "../App.scss";
 
 .HandComponent {
     display: inline-block;
-    margin-left: $m;
     height: 100%;
     width: fit-content;
     padding-right: 2 * $m;
@@ -16,15 +16,6 @@
     height:100%;
 }
 
-.SubHandTitle {
-    background: $black;
-    width: fit-content;
-    padding-left: 2rem;
-    margin-bottom: 1rem;
-    padding-right: 2rem;
-    border-radius: 0.5rem;
-}
-
 .SubHand {
     overflow-x: clip;
     display:inline-block;
@@ -34,6 +25,17 @@
     height:100%;
 }
 
+.SubHandTitle {
+    background: $black;
+    width: fit-content;
+    padding-left: 2rem;
+    margin-bottom: 1rem;
+    padding-right: 2rem;
+    border-radius: 0.5rem;
+    h1 {
+        font-size: calc(0.015 * #{$gww});
+    }
+} 
 .CardList {
     display:block;
     background: $black;
@@ -42,7 +44,6 @@
     white-space: nowrap;
     width: fit-content;
     height: fit-content;
-    float: right;
     max-height: 92.4%;
     border-radius: 0.5rem;
     padding-bottom: 2* $m;

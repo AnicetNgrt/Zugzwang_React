@@ -14,6 +14,7 @@ var io = require("socket.io")(http);
 // a websocket, log that a user has connected
 io.on("connection", function (socket) {
     console.log("a user connected");
+    socket.emit("message", "Tu es bo");
 });
 var server = http.listen(4443, function () {
     console.log("listening on *:4443");

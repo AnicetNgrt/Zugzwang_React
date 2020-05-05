@@ -1,54 +1,15 @@
 @import "../../styles.scss";
 
-$gwh: calc(0.9 * #{$gh});
-$ghh: calc(0.07 * #{$gh});
+$gh: calc(1 * #{$gh});
+$gw: calc(1 * #{$gw});
+
+$gwh: calc(0.98 * #{$gh});
+$gww: calc(0.985 * #{$gw});
+$ghh: calc(0 * #{$gh});
 
 .AppDiv {
   width:$gw;
   height:$gh;
-}
-
-.GameWindow {
-  display:block;
-  position: absolute;
-  left: 0vw;
-  top: $ghh; 
-  overflow:hidden;
-  background: $yellow2;
-  width: $gw;
-  height: $gwh;
-}
-
-.Header {
-  height: $ghh;
-  width: calc(calc(#{$gwh} / 1.5) + calc(2 * #{$m}));
-  background-color: $gray1;
-  padding: $m;
-}
-
-.Header h1 {
-  color: $yellow4;
-  margin-top: -2rem;
-  font-size: 7rem;
-  padding-left: $m;
-  padding-right: $m;
-  width: fit-content;
-}
-
-.Title {
-  background-color: black;
-  padding-left: $m;
-  padding-right: $m;
-  border-radius: 0.5rem;
-}
-
-.Prefix {
-  font-family: 'Times';
-  font-size: 10rem;
-}
-
-.SubTitle {
-  color: $gray1;
-  font-family: 'Archive';
-  font-size: 7rem;
+  background-color: $black;
+  box-sizing: border-box;
 }
