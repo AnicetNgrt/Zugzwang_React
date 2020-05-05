@@ -35,18 +35,19 @@ $cs: calc(0.06 * #{$gww});
     z-index: 10;
     opacity: 0;
     border-radius: 1rem;
-    padding-top: calc(0.5 * $cs);
+    padding-top: calc(0.5 * #{$cs});
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .Selected .CardArrow {
-    padding-top: calc(0.6 * $cs);
+    padding-top: calc(0.6 * #{$cs});
 }
 
 .CardDiv:hover .CardArrow {
     transition: font-size 0.3s, padding-top 0.3s;
-    font-size: calc(0.37 * $cs);
-    padding-top: calc(0.2 * $cs);
+    font-size: calc(0.37 * #{$cs});
+    padding-top: calc(0.25 * #{$cs});
     opacity: 1;
     background-color: change-color($color: $black, $alpha: 0.5);
 }

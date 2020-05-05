@@ -25,10 +25,9 @@ export default class BoardComponent extends React.Component {
             <div className={"BoardDiv"}>
                 <div className="GameTitle">
                     <h1 className="PlayerName"
-                        style={{float:'left'}}>{this.props.players[0]}</h1>
-                    <h1 className="Vs">{' VS '}</h1>
+                        style={{float: 'left', backgroundColor:'#c94747'}}>{this.props.players[0]}</h1>
                     <h1 className="PlayerName"
-                        style={{float:'right'}}>{this.props.players[1]}</h1>
+                        style={{float:'right', left:'54%', backgroundColor:'#4070bd'}}>{this.props.players[1]}</h1>
                 </div>
                 <div className="TableContainer">
                 <table>

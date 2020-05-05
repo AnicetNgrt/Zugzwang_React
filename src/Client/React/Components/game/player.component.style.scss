@@ -2,9 +2,18 @@
 @import "../App.scss";
 
 .PlayerDiv {
+    position:relative;
     float: left;
-    background: $gray1;
     height: 100%;
     width: calc(calc(#{$gww} - calc(#{$gwh} / 1.3))/2);
-    padding-right: $m;
+}
+
+.BackgroundIllustration {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:98%;
+    box-shadow: 0 0 $m black;
+    opacity: 0;
 }

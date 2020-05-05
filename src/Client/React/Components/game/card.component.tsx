@@ -9,7 +9,7 @@ function CardComponent(props:{card:Card, selected:boolean, onClick:()=>void}) {
         onClick={props.onClick}
         >   
             <img className={"CardImg"} src={props.card.type.data.picturePath}></img>
-            <h1 className={"CardArrow"}>{'👁'}</h1>
+            <h1 className={"CardArrow"}>{'※'}</h1>
         </div>
     )
 }

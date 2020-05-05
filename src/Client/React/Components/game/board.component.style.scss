@@ -8,7 +8,6 @@ $bw: calc(#{$bh} / 1.38);
     float: left;
     display: flex;
     flex-flow: column;
-    background: $black;
     height: $gwh;
     width: calc(#{$gwh} / 1.3);
     padding-left: calc(#{$m} * 1);
@@ -26,56 +25,70 @@ table {
     width: max-content;
     border: 0px;
     margin: 0px;
-    background-color: $gray1;
 }
 
 .Tile {
     font-size: 3rem;
     color: $gray2;
     text-align: center;
-    background-color:black;
+    background-color:rgba($color: #ffffff, $alpha: 0.2);
 }
 
 td {
     padding:0;
-    border: solid calc(0.6 * #{$m}) transparent;
+    border-radius: calc(1.5 * #{$m});
+    border: solid calc(0.5 * #{$m}) rgba($color: $gray1, $alpha: 0);
     white-space: nowrap;
     width: calc(#{$bw} / 8);
     height: calc(#{$bh} / 16.5);
 }
 
 .Tile:hover {
-    background-color: $gray2;
+    background-color: $gray3;
 }
 
 .GameTitle {
     position: relative;
     display: block;
     padding: calc(3 * #{$m});
-    height: 7.5%;
+    height: 6%;
     width: 100%;
     padding-top: 0px;
     padding-bottom: 0px;
-    background-color: $gray1;
     box-sizing: border-box;
 }
 
 .PlayerName {
-    font-family: 'Roboto';
-    font-weight: 600;
-    font-size: calc(0.015 * #{$gww});
-    height: 100%;
-    width: 40%;
-    padding-top: 2%;
+    position: absolute;
+    top: 8%;
+    left: 2.1%;
+    font-family: 'Archive';
+    font-weight: 200;
+    font-size: calc(0.030 * #{$gwh});
+    height: calc(0.035 * #{$gwh});
+    width: 44%;
+    margin-top: $m;
+    padding: calc(1*#{$m});
+    padding-top: 0;
     box-sizing: border-box;
     text-align: center;
     background-color: none;
+    border-radius: calc(1*#{$m});
+    color: white;
+    //text-shadow: 0 calc(0.6 * #{$m}) calc(0 * #{$m}) $black;
+    box-shadow: 0 $m 0 $black;
 }
 
-.Vs {
-    font-size: calc(0.03 * #{$gww});
+/*.Vs {
+    font-size: calc(0.02 * #{$gww});
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
+    padding: calc(2*#{$m});
+    padding-top: 0;
+    padding-bottom: 0;
+    color: $yellow4;
+    border-radius: calc(1*#{$m});
+    background-color: $black;
+}*/

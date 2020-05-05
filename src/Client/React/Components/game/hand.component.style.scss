@@ -2,18 +2,34 @@
 @import "../App.scss";
 
 .HandComponent {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
     display: inline-block;
-    height: 100%;
-    width: fit-content;
+    height: 98%;
+    width: 100%;
     padding-right: 2 * $m;
-    background: $gray2;
+    opacity: 0.2;
+}
+
+.HandComponent:hover {
+    transition: opacity 0.2s;
+    opacity: 1;
 }
 
 .HandDiv {
     display: flex;
+    position: absolute;
+    top: 0%;
+    left: 25%;
     float:left;
     width: fit-content;
-    height:100%;
+    height:80%;
+}
+
+.HandDiv:hover {
+    cursor: grab;
 }
 
 .SubHand {
