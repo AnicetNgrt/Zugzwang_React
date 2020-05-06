@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import GameComponent from './game/game.component';
-import loginData from "../../LocalStorage/loginData.json";
+import { getLocalData } from 'Client/client';
 
 export interface AppProps {
 }
@@ -17,8 +17,13 @@ export default class App extends React.Component {
   constructor(readonly props: AppProps) {
     super(props);
     this.state = {
-      loginData: loginData
-    }
+      loginData: { loggedIn: false, sessionId: "" }
+    };
+    getLocalData("loginData")
+      .then(data => {
+        if (data != null) this.state.loginData = JSON.parse(data);
+      });
+    
   }
 
   componentDidMount() {

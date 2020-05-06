@@ -5,14 +5,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const socket = io("http://localhost:4443");
 
-export const getLocalData = async (key:string):Promise<string | undefined> => {
+export const getLocalData = async (key:string):Promise<string | null> => {
   try {
     const value = await AsyncStorage.getItem(key)
-    if(value !== null) {
-      return value;
-    }
+    return value;
   } catch(e) {
-    // error reading value
+    return null;
   }
 }
 
