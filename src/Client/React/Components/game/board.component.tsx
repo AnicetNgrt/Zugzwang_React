@@ -23,7 +23,7 @@ export default class BoardComponent extends React.Component {
     render() {
         return (
             <div className={"BoardDiv"}>
-                <div className="GameTitle">
+                <div className="GameHeader">
                     <h1 className="PlayerName"
                         style={{float: 'left', backgroundColor:'#c94747'}}>{this.props.players[0]}</h1>
                     <h1 className="PlayerName"

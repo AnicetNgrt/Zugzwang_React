@@ -14,22 +14,23 @@ let mainWindow;
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 1890, 
-        height: 1080, 
-        minWidth:896, 
-        minHeight:504,
-        maxWidth:1920,
-        maxHeight:1080,
-        shown:false,
+        width: 334, 
+        height: 610,
+        fullscreen:false,
+        titleBarStyle:'hidden',
+        shown:true,
         autoHideMenuBar: true,
-        resizable: false
+        resizable: false,
+        webPreferences: {
+            nodeIntegration: true,
+            preload: __dirname + '/preload.js'
+        }
     });
 
     // and load the index.html of the app.
     mainWindow.loadURL("http://localhost:3000/");
 
     mainWindow.setTitle("Zugwang project pre-alpha");
-    mainWindow.setFullScreen(true);
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
@@ -38,6 +39,36 @@ function createWindow() {
         // when you should delete the corresponding element.
         mainWindow = null
     })
+
+    electron.ipcMain.on("resizeSmall", args => {
+        mainWindow.setSize(334, 610, true);
+    });
+
+    electron.ipcMain.on("resize1080", args => {
+        mainWindow.setContentSize(1920, 1080);
+    });
+
+    electron.ipcMain.on("resize768", args => {
+        mainWindow.setSize(1366, 768, true);
+    });
+
+    electron.ipcMain.on("resize720", args => {
+        mainWindow.setSize(1280, 720, true);
+    });
+
+    electron.ipcMain.on("fullscreenOn", args => {
+        mainWindow.setFullScreen(true);
+    });
+
+    electron.ipcMain.on("fullscreenOff", args => {
+        mainWindow.setFullScreen(false);
+    });
+
+    electron.ipcMain.on("center", args => {
+        mainWindow.center();
+    });
+
+    
 
     mainWindow.once('ready-to-show', () => {
         mainWindow.show()
@@ -48,6 +79,8 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
+app.commandLine.appendSwitch('high-dpi-support', 1)
+app.commandLine.appendSwitch('force-device-scale-factor', 1)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

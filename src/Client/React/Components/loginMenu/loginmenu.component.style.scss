@@ -1,0 +1,43 @@
+@import "../../../styles.scss";
+
+.LoginMenuDiv {
+    image-rendering: pixelated;
+    backdrop-filter: contrast(40%);
+    position: relative;
+    background-size: 64px;
+    background-position:50% 50%;
+    //background-color: $gray1;
+    width: 100vw;
+    height: 100vh;
+}
+
+.LoginBackgroundImg {
+    position: absolute;
+    top:43%;
+    left:0px;
+    transform: translate(0%, -50%);
+    width: calc(103px * 3.2);
+    opacity: 1;
+    pointer-events: none;
+}
+
+.GameTitle {
+    cursor: grab;
+    position: absolute;
+    top:20%;
+    left:2%;
+    font-family: 'Archive';
+    font-weight: 200;
+    font-size: 50px;
+    width: 90%;
+    height: 10%;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5%;
+    background: rgba($color: #13004b, $alpha: 0.8);
+    box-shadow: 0 0 20px #0a0027;
+}
+
+.Subtitle {
+    color: rgb(255, 229, 142);   
+}

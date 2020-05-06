@@ -41,7 +41,7 @@ const cards2: Card[] = [
 
 const hand2 = new Hand(cards2);
 
-const players = ["Antonio", "Im stuck in ya loop"];
+const players = ["Joueur 1", "Joueur 2"];
 
 export default function GameBodyComponent(props: {board:Board, onCardClicked:(card:Card)=>void}) {
   return (

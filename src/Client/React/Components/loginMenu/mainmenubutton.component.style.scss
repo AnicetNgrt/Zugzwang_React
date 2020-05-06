@@ -1,0 +1,57 @@
+@import "../../../styles.scss";
+
+.ButtonDiv {
+    position: relative;
+    font-family: 'Archive';
+    font-weight: 200;
+    width:fit-content;
+
+    .emoji {
+        cursor: grab;
+        display: inline-block;
+        width:fit-content;
+        height: fit-content;
+        margin-top: 5px;
+        margin-right: 10px;
+        font-size: 40px;
+        color: rgba($color: rgb(255, 229, 142), $alpha: 1);
+    }
+
+    .text {
+        font-size: 25px;
+        cursor: pointer;
+        display: inline-block;
+        border-radius: 5px;
+        color: rgba($color: #13004b, $alpha: 0.8);
+        background-color: rgba($color: rgb(255, 229, 142), $alpha: 1);
+        box-shadow: 0 0 20px #0a0027;
+        width:fit-content;
+        height: fit-content;
+        padding: 5px;
+    }
+}
+
+.text:hover {
+    color: rgba($color: black, $alpha: 1);
+    transition: background-color 0.2s;
+    background-color: rgba($color: rgb(255, 255, 255), $alpha: 1);
+}
+
+.text:active {
+    color: rgba($color: black, $alpha: 1);
+    transition: background-color 0.2s;
+    background-color: rgba($color: rgb(121, 217, 255), $alpha: 1);
+}
+
+.emoji:hover {
+    animation: spin 1s ease-in-out infinite;
+}
+
+.emoji:active {
+    animation: spin 0.5s ease-in-out infinite;
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
