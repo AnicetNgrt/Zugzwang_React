@@ -1,8 +1,11 @@
 {
-  "name": "zwang",
+  "name": "zwangproject",
+  "author": "Anicet Nougaret",
   "version": "0.1.0",
+  "description": "nothing yet",
   "private": true,
   "dependencies": {
+    "@react-native-community/async-storage": "^1.10.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -15,6 +18,8 @@
     "@types/react-dom": "^16.9.7",
     "@types/socket.io-client": "^1.4.32",
     "alm": "^2.39.1",
+    "electron-simple-window-manager": "^1.1.1",
+    "electron-store": "^5.1.1",
     "mongoose": "^5.9.11",
     "react": "^16.13.1",
     "react-aspect-ratio": "^1.0.42",
@@ -32,7 +37,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -56,8 +64,15 @@
     "express": "^4.17.1",
     "node-sass": "^4.14.0",
     "socketio": "^1.0.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "electron-builder": "^22.6.0"
   },
   "homepage": "./",
-  "main": "src/Client/electron-starter.js"
+  "main": "public/electron.js",
+  "build": {
+    "appId": "com.zugzwangcompany.zwangproject.prealpha",
+    "mac": {
+      "category": "public.app-category.games"
+    }
+  }
 }

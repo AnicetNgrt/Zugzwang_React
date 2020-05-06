@@ -1,8 +1,28 @@
 import io from 'socket.io-client';
 import { Message } from 'Shared/Api/Message';
 import { User } from 'Shared/Api/User';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const socket = io("http://localhost:4443");
+
+export const getLocalData = async (key:string):Promise<string | undefined> => {
+  try {
+    const value = await AsyncStorage.getItem(key)
+    if(value !== null) {
+      return value;
+    }
+  } catch(e) {
+    // error reading value
+  }
+}
+
+export const storeData = async (key:string, value:string) => {
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch (e) {
+    // saving error
+  }
+}
 
 export function onMessages(onMessage:(m:Message)=>void) {
   socket.on("message", function (data: Message) {

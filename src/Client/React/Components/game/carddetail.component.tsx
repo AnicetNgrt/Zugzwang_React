@@ -3,7 +3,8 @@ import "./carddetail.component.style.scss";
 import { Card } from "../../../../Shared/Classes/GameObjects/Card";
 import React, { createRef } from "react";
 import BsComponent from "./bs.component";
-import Draggable from 'react-draggable'
+import Draggable from 'react-draggable';
+import { cardsLayoutsImgs, cardsImgs } from "../../../Assets/Assets";
 
 class CardDetailComponent extends React.Component {
     movingCard: React.RefObject<HTMLDivElement>;
@@ -27,7 +28,7 @@ class CardDetailComponent extends React.Component {
                         <h1>{"×"}</h1>
                     </div>
                     <div className="IllustrationContainer">
-                        <img className="CardIllustration" src={this.props.card.type.data.picturePath} />
+                        <img className="CardIllustration" src={cardsImgs[this.props.card.type.data.name.toLowerCase()]} />
                         <BsComponent strength={10} color="#000000"/>
                     </div>
                 
@@ -54,7 +55,7 @@ class CardDetailComponent extends React.Component {
                         }</span><span className="StatLetter">{"g"}</span></h1>
                     </div>
                 
-                    <img className="CardLayout" src={"/images/cardsLayouts/layout_hostel.png"}></img>
+                    <img className="CardLayout" src={cardsLayoutsImgs.default}></img>
                     <div>
                         <h1 className="CardName">{this.props.card.type.data.name}</h1>
                     </div>

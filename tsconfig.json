@@ -29,13 +29,14 @@
   "include": [
     "./src/",
     "./src/Client/*",
-    "./src/Shared/*", "src/react-app-env.d.ts", "src/index.tsx"
+    "./src/Shared/*", "src/react-app-env.d.ts", "src/index.tsx", "public/electron-starter.js"
   ],
   "exclude": [
     "./src/Server",
     "node_modules",
     "**/*.spec.ts",
     "build",
-    ".idea"
+    ".idea",
+    ".alm"
   ]
 }

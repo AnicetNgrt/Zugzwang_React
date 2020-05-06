@@ -82,6 +82,13 @@ $m: 0.7rem;
   src: url("/fonts/PermanentMarker/PermanentMarker-Regular.ttf");
 }
 
+@font-face {
+  font-family: 'Cinzel';
+  src: url("/fonts/Cinzel/Cinzel-Regular.ttf"),
+  url("/fonts/Cinzel/Cinzel-Bold.ttf"),
+  url("/fonts/Cinzel/Cinzel-Black.ttf");
+}
+
 * {
   margin:0px;
   user-select: none;

@@ -7,26 +7,10 @@ $gwh: calc(1 * #{$gh});
 $gww: calc(1 * #{$gw});
 $ghh: calc(0 * #{$gh});
 
-.AppDiv {
+/*.AppDiv {
   width:$gw;
   height:$gh;
   background-color: $black;
   box-sizing: border-box;
   overflow: hidden;
-}
-
-.GameBackground {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  @include md {
-    width: calc(385px * 2);
-  }
-  @include xl {
-      width: calc(385px * 3.2);
-  }
-  @include xxl {
-      width: calc(385px * 4);
-  }
-}
+}*/
