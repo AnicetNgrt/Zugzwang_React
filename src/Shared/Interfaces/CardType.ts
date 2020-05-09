@@ -1,4 +1,4 @@
-import { Action } from "../Types/Action";
+import { Action } from "../Classes/Other/Action";
 import { GameState } from "../Classes/Other/GameState";
 import { Player } from "../Classes/GameObjects/Player";
 

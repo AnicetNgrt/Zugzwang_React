@@ -7,10 +7,14 @@ export abstract class GameLobby {
     readonly clock: number = 0;
     readonly winner: string | null = null;
     readonly phases: Set<GamePhase> = new Set();
+    readonly players: Set<string> = new Set();
   
     constructor(
-      readonly players: [string]
+      readonly owner:string
     ) { 
       this.phases.add(GamePhase.PLAYER_GATHERING);
+      this.players.add(owner);
     }
+  
+    
   }

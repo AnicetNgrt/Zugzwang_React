@@ -1,37 +1,36 @@
 import { GameObject } from "./GameObject";
 import { IdProvider } from "../../Interfaces/IdProvider";
 import { CopyIdProvider } from "../IdProviders/CopyIdProvider";
-
-export enum PawnState {
-    FINE = "This pawn is alive",
-    EXILED = "This pawn is exiled",
-    DEAD = "This pawn is dead"
-}
+import { Vec2 } from "../../Types/Vec2";
 
 export class Pawn extends GameObject {
 
-    state:PawnState
+    isAlive: boolean;
+    isActive: boolean;
+    isExiled: boolean;
 
     constructor(
         idProvider:IdProvider,
-        state:PawnState,
-        readonly x:number,
-        readonly y:number
+        readonly pos:Vec2
         ) {
         super(idProvider);
-        this.state = state;
+        this.isAlive = true;
+        this.isExiled = false;
+        this.isActive = true;
     }
 
     distanceTo(pawn:Pawn) {
-        return Math.abs(pawn.x - this.x) + Math.abs(pawn.y - this.y);
+        return Math.abs(pawn.pos.x - this.pos.x) + Math.abs(pawn.pos.y - this.pos.y);
     }
 
-    copy():Pawn {
-        return new Pawn(
+    copy(): Pawn {
+        const pawn = new Pawn(
             CopyIdProvider.getYours(this),
-            this.state,
-            this.x,
-            this.y
+            {x:this.pos.x, y:this.pos.y}
         );
+        pawn.isActive = this.isActive;
+        pawn.isAlive = this.isAlive;
+        pawn.isExiled = this.isExiled;
+        return pawn;
     }
 }

@@ -20,11 +20,11 @@ export default class LoginMenuComponent extends React.Component {
       <Draggable
       bounds="parent"
       >
-        <h1 className="GameTitle">the <span className="Subtitle">cartet</span></h1>
+        <h1 className="GameTitle">Path<span className="Subtitle">erns</span></h1>
       </Draggable>
-      <MainMenuButtonComponent text="Online guest" emoji={"⨝"} position={{ x: '13%', y: '32%' }}></MainMenuButtonComponent>
-      <MainMenuButtonComponent text="Online premium" emoji={"▦"} position={{x:'13%',y:'35%'}}></MainMenuButtonComponent>
-      <MainMenuButtonComponent text="Offline play" emoji={"◮"} position={{ x: '13%', y: '38%' }}></MainMenuButtonComponent>
+      <MainMenuButtonComponent text="Online play" emoji={"⨝"} position={{ x: '13%', y: '32%' }}></MainMenuButtonComponent>
+      <MainMenuButtonComponent text="Offline play" emoji={"▦"} position={{x:'13%',y:'35%'}}></MainMenuButtonComponent>
+      <MainMenuButtonComponent text="Settings" emoji={"◮"} position={{ x: '13%', y: '38%' }}></MainMenuButtonComponent>
     </div>)
   }
 }

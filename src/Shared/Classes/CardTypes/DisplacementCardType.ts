@@ -1,6 +1,6 @@
 import { ShownCardType } from "./ShownCardType";
 import { Player } from "../GameObjects/Player";
-import { Action } from "../../Types/Action";
+import { Action } from "../Other/Action";
 import { GameState } from "../Other/GameState";
 import { CardTypeData } from "../../Interfaces/CardType";
 import { Pattern } from "../../Types/Pattern";

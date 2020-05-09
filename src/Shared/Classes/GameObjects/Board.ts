@@ -5,19 +5,19 @@ import { CopyIdProvider } from "../IdProviders/CopyIdProvider";
 
 export class Board extends GameObject {
     constructor(
-        readonly maxCrd:Vec2,
-        readonly slippery:Vec2[],
-        readonly obstructed:Vec2[],
-        readonly shiftMap:Vec2[][],
+        readonly maxCrd: Vec2,
+        readonly slippery: Set<Vec2>,
+        readonly obstructed: Set<Vec2>,
+        readonly shiftMap: Array<Array<Vec2>>,
         idProvider:IdProvider
     ) {
         super(idProvider);
     }
 
     copy():Board {
-        const slipperyCopy: Vec2[] = Object.assign([], this.slippery);
-        const obstructedCopy: Vec2[] = Object.assign([], this.obstructed);
-        const shiftMapCopy: Vec2[][] = [];
+        const slipperyCopy = new Set(this.slippery);
+        const obstructedCopy = new Set(this.obstructed);
+        const shiftMapCopy: Array<Array<Vec2>> = [];
         this.shiftMap.forEach(row => shiftMapCopy.push(Object.assign([], row)));
         return new Board(
             this.maxCrd,
@@ -28,18 +28,31 @@ export class Board extends GameObject {
         )
     }
 
+    isIn(pos: Vec2): boolean {
+        return (pos.x >= 0 && pos.y >= 0 && pos.x <= this.maxCrd.x && pos.y <= this.maxCrd.y);
+    }
+
+    getSlippery(pos: Vec2): Vec2 | null {
+        if (!this.slippery.has(pos)) return null;
+        return this.shiftMap[pos.y][pos.x];
+    }
+
+    isObstructed(pos: Vec2): boolean {
+        return this.obstructed.has(pos);
+    }
+
     static getFromSize(size:Vec2, idProvider:IdProvider):Board {
-        const shiftMap: Vec2[][] = [];
+        const shiftMap: Array<Array<Vec2>> = [];
         var mys: number[] = [];
         var mxs: number[] = [];
 
-        if (size.y % 2 == 0) {
+        if (size.y % 2 === 0) {
             mys.push(size.y / 2);
             mys.push((size.y / 2) - 1);
         } else {
             mys.push((size.y - 1) / 2);
         }
-        if (size.x % 2 == 0) {
+        if (size.x % 2 === 0) {
             mxs.push(size.x / 2);
             mxs.push((size.x / 2) - 1);
         } else {
@@ -60,9 +73,9 @@ export class Board extends GameObject {
             }
         }
 
-        for (var y = 0; y < size.y; y++) {
+        for (y = 0; y < size.y; y++) {
             shiftMap.push([]);
-            for (var x = 0; x < size.x; x++) {
+            for (x = 0; x < size.x; x++) {
                 var vec1:Vec2;
                 var vec2:Vec2;
 
@@ -86,6 +99,6 @@ export class Board extends GameObject {
             }
         }
 
-        return new Board({x:size.x-1, y:size.y-1}, [], [], shiftMap, idProvider);
+        return new Board({x:size.x-1, y:size.y-1}, new Set(),  new Set(), shiftMap, idProvider);
     }
 }

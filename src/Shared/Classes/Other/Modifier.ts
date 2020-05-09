@@ -1,11 +1,17 @@
+import { GameState } from "./GameState";
 import { GameObject } from "../GameObjects/GameObject";
-import { Modification } from "./Modification";
 
 export class Modifier {
-    constructor(
-        readonly combination: GameObject[],
-        readonly impacts: Modification[]
-    ) {
-        
-    }
+  constructor(
+    readonly inputs: {[key:string]:{ typeName: string, count: number, justification: string }},
+    readonly outputs: string[][],
+    readonly checkPrerequisites: (gameState: GameState, objects: { [key: string]: GameObject[] }) => boolean
+  ) { 
+
+  }
+
+  private checkHasItAll(objects: { [key: string]: GameObject[] }) {
+
+  }
+
 }
