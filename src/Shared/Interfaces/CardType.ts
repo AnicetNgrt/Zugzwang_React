@@ -1,5 +1,6 @@
 import { Action } from "../Classes/Other/Action";
-import { GameState } from "../Classes/Other/GameState";
+import { ModifierConclusion, ModifierObjects } from "../Classes/Other/Modifier";
+import { GameState } from "../Classes/GameObjects/GameState";
 import { Player } from "../Classes/GameObjects/Player";
 
 export interface CardTypeData {
@@ -12,7 +13,6 @@ export interface CardTypeData {
 }
 
 export interface CardType {
-    readonly data:CardTypeData;
-    
-    getPlayableFor(player:Player, gameState:GameState): Action[];
+    readonly data: CardTypeData;
+    play(gameState: GameState, actionIndex: number, player: Player, objects: ModifierObjects): ModifierConclusion;
 }

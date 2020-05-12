@@ -1,7 +1,6 @@
 import { IdProvider } from "../../Interfaces/IdProvider";
-import { CopyIdProvider } from "../IdProviders/CopyIdProvider";
 
-export class GameObject {
+export abstract class GameObject {
     readonly id:number;
 
     constructor(
@@ -10,7 +9,6 @@ export class GameObject {
         this.id = idProvider.provide();
     }
 
-    copy():GameObject {
-        return new GameObject(CopyIdProvider.getYours(this));
-    }
+    abstract copy(): GameObject;
+    abstract getStaticClassName(): string;
 }

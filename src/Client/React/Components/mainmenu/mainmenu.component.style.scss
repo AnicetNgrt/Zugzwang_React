@@ -1,0 +1,28 @@
+@import "../../../styles.scss";
+
+.MainMenuDiv {
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 5vw $black;
+}
+
+.GameTitle {
+    z-index: 100;
+}
+
+.GameBackground {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    /*@include md {
+      width: calc(385px * 2);
+    }
+    @include xl {
+        width: calc(385px * 3.2);
+    }
+    @include xxl {
+        width: calc(385px * 5);
+    }*/
+    width:100%;
+  }

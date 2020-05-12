@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useRef, useEffect } from "react";
 
 export default function handleClicked(initialIsClicked: any) {

@@ -40,9 +40,9 @@ export default class GameComponent extends React.Component {
 
     return (
       <div className="GameDiv">
-        <img className="GameBackground" src={backgroundsImgs.default}></img>
+        <img className="GameBackground" src={backgroundsImgs.default} alt=""></img>
         <GameBodyComponent board={board} onCardClicked={(card: Card) => {
-          if (selectedCards.indexOf(card) != -1) return;
+          if (selectedCards.indexOf(card) !== -1) return;
           this.setState({ selectedCard: selectedCards.push(card) });
         }}/>
         {selectedCards.length > 0 && 

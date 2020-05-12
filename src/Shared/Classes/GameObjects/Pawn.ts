@@ -2,9 +2,13 @@ import { GameObject } from "./GameObject";
 import { IdProvider } from "../../Interfaces/IdProvider";
 import { CopyIdProvider } from "../IdProviders/CopyIdProvider";
 import { Vec2 } from "../../Types/Vec2";
+import { ObjectsNames } from "./ObjectsNames";
+import { GameState } from "./GameState";
+import { Player } from "./Player";
+import { ModifierConclusion } from "../Other/Modifier";
+import { ModEffNames } from "../../Consts/Modifiers";
 
 export class Pawn extends GameObject {
-
     isAlive: boolean;
     isActive: boolean;
     isExiled: boolean;
@@ -32,5 +36,29 @@ export class Pawn extends GameObject {
         pawn.isAlive = this.isAlive;
         pawn.isExiled = this.isExiled;
         return pawn;
+    }
+
+    isPlayable(): boolean {
+        return this.isActive && this.isAlive && !this.isExiled;
+    }
+
+    getStaticClassName(): string {
+        return ObjectsNames.PAWN;
+    }
+
+    editSafe(gameState: GameState, owner: Player, fn: (gameState: GameState, owner: Player, pa: Pawn) => ModifierConclusion): ModifierConclusion {
+        const newGs: GameState = gameState.copy();
+        const newOw: Player = owner.copy();
+        const newPa: Pawn = this.copy();
+        
+        const ccl: ModifierConclusion = fn(newGs, newOw, newPa);
+        if (!ccl.success) return ccl;
+        
+        newGs.replacePlayerWith(newOw);
+        newOw.replacePawnWith(newPa);
+        ccl.effects.push({ name: ModEffNames.INTERNALREFCHANGE, old: gameState, new: gameState });
+        ccl.effects.push({ name:ModEffNames.INTERNALREFCHANGE, old: owner, new: newOw });
+        
+        return ccl;
     }
 }

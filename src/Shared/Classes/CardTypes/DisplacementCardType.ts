@@ -1,11 +1,10 @@
 import { ShownCardType } from "./ShownCardType";
-import { Player } from "../GameObjects/Player";
 import { Action } from "../Other/Action";
-import { GameState } from "../Other/GameState";
 import { CardTypeData } from "../../Interfaces/CardType";
 import { Pattern } from "../../Types/Pattern";
 import { Orientation, reOrient } from "../../Enums/Orientation";
 import { Displacement } from "../../Types/Displacement";
+import { getFromPattern } from "../../Consts/Modifiers";
 
 export interface DisplacementCardTypeData {
     readonly weight: number,
@@ -30,6 +29,12 @@ export class DisplacementCardType extends ShownCardType {
             maxGame:data.maxGame,
             actions: []
         });
+
+        const actions: Action[] = [];
+        for (var disp of data.displacements) {
+            actions.push(new Action(disp.cost, "moveActionTitle", "moveActionDesc", getFromPattern(disp.pattern)));
+        }
+
         this.data = {
             ...data,
             actions: []
@@ -43,9 +48,4 @@ export class DisplacementCardType extends ShownCardType {
             this.data.displacements[i].pattern = rotated;
         }
     }
-
-    getPlayableFor(player:Player, gameState:GameState): Action[] {
-        const ret: Action[] = [];
-        return ret.concat(super.getPlayableFor(player, gameState));
-    }   
 }

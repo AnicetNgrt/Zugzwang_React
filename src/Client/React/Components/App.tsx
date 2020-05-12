@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.scss';
-import GameComponent from './game/game.component';
 import { getLocalData } from 'Client/client';
 import { IpcRenderer } from 'electron';
 import LoginMenuComponent from './loginMenu/loginmenu.component';
+import MainMenuComponent from './mainmenu/mainmenu.component';
+import SettingsMenuComponent from './settingsmenu/settingsmenu.component';
 
 var ipcRenderer: null | IpcRenderer = null;
 
@@ -14,10 +15,13 @@ if (typeof window['require'] !== "undefined") {
 }
 
 export interface AppProps {
+  locs:{[key:string]:Locs}
 }
 
 export type AppState = {
-  loginData: {loggedIn:boolean, sessionId:string}
+  loginData: { loggedIn: boolean, sessionId: string },
+  scene: string,
+  lang: string
 }
 
 export default class App extends React.Component {
@@ -27,14 +31,17 @@ export default class App extends React.Component {
   constructor(readonly props: AppProps) {
     super(props);
     this.state = {
-      loginData: { loggedIn: false, sessionId: "" }
+      loginData: { loggedIn: false, sessionId: "" },
+      scene: "settings",
+      lang: "en"
     };
   }
 
   componentDidMount() {
+    // initialising local private data
     getLocalData("loginData")
       .then(data => {
-        if (data != null) this.state.loginData = JSON.parse(data);
+        if (data != null) this.setState({ loginData: JSON.parse(data) });
         this.forceUpdate();
       });
   }
@@ -51,16 +58,24 @@ export default class App extends React.Component {
   }
 
   render() {
-    const loginData = this.state.loginData;
     return (
       <div className="AppDiv">
-        {(loginData.loggedIn &&
-          <GameComponent></GameComponent>
+        {(this.state.scene === "main" &&
+          <MainMenuComponent loc={this.props.locs[this.state.lang]}></MainMenuComponent>
         )}
-        {(!loginData.loggedIn &&
-          <LoginMenuComponent></LoginMenuComponent>  
+        {(this.state.scene === "login" &&
+          <LoginMenuComponent loc={this.props.locs[this.state.lang]}></LoginMenuComponent>  
+        )}
+        {(this.state.scene === "settings" &&
+          <SettingsMenuComponent locs={this.props.locs} loc={this.props.locs[this.state.lang]}></SettingsMenuComponent>
         )}
       </div>
     )
   }
 }
+
+
+
+/*{(loginData.loggedIn &&
+  <GameComponent loc={this.props.loc}></GameComponent>
+)}*/

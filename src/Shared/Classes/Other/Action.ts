@@ -1,16 +1,53 @@
-import { GameState } from "./GameState";
+import { GameState } from "../GameObjects/GameState";
 import { Player } from "../GameObjects/Player";
-import { Modifier } from "./Modifier";
+import { Modifier, ModifierConclusion, ModifierObjects, getFailedConclusion } from "./Modifier";
+import { ModEffNames } from "../../Consts/Modifiers";
 
 export class Action {
     constructor(
         readonly cost: number,
         readonly name: string,
         readonly description: string,
-        readonly modifiers: Modifier[]
+        readonly modifier: Modifier
     ) { }
 
-    canBePlayed(gameState: GameState, player: Player): boolean {
-        return player.ap >= this.cost;
+    play(gameState: GameState, player: Player, objects: ModifierObjects): ModifierConclusion {
+        if (player.ap < this.cost) return getFailedConclusion();
+        
+        const ccl: ModifierConclusion = this.modifier.execute(gameState, objects);
+        if (!ccl.success) return getFailedConclusion();
+        
+        var newGs: GameState;
+        var newPlayer: Player;
+
+        for (var effect of ccl.effects) {
+            if (effect.new.id === player.id) {
+                (effect.new as Player).ap -= this.cost;
+                if ((effect.new as Player).ap < 0) return getFailedConclusion();
+                ccl.effects.push({ name: ModEffNames.APCHANGE, old: effect.old, new: effect.new });
+                return ccl;
+            }
+        }
+
+        newPlayer = player.copy();
+        newPlayer.ap -= this.cost;
+        if (newPlayer.ap < 0) return getFailedConclusion();
+
+        for (effect of ccl.effects) {
+            if (effect.new.id === gameState.id) {
+                (effect.new as GameState).replacePlayerWith(newPlayer);
+                ccl.effects.push({ name: ModEffNames.APCHANGE, old: player, new: newPlayer });
+                ccl.effects.push({ name: ModEffNames.INTERNALREFCHANGE, old: effect.old, new: effect.new });
+                return ccl;
+            }
+        }
+
+        newGs = gameState.copy();
+        newGs.replacePlayerWith(newPlayer);
+        ccl.effects.push({ name: ModEffNames.APCHANGE, old: player, new: newPlayer });
+        ccl.effects.push({ name: ModEffNames.INTERNALREFCHANGE, old: gameState, new: newGs });
+        return ccl;
     }
+
+
 }

@@ -1,7 +1,12 @@
 import { GameObject } from "./GameObject";
-import { Vec2 } from "../../Types/Vec2";
+import { Vec2, add } from "../../Types/Vec2";
 import { IdProvider } from "../../Interfaces/IdProvider";
 import { CopyIdProvider } from "../IdProviders/CopyIdProvider";
+import { ObjectsNames } from "./ObjectsNames";
+import { Pawn } from "./Pawn";
+import { Pattern } from "../../Types/Pattern";
+import { getVec } from "../../Enums/Orientation";
+import { Player } from "./Player";
 
 export class Board extends GameObject {
     constructor(
@@ -17,13 +22,11 @@ export class Board extends GameObject {
     copy():Board {
         const slipperyCopy = new Set(this.slippery);
         const obstructedCopy = new Set(this.obstructed);
-        const shiftMapCopy: Array<Array<Vec2>> = [];
-        this.shiftMap.forEach(row => shiftMapCopy.push(Object.assign([], row)));
         return new Board(
             this.maxCrd,
             slipperyCopy,
             obstructedCopy,
-            shiftMapCopy,
+            this.shiftMap,
             CopyIdProvider.getYours(this)
         )
     }
@@ -32,8 +35,8 @@ export class Board extends GameObject {
         return (pos.x >= 0 && pos.y >= 0 && pos.x <= this.maxCrd.x && pos.y <= this.maxCrd.y);
     }
 
-    getSlippery(pos: Vec2): Vec2 | null {
-        if (!this.slippery.has(pos)) return null;
+    getSlippery(pos: Vec2): Vec2 {
+        if (!this.slippery.has(pos)) return {x:0, y:0};
         return this.shiftMap[pos.y][pos.x];
     }
 
@@ -100,5 +103,28 @@ export class Board extends GameObject {
         }
 
         return new Board({x:size.x-1, y:size.y-1}, new Set(),  new Set(), shiftMap, idProvider);
+    }
+
+    movePawnFromPattern(pawn: Pawn, owner: Player, pattern: Pattern): boolean {
+        const oldPos: Vec2 = pawn.pos; 
+        var newPos: Vec2 = { x: oldPos.x, y: oldPos.y };
+        for (var or of pattern) {
+            const vec: Vec2 = getVec(or);
+            newPos = add(newPos, vec);
+        }
+        return this.movePawn(pawn, owner, newPos);
+    }
+
+    movePawn(pawn: Pawn, owner: Player, newPos: Vec2): boolean {
+        newPos = { x: newPos.x % (this.maxCrd.x + 1), y: newPos.y % (this.maxCrd.y + 1) };
+        if (owner.prohibitedTiles.has(newPos)) return false;
+        if (this.isObstructed(newPos)) return false;
+        const shiftedPos: Vec2 = add(newPos, this.getSlippery(newPos));
+        if (shiftedPos.x === newPos.x && shiftedPos.y === newPos.y) return true;
+        return this.movePawn(pawn, owner, shiftedPos);
+    }
+
+    getStaticClassName(): string {
+        return ObjectsNames.BOARD;
     }
 }

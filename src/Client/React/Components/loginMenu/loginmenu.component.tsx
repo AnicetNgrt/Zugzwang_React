@@ -1,12 +1,11 @@
 import "./loginmenu.component.style.scss";
 import React from "react";
-import { backgroundsImgs, carpetsImgs } from "Client/Assets/Assets";
-import BsComponent from "../game/bs.component";
+import { carpetsImgs } from "Client/Assets/Assets";
 import Draggable from 'react-draggable';
-import MainMenuButtonComponent from "./mainmenubutton.component";
+import LoginMenuButtonComponent from "./loginmenubutton.component";
 
 export default class LoginMenuComponent extends React.Component {
-  constructor(readonly props: { [key: string]: any }) {
+  constructor(readonly props: { [key: string]: any, loc:Locs }) {
     super(props);
   }
 
@@ -16,15 +15,15 @@ export default class LoginMenuComponent extends React.Component {
         //backgroundImage: `url(${backgroundsImgs.waveTexture})`,
         backgroundRepeat: 'repeat'
       }}>
-      <img className="LoginBackgroundImg" src={carpetsImgs.wavePanel}></img>
+      <img className="LoginBackgroundImg" src={carpetsImgs.wavePanel} alt=""></img>
       <Draggable
       bounds="parent"
       >
         <h1 className="GameTitle">Path<span className="Subtitle">erns</span></h1>
       </Draggable>
-      <MainMenuButtonComponent text="Online play" emoji={"⨝"} position={{ x: '13%', y: '32%' }}></MainMenuButtonComponent>
-      <MainMenuButtonComponent text="Offline play" emoji={"▦"} position={{x:'13%',y:'35%'}}></MainMenuButtonComponent>
-      <MainMenuButtonComponent text="Settings" emoji={"◮"} position={{ x: '13%', y: '38%' }}></MainMenuButtonComponent>
+      <LoginMenuButtonComponent text={this.props.loc.a} emoji={"⨝"} position={{ x: '13%', y: '32%' }}></LoginMenuButtonComponent>
+      <LoginMenuButtonComponent text={this.props.loc.b} emoji={"▦"} position={{x:'13%',y:'35%'}}></LoginMenuButtonComponent>
+      <LoginMenuButtonComponent text={this.props.loc.c} emoji={"◮"} position={{ x: '13%', y: '38%' }}></LoginMenuButtonComponent>
     </div>)
   }
 }

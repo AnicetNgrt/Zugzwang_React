@@ -1,17 +1,18 @@
 import React from "react";
-import "./mainmenubutton.component.style.scss";
+import "./settingsmenubutton.component.style.scss";
 import Draggable from "react-draggable";
 
-export default function MainMenuButtonComponent(props: {
+export default function SettingsMenuButtonComponent(props: {
   emoji:string,
   text: string,
-  position: { x: string, y: string }
+  position: { x: string, y: string },
+  onClick: () => void
 }) {
   return (
     <Draggable
       bounds="parent"
      handle=".emoji">
-      <div className="ButtonDiv" style={{
+      <div className="SettingsMenuButtonDiv" style={{
         top: props.position.y,
         left: props.position.x
       }}>

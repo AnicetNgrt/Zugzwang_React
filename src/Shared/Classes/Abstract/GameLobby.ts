@@ -1,4 +1,4 @@
-import { GameState } from "../Other/GameState";
+import { GameState } from "../GameObjects/GameState";
 import { GamePhase } from "../../Enums/GamePhase";
 
 export abstract class GameLobby {

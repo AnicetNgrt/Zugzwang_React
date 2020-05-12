@@ -1,10 +1,12 @@
 @import "../../../styles.scss";
 
-.ButtonDiv {
+.LoginButtonDiv {
     position: relative;
     font-family: 'Archive';
     font-weight: 200;
     width:fit-content;
+    max-width: 80%;
+    transform: translate(-50%, -50%);
 
     .emoji {
         cursor: grab;
@@ -26,29 +28,31 @@
         background-color: rgba($color: rgb(255, 229, 142), $alpha: 1);
         box-shadow: 0 0 20px #0a0027;
         width:fit-content;
+        text-align: center;
         height: fit-content;
         padding: 5px;
+        max-width: 73%;
     }
-}
 
-.text:hover {
-    color: rgba($color: black, $alpha: 1);
-    transition: background-color 0.2s;
-    background-color: rgba($color: rgb(255, 255, 255), $alpha: 1);
-}
-
-.text:active {
-    color: rgba($color: black, $alpha: 1);
-    transition: background-color 0.2s;
-    background-color: rgba($color: rgb(121, 217, 255), $alpha: 1);
-}
-
-.emoji:hover {
-    animation: spin 1s ease-in-out infinite;
-}
-
-.emoji:active {
-    animation: spin 0.5s ease-in-out infinite;
+    .text:hover {
+        color: rgba($color: black, $alpha: 1);
+        transition: background-color 0.2s;
+        background-color: rgba($color: rgb(255, 255, 255), $alpha: 1);
+    }
+    
+    .text:active {
+        color: rgba($color: black, $alpha: 1);
+        transition: background-color 0.2s;
+        background-color: rgba($color: rgb(121, 217, 255), $alpha: 1);
+    }
+    
+    .emoji:hover {
+        animation: spin 1s ease-in-out infinite;
+    }
+    
+    .emoji:active {
+        animation: spin 0.5s ease-in-out infinite;
+    }
 }
 
 @keyframes spin {

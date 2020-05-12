@@ -1,0 +1,69 @@
+@import "../../../styles.scss";
+
+.SettingsMenuButtonDiv {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width:fit-content;
+    height: fit-content;
+    text-align: center;
+    
+
+    .emoji {
+        cursor: grab;
+        display: inline-block;
+        width:fit-content;
+        height: fit-content;
+        vertical-align: bottom;
+        margin-right: 1.5vw;
+        font-size: 3vw;
+        color: rgba($color: white, $alpha: 0.5);
+        text-shadow: 0 0 0.5vw rgba($color: black, $alpha: 0.5);
+    }
+
+    .text {
+        font-family: 'Cinzel';
+        font-weight: 900;
+        font-size: 2.5vw;
+        cursor: pointer;
+        display: inline-block;
+        border-radius: 5px;
+        color: rgba($color: #0a0027, $alpha: 1);
+        background-color: rgba($color: white, $alpha: 0.7);
+        box-shadow: 0 0 0.5vw rgba($color: white, $alpha: 1);
+        width:max-content;
+        text-align: center;
+        height: fit-content;
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+    }
+
+    .text:hover {
+        color: rgba($color: black, $alpha: 1);
+        transition: background-color 0.2s;
+        background-color: rgba($color: rgb(255, 255, 255), $alpha: 1);
+    }
+    
+    .text:active {
+        color: rgba($color: black, $alpha: 1);
+        transition: background-color 0.2s;
+        background-color: rgba($color: yellow, $alpha: 1);
+        box-shadow: 0 0 0.5vw rgba($color: yellow, $alpha: 1);
+    }
+    
+    .emoji:hover {
+        animation: spin 1s ease-in-out infinite;
+        color: rgba($color: white, $alpha: 1);
+    }
+    
+    .emoji:active {
+        animation: spin 0.5s ease-in-out infinite;
+        color: rgba($color: yellow, $alpha: 1);
+    }
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}

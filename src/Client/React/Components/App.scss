@@ -7,10 +7,10 @@ $gwh: calc(1 * #{$gh});
 $gww: calc(1 * #{$gw});
 $ghh: calc(0 * #{$gh});
 
-/*.AppDiv {
-  width:$gw;
-  height:$gh;
+.AppDiv {
+  width:100vw;
+  height:100vh;
   background-color: $black;
   box-sizing: border-box;
   overflow: hidden;
-}*/
+}
