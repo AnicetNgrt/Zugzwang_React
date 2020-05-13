@@ -5,7 +5,8 @@ import { backgroundsImgs } from "Client/Assets/Assets";
 import MainMenuButtonComponent from "./mainmenubutton.component";
 
 export default class MainMenuComponent extends React.Component {
-  constructor(readonly props: { [key: string]: any, loc:Locs }) {
+
+  constructor(readonly props: { [key: string]: any, loc:Locs, onSceneRequest:(scene:string)=>void }) {
     super(props);
   }
 
@@ -15,9 +16,24 @@ export default class MainMenuComponent extends React.Component {
         backgroundColor:'black'
       }}>
       <img className="GameBackground" src={backgroundsImgs.default} alt=""></img>
-      <MainMenuButtonComponent text={this.props.loc.d} emoji={"⨝"} position={{ x: '29%', y: '28%' }}></MainMenuButtonComponent>
-      <MainMenuButtonComponent text={this.props.loc.e} emoji={"▦"} position={{x:'29%',y:'38%'}}></MainMenuButtonComponent>
-      <MainMenuButtonComponent text={this.props.loc.c} emoji={"◮"} position={{ x: '29%', y: '48%' }}></MainMenuButtonComponent>
+      <MainMenuButtonComponent
+        text={this.props.loc.d}
+        emoji={"⨝"}
+        position={{ x: '29%', y: '28%' }}
+        onClick={()=>{ this.props.onSceneRequest("lobby");}}
+      ></MainMenuButtonComponent>
+      <MainMenuButtonComponent
+        text={this.props.loc.e}
+        emoji={"▦"}
+        position={{ x: '29%', y: '38%' }}
+        onClick={()=>{}}
+      ></MainMenuButtonComponent>
+      <MainMenuButtonComponent
+        text={this.props.loc.c}
+        emoji={"◮"}
+        position={{ x: '29%', y: '48%' }}
+        onClick={() => { this.props.onSceneRequest("settings");}}
+      ></MainMenuButtonComponent>
     </div>)
   }
 }

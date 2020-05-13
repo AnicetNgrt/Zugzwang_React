@@ -27,6 +27,8 @@ function createWindow() {
         }
     });
 
+    mainWindow.setMenuBarVisibility(false);
+
     // and load the index.html of the app.
     mainWindow.loadURL("http://localhost:3000/");
 
@@ -49,11 +51,11 @@ function createWindow() {
     });
 
     electron.ipcMain.on("resize768", args => {
-        mainWindow.setSize(1366, 768, true);
+        mainWindow.setContentSize(1366, 768);
     });
 
     electron.ipcMain.on("resize720", args => {
-        mainWindow.setSize(1280, 720, true);
+        mainWindow.setContentSize(1280, 720);
     });
 
     electron.ipcMain.on("fullscreenOn", args => {

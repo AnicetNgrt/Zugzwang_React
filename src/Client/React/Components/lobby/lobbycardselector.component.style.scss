@@ -1,0 +1,55 @@
+.LobbyCardSelectorDiv {
+    position: absolute;
+    top:23vh;
+    left:44vw;
+    width: 36.5vw;
+    height: 42.5vw;
+    border-radius: 0.5vw;
+    background-color: rgba(48, 48, 48, 0);
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+
+    .SelectorTitle {
+        font-family: 'Cinzel';
+        font-weight: 900;
+        color: white;
+        text-align: center;
+        font-size: 2vw;
+    }
+
+    .collumn {
+        position: relative;
+        width:100%;
+        height:40%;
+        background-color: rgba(0, 0, 0, 0.5);
+        margin-bottom: 0.5vw;
+        border-radius: 0.25vw;
+        box-shadow: inset 0 0 0.5vw black;
+        overflow-y: auto;
+    }
+
+    .collumnTitle {
+        position: static;
+        font-family: 'Cinzel';
+        top: 0.1vw;
+        left: 0.1vw;
+        font-weight: 900;
+        color: #eec39a;
+        text-align: center;
+        border-radius: 0.25vw;
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        font-size: 2vw;
+        pointer-events: none;
+    }
+    
+    .card {
+        width: 5.4vw;
+        height: 5.4vw;
+        background-color: #eec39a;
+        margin-left: 0.3vw;
+        margin-top: 0.3vw;
+        display: inline-block;
+        border-radius: 0.25vw;
+    }
+}

@@ -7,13 +7,15 @@ import texture_loop from "./backgrounds/looptexture.png";
 import waveTexture from "./backgrounds/wavetexture.png";
 import wavePanel from "./panels/panel_wave.png";
 import settingsBg from "./backgrounds/settings.png";
+import lobby from "./backgrounds/lobby.png";
 
 export const backgroundsImgs: { [key:string]:string} = {
   "default": default_background,
   "smallwall": background_smallwall,
   "loopTexture": texture_loop,
   "settings": settingsBg,
-  "waveTexture": waveTexture
+  "waveTexture": waveTexture,
+  "lobby": lobby
 }
 
 export const cardsImgs: { [key:string]:string} = {

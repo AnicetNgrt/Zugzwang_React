@@ -1,10 +1,18 @@
 {
+  "0": "English",
   "a": "Online play",
   "b": "Offline play",
   "c": "Settings",
   "d": "New game",
   "e": "Join game",
-  "f": "back to main menu",
-  "g": "language",
-  "h": "username"
+  "f": "Back",
+  "g": "Language",
+  "h": "Username",
+  "i": "Click to select",
+  "j": "Confirm",
+  "k": "Fullscreen",
+  "l": "Resolution",
+  "m": "Players",
+  "n": "Leave",
+  "o": "Select your cards"
 }

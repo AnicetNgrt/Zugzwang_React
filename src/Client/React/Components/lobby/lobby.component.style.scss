@@ -1,0 +1,71 @@
+@import "../../../styles.scss";
+
+.LobbyDiv {
+    animation: fadeIn 0.5s ease-in;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 5vw $black;
+
+    .Players {
+        position: absolute;
+        //background-color: blue;
+        top:1vh;
+        left: 44vw;
+        width: fit-content;
+        height: fit-content;
+    }
+
+    .PlayersTitle {
+        font-family: 'Cinzel';
+        color: rgba($color: #3f3f74, $alpha: 1);
+        background-color: #222034;
+        border-radius: 0.5vw;
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        font-weight: 900;
+        font-size: 1.7vw;
+        width: fit-content;
+        margin-bottom: 0.5vw;
+    }
+
+    .PlayerSlot {
+        display: inline-block;
+        margin-right: 0.5vw;
+        width:fit-content;
+        height: fit-content;
+        text-align: center;
+        border-radius: 0.5vw;
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        box-shadow: 0 0 0.3vw black;
+    }
+
+    .PlayerSlot:hover {
+        box-shadow: 0 0 0.5vw rgba($color: #eec39a, $alpha: 1);
+    }
+
+    .Player {
+        font-family: 'Cinzel';
+        color: rgba($color: #eec39a, $alpha: 1);
+        font-weight: 900;
+        font-size: 2.5vw;
+    }
+}
+
+.LobbyBackground {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+    /*@include md {
+      width: calc(385px * 2);
+    }
+    @include xl {
+        width: calc(385px * 3.2);
+    }
+    @include xxl {
+        width: calc(385px * 5);
+    }*/
+    width:100%;
+}

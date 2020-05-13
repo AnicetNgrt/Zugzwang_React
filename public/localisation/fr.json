@@ -1,10 +1,18 @@
 {
+  "0": "Français",
   "a": "Jeu en ligne & LAN",
   "b": "Jeu local",
   "c": "Paramètres",
-  "d": "Créer partie",
-  "e": "Rejoindre partie",
-  "f": "retour au menu principal",
-  "g": "langue",
-  "h": "nom en jeu"
+  "d": "Créer une partie",
+  "e": "Rejoindre une partie",
+  "f": "Retour",
+  "g": "Langue",
+  "h": "Nom en jeu",
+  "i": "Cliquez pour sélectionner",
+  "j": "Valider",
+  "k": "Plein écran",
+  "l": "Résolution",
+  "m": "Joueurs",
+  "n": "Quitter",
+  "o": "Choisissez vos cartes"
 }

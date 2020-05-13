@@ -1,8 +1,8 @@
 import React from "react";
-import "./settingsmenulist.component.style.scss";
+import "./lobbylist.component.style.scss";
 import Draggable from "react-draggable";
 
-export default function SettingsMenuListComponent(props: {
+export default function LobbyListComponent(props: {
   emoji:string,
   text: string,
   content: {id:string, title:string, desc:string}[]
@@ -15,7 +15,7 @@ export default function SettingsMenuListComponent(props: {
     <Draggable
       bounds="parent"
      handle=".emoji">
-      <div className="SettingsMenuListDiv" style={{
+      <div className="LobbyListDiv" style={{
         top: props.position.y,
         left: props.position.x
       }}>

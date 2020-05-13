@@ -19,7 +19,7 @@ export default function SettingsMenuButtonComponent(props: {
         <h1 className={"emoji"}>
           {props.emoji}
         </h1>
-        <h1 className={"text"}>
+        <h1 className={"text"} onClick={()=>props.onClick()}>
           {" "+props.text}
         </h1>
       </div>
