@@ -9,10 +9,20 @@
   "g": "Language",
   "h": "Username",
   "i": "Click to select",
-  "j": "Confirm",
+  "j": "Apply",
   "k": "Fullscreen",
   "l": "Resolution",
   "m": "Players",
   "n": "Leave",
-  "o": "Select your cards"
+  "o": "Select your cards",
+  "p": "Ready ?",
+  "q": "Go!",
+  "r": "Become 1st to play",
+  "s": "1st to play",
+  "t": "Not ready",
+  "u": "Guest",
+  "v": "Start game",
+  "w": "Pawns to place",
+  "x": "Revealed",
+  "y": "Hidden"
 }

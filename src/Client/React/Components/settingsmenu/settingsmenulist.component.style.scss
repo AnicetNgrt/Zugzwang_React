@@ -25,6 +25,7 @@
         box-shadow: 0 0 0.5vw rgba($color: white, $alpha: 1);
         width:fit-content;
         height: fit-content;
+        max-height: 46vh;
         .listTitle {
             font-family: 'Cinzel';
             font-weight: 900;
@@ -37,9 +38,9 @@
 
         .listBody {
             width:fit-content;
-            height: fit-content;
-            max-height: 45vh;
+            max-height: 17vh;
             overflow-y: auto;
+            max-height: 38vh;
             background-color: rgba($color: black, $alpha: 0.7);
             box-shadow: inset 0 0 0.5vw rgba($color: black, $alpha: 1);
             margin: 0.5vw;
@@ -53,7 +54,7 @@
                 padding-right: 0.5vw;
                 border-radius: 0.2vw ;
                 margin-bottom: 0.5vw;
-                height: max-content;
+                height: fit-content;
                 cursor: pointer;
 
                 .listElementTitle {

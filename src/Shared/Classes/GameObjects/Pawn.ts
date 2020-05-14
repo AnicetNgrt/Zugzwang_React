@@ -12,15 +12,19 @@ export class Pawn extends GameObject {
     isAlive: boolean;
     isActive: boolean;
     isExiled: boolean;
+    isPlacable: boolean;
+    pos: Vec2;
 
     constructor(
         idProvider:IdProvider,
-        readonly pos:Vec2
+        pos:Vec2
         ) {
         super(idProvider);
+        this.pos = pos;
         this.isAlive = true;
         this.isExiled = false;
         this.isActive = true;
+        this.isPlacable = false;
     }
 
     distanceTo(pawn:Pawn) {
@@ -35,6 +39,7 @@ export class Pawn extends GameObject {
         pawn.isActive = this.isActive;
         pawn.isAlive = this.isAlive;
         pawn.isExiled = this.isExiled;
+        pawn.isPlacable = this.isPlacable;
         return pawn;
     }
 

@@ -9,10 +9,20 @@
   "g": "Langue",
   "h": "Nom en jeu",
   "i": "Cliquez pour sélectionner",
-  "j": "Valider",
+  "j": "Appliquer",
   "k": "Plein écran",
   "l": "Résolution",
   "m": "Joueurs",
   "n": "Quitter",
-  "o": "Choisissez vos cartes"
+  "o": "Choisissez vos cartes",
+  "p": "C'est bon ?",
+  "q": "Allons-y !",
+  "r": "Je veux jouer en 1er",
+  "s": "1er à jouer",
+  "t": "Se prépare",
+  "u": "Invité",
+  "v": "Jouer",
+  "w": "Pions à placer",
+  "x": "Visible",
+  "y": "Caché"
 }

@@ -116,11 +116,19 @@ export class Board extends GameObject {
     }
 
     movePawn(pawn: Pawn, owner: Player, newPos: Vec2): boolean {
+        console.log("pos: " + JSON.stringify(newPos));
         newPos = { x: newPos.x % (this.maxCrd.x + 1), y: newPos.y % (this.maxCrd.y + 1) };
+        console.log("adjustedPos: " + JSON.stringify(newPos));
         if (owner.prohibitedTiles.has(newPos)) return false;
+
         if (this.isObstructed(newPos)) return false;
+
         const shiftedPos: Vec2 = add(newPos, this.getSlippery(newPos));
-        if (shiftedPos.x === newPos.x && shiftedPos.y === newPos.y) return true;
+        console.log("shiftedPos: " + JSON.stringify(newPos));
+        if (shiftedPos.x === newPos.x && shiftedPos.y === newPos.y) {
+            pawn.pos = { x: newPos.x, y: newPos.y };
+            return true;
+        }
         return this.movePawn(pawn, owner, shiftedPos);
     }
 

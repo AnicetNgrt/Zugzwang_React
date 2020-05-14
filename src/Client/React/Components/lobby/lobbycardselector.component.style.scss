@@ -1,55 +1,160 @@
+@import "../game/card.component.style.scss";
+
 .LobbyCardSelectorDiv {
     position: absolute;
     top:23vh;
     left:44vw;
-    width: 36.5vw;
     height: 42.5vw;
     border-radius: 0.5vw;
     background-color: rgba(48, 48, 48, 0);
     padding-left: 0.5vw;
     padding-right: 0.5vw;
 
+    .SelectorHead {
+        cursor: grab;
+        width: 100%;
+        border-top-left-radius: 0.5vw;
+        border-top-right-radius: 0.5vw;
+        padding: 0.5vw;
+        height: 10.5%;
+        margin: none;
+        box-shadow: 0 0 0.5vw black;
+    }
+
+    .Left {
+        display:inline-block;
+        width: 60%;
+    }
+
+    .SelectorFoot {
+        height: 5%;
+        border-bottom-left-radius: 0.5vw;
+        border-bottom-right-radius: 0.5vw;
+    }
+
     .SelectorTitle {
+        float:left;
+        font-family: 'Cinzel';
+        font-weight: 900;
+        color: white;
+        width: 100%;
+        font-size: 1.6vw;
+    }
+
+    .SelectorInstructions {
+        float:left;
+        font-family: 'Cinzel';
+        font-weight: 900;
+        color: white;
+        font-size: 0.8vw;
+    }
+
+    .weight {
+        float:right;
         font-family: 'Cinzel';
         font-weight: 900;
         color: white;
         text-align: center;
-        font-size: 2vw;
+        font-size: 2.7vw;
     }
 
-    .collumn {
+    .ClickedCard {
+        position:absolute;
+        //background-color: rgba(255, 255, 255, 0.068);
+        top:52%;
+        left:53.5%;
+        transform: translate(-50%, -50%);
+        width: 10vw;
+        height: 10vw;
+        border: solid 0.4vw rgb(10, 0, 32);
+        border-radius: 0.25vw;
+        z-index: 50;
+
+        .CardButton {
+            font-family: 'Roboto';
+            font-weight: 500;
+            width: 100%;
+            text-align: center;
+            font-size: 3vw;
+        }
+        .CardButton:hover {
+            color:black;
+        }
+
+        .SelectButton {
+            background-color: rgba(115, 108, 138, 0.8);
+            border-top-left-radius: 0.25vw;
+            border-top-right-radius: 0.25vw;
+            height: 39%;
+            &.NotSelectable {
+                background-color: rgba(73, 52, 52, 0);
+                color: rgba(97, 60, 60, 0);
+                height: 0;
+                padding: 0;
+            }
+
+            .CardWeight {
+                font-size: 2vw;
+                font-family: 'Cinzel';
+                font-weight: 900;
+                vertical-align: middle;
+            }
+        }
+        .SelectButton:hover {
+            background-color: rgb(255, 255, 255);
+        }
+
+        .SeeButton {
+            height: 39%;
+            background-color: rgba(66, 45, 63, 0.8);
+            &.NotSelectable {
+                height: 78%;
+                font-size: 5vw;
+                border-top-left-radius: 0.25vw;
+                border-top-right-radius: 0.25vw;
+            }
+        }
+        .SeeButton:hover {
+            background-color: rgb(184, 168, 255);
+        }
+
+        .DeSelectButton {
+            height: 22%;
+            font-size: 1.7vw;
+            background-color: rgba(168, 98, 98, 0.8);
+            border-bottom-left-radius: 0.25vw;
+            border-bottom-right-radius: 0.25vw;
+        }
+        .DeSelectButton:hover {
+            background-color: rgb(255, 166, 166);
+        }
+    }
+
+    .SelectorBody {
         position: relative;
         width:100%;
-        height:40%;
+        height:90%;
+        display: block;
         background-color: rgba(0, 0, 0, 0.5);
-        margin-bottom: 0.5vw;
-        border-radius: 0.25vw;
+        margin-right: 0.5vw;
+        padding: 0.5vw;
         box-shadow: inset 0 0 0.5vw black;
         overflow-y: auto;
-    }
-
-    .collumnTitle {
-        position: static;
-        font-family: 'Cinzel';
-        top: 0.1vw;
-        left: 0.1vw;
-        font-weight: 900;
-        color: #eec39a;
-        text-align: center;
-        border-radius: 0.25vw;
-        padding-left: 0.5vw;
-        padding-right: 0.5vw;
-        font-size: 2vw;
-        pointer-events: none;
+        border-bottom-left-radius: 0.5vw;
+        border-bottom-right-radius: 0.5vw;
     }
     
-    .card {
-        width: 5.4vw;
-        height: 5.4vw;
-        background-color: #eec39a;
-        margin-left: 0.3vw;
-        margin-top: 0.3vw;
+    .CardContainer {
+        margin-right: 0.25vw;
+        margin-bottom: 0.25vw;
+        position:relative;
         display: inline-block;
-        border-radius: 0.25vw;
+        width: 10vw;
+        height: 10vw;
     }
+
+    .CardDiv {
+        display: inline-block;
+    }
+
 }

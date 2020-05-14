@@ -15,8 +15,8 @@ function main(args?: string[]) {
     maxAp: 4
   }
 
-  var anicet: Player = new Player((cards: Set<Card>)=>true, "Anicet", 1, rules, idProvider, 4);
-  var thibo: Player = new Player((cards: Set<Card>)=>true, "Thibo", 2, rules, idProvider, 4);
+  var anicet: Player = new Player((cards: Set<Card>)=>true, "Anicet", "blue", 1, rules, idProvider, 4);
+  var thibo: Player = new Player((cards: Set<Card>)=>true, "Thibo", "red", 2, rules, idProvider, 4);
   var players: Player[] = [anicet, thibo];
 
   var board: Board = Board.getFromSize(rules.boardSize, idProvider);

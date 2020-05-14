@@ -13,7 +13,8 @@ export interface DisplacementCardTypeData {
     readonly maxTurn: number,
     readonly maxGame: number,
     readonly fullCircle: boolean,
-    readonly displacements: Displacement[]
+    readonly displacements: Displacement[],
+    readonly defaultRotation: Orientation;
 }
 
 export class DisplacementCardType extends ShownCardType {

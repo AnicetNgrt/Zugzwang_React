@@ -18,7 +18,7 @@ export enum ModEffNames {
 export function getFromPattern(pattern: Pattern): Modifier {
   return new Modifier(
     {
-      "player": { className: ObjectsNames.PLAYER, count: 1 },
+      "owner": { className: ObjectsNames.PLAYER, count: 1 },
       "movedPawn": { className: ObjectsNames.PAWN, count: 1, justification:"movedPawnJustification"}
     },
     (gameState: GameState, objects: ModifierObjects): ModifierConclusion => {

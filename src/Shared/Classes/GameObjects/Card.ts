@@ -8,12 +8,15 @@ import { ObjectsNames } from "./ObjectsNames";
 import { ModifierConclusion, getFailedConclusion, ModifierObjects } from "../Other/Modifier";
 import { FlickeringCardType } from "../CardTypes/FlickeringCardType";
 import { ModEffNames } from "../../Consts/Modifiers";
+import { Orientation } from "../../Enums/Orientation";
+import { DisplacementCardType } from "../CardTypes/DisplacementCardType";
 
 export class Card extends GameObject {
 
     shown: boolean;
     playedGame: number;
     playedTurn: number;
+    rotation: Orientation;
 
     constructor(
         readonly type: CardType,
@@ -26,6 +29,27 @@ export class Card extends GameObject {
         this.shown = shown;
         this.playedGame = playedGame;
         this.playedTurn = playedTurn;
+        if (this.type instanceof DisplacementCardType) {
+            this.rotation = this.type.data.defaultRotation;
+        } else {
+            this.rotation = Orientation.NORTH;
+        }
+    }
+
+    canRotate(): boolean {
+        if(!(this.type instanceof DisplacementCardType))return false;
+        return this.type.data.fullCircle;
+    }
+
+    rotate() {
+        
+    }
+
+    pictureRotation() {
+        if (this.type instanceof DisplacementCardType && !this.type.data.fullCircle) {
+            return this.rotation - this.type.data.defaultRotation;
+        }
+        return this.rotation;
     }
 
     copy():Card {

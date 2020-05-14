@@ -42,12 +42,34 @@ function createWindow() {
         mainWindow = null
     })
 
+    const allScreens = electron.screen.getAllDisplays();
+
+    var maxHeight = 0;
+    for(var screen of allScreens) {
+        if(screen.size.height > maxHeight) maxHeight = screen.size.height;
+    }
+
     electron.ipcMain.on("resizeSmall", args => {
         mainWindow.setSize(334, 610, true);
     });
 
+    electron.ipcMain.on("resize2160", args => {
+        if(maxHeight < 1400) return;
+        mainWindow.setContentSize(3840, 2160);
+    });
+
+    electron.ipcMain.on("resize1440", args => {
+        if(maxHeight < 1000) return;
+        mainWindow.setContentSize(2560, 1440);
+    });
+
     electron.ipcMain.on("resize1080", args => {
+        if(maxHeight < 750) return;
         mainWindow.setContentSize(1920, 1080);
+    });
+
+    electron.ipcMain.on("resize900", args => {
+        mainWindow.setContentSize(1600, 900);
     });
 
     electron.ipcMain.on("resize768", args => {
@@ -56,6 +78,14 @@ function createWindow() {
 
     electron.ipcMain.on("resize720", args => {
         mainWindow.setContentSize(1280, 720);
+    });
+
+    electron.ipcMain.on("resize648", args => {
+        mainWindow.setContentSize(1152, 648);
+    });
+
+    electron.ipcMain.on("resize576", args => {
+        mainWindow.setContentSize(1024, 576);
     });
 
     electron.ipcMain.on("fullscreenOn", args => {

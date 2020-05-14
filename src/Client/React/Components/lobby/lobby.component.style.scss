@@ -16,6 +16,7 @@
     }
 
     .PlayersTitle {
+        cursor: grab;
         font-family: 'Cinzel';
         color: rgba($color: #3f3f74, $alpha: 1);
         background-color: #222034;
@@ -23,12 +24,12 @@
         padding-left: 0.5vw;
         padding-right: 0.5vw;
         font-weight: 900;
-        font-size: 1.7vw;
+        font-size: 1.1vw;
         width: fit-content;
-        margin-bottom: 0.5vw;
+        margin-bottom: 0.1vw;
     }
 
-    .PlayerSlot {
+    .AddPlayerSlot {
         display: inline-block;
         margin-right: 0.5vw;
         width:fit-content;
@@ -38,17 +39,97 @@
         padding-left: 0.5vw;
         padding-right: 0.5vw;
         box-shadow: 0 0 0.3vw black;
+        background-color: rgb(50, 161, 83);
+        .AddPlus {
+            font-size: 2.5vw;
+            font-family: 'Cinzel';
+            color: rgba($color: #eec39a, $alpha: 1);
+            font-weight: 900;
+        }
     }
 
-    .PlayerSlot:hover {
-        box-shadow: 0 0 0.5vw rgba($color: #eec39a, $alpha: 1);
+    .AddPlayerSlot:hover {
+        box-shadow: 0 0 0.5vw rgba($color: #14ff3b, $alpha: 1);
+        background-color: white;
+        .AddPlus {
+            color: #0fa742;
+        }
+    }
+
+    .PlayerSlot {
+        display: inline-block;
+        margin-right: 0.5vw;
+        width:fit-content;
+        height: fit-content;
+        vertical-align: top;
+        border-radius: 0.5vw;
+        box-shadow: 0 0 0.3vw black;
+        background-color: rgba(0, 0, 0, 0.541);
     }
 
     .Player {
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        border-top-left-radius: 0.5vw;
+        border-top-right-radius: 0.5vw;
+        text-align: center;
         font-family: 'Cinzel';
         color: rgba($color: #eec39a, $alpha: 1);
         font-weight: 900;
         font-size: 2.5vw;
+    }
+
+    .Player:hover {
+        color: rgba($color: white, $alpha: 1);
+    }
+
+    .PlayFirst {
+        margin-top: 0.25vw;
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        text-align: center;
+        font-family: 'Cinzel';
+        color: rgba($color: #000000, $alpha: 1);
+        background-color: #eec39a;
+        font-weight: 600;
+        font-size: 1.2vw;
+
+        &.SecondPlayer {
+            color: rgba($color: #eec39a, $alpha: 1);
+            background-color: black;
+        }
+    }
+
+    .SecondPlayer:hover {
+        color: rgba($color: #000000, $alpha: 1);
+        background-color: #eec39a;
+    }
+
+    .Ready {
+        margin-top: 0.25vw;
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        border-bottom-left-radius: 0.5vw;
+        border-bottom-right-radius: 0.5vw;
+        text-align: center;
+        font-family: 'Cinzel';
+        color: rgba($color: white, $alpha: 1);
+        background-color: rgb(18, 87, 55);
+        font-weight: 600;
+        font-size: 1.8vw;
+
+        &.Toggable:hover {
+            background-color:rgb(50, 161, 83);
+        }
+
+        &.Toggled {
+            background-color:rgb(50, 161, 83);
+        }
+
+        &.Toggled:hover {
+            background-color:rgb(204, 61, 85);
+            color: rgb(224, 125, 125);
+        }
     }
 }
 

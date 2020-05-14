@@ -1,103 +1,84 @@
-import "./lobbycardselector.component.style.scss";
 import React from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
-type Item = {
-  id: string,
-  content: string
-}
-
-const items = [
-  { id: "ca1", content: "truc" },
-  { id: "ca2", content: "truc2" },
-  { id: "ca3", content: "truc" },
-  { id: "ca4", content: "truc2" },
-  { id: "ca5", content: "truc" },
-  { id:"ca6", content: "truc2" },
-  { id: "ca7", content: "truc2" },
-  { id: "ca8", content: "truc" },
-  { id: "ca9", content: "truc2" },
-  { id: "ca10", content: "truc" },
-  { id:"ca11", content: "truc2" },
-  { id: "ca12", content: "truc2" },
-  { id: "ca13", content: "truc" },
-  { id: "ca14", content: "truc2" },
-  { id: "ca15", content: "truc" },
-  { id:"ca16", content: "truc2" }
-]
-
-type Collumn = {
-    name: string,
-    items: Item[]
-}
-
-const collumns = {
-  "c1": {
-    name: "Available",
-    items: items
-  },
-  "c2": {
-    name: "Selected",
-    items: []
-  }
-};
+import "./lobbycardselector.component.style.scss";
+import Draggable from "react-draggable";
+import { Card } from "Shared/Classes/GameObjects/Card";
+import CardComponent from "../game/card.component";
 
 export default class LobbyCardSelectorComponent extends React.Component {
 
-  readonly state: { collumns: { [key:string]:Collumn }}
+  readonly state: { selected: Card[], clicked:Card|null };
 
-  constructor(readonly props: {loc:Locs}) {
+  constructor(readonly props: {
+    loc: Locs,
+    username: string,
+    color: string,
+    available: Card[],
+    hand: Card[],
+    position: { top: string, left: string },
+    width: string,
+    weight: number,
+    maxWeight: number,
+    onCardSeen: (card: Card) => void,
+    onCardStartHover: (card: Card) => void,
+    onCardEndHover: (card: Card) => void,
+    selectable: (card: Card) => boolean,
+    onSelect: (card: Card) => void
+  }) {
     super(props);
     this.state = {
-      collumns: collumns
+      selected: [],
+      clicked: null
     }
   }
 
   render() {
     return (
-      <DragDropContext
-      onDragEnd={result=>console.log(result)}>
-        <div className="LobbyCardSelectorDiv">
-          <h1 className="SelectorTitle">{this.props.loc["o"]}</h1>
-          {Object.entries(collumns).map(([id, collumn]) => {
-            return (
-              <Droppable droppableId={id}>
-                {(provided, snapshot) => {
-                  return (
-                    <div className="collumn"
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      style={{}}
-                    >
-                      <h1 className="collumnTitle">{collumn.name}</h1>
-                      {collumn.items.map((value, index) => {
-                        return (
-                          <Draggable key={value.id} draggableId={value.id} index={index}>
-                            {(provided, snapshot) => {
-                              return (
-                                <div className="card"
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  ref={provided.innerRef}
-                                  style={{
-                                    ...provided.draggableProps.style
-                                  }}
-                                >
-
-                                </div>
-                              )
-                            }}
-                          </Draggable>
-                        )
-                      })}
+      <Draggable
+        bounds="parent"
+        handle=".SelectorHead">
+        <div
+          className={"LobbyCardSelectorDiv"}
+          style={{ width: this.props.width, top: this.props.position.top, left: this.props.position.left }}>
+          <div className="SelectorHead" style={{backgroundColor:this.props.color+'a6'}}>
+            <div className="Left">
+              <h1 className="SelectorTitle">{this.props.username}</h1>
+              <h1 className="SelectorInstructions">{this.props.loc["o"]}</h1>
+            </div>
+            <h1 className="weight"><span style={{fontSize:'1vw', verticalAlign:'top'}}>{"w "}</span>{this.props.weight+"/"+this.props.maxWeight}</h1>
+          </div>
+          <div className="SelectorBody">
+            {(this.props.available.map((card, index, a) => {
+              return (
+                <div className="CardContainer">
+                  {(this.state.clicked === card &&
+                    <div className={"ClickedCard"} style={{boxShadow:(this.props.hand.indexOf(card) !== -1 ? "0 0 0.5vw white" : "none")}}>
+                    <div className={"CardButton SelectButton" + ((this.props.selectable(card) || this.props.hand.indexOf(card) !== -1) ? "" : " NotSelectable")}
+                      onClick={() => { this.props.onSelect(card); this.setState({ clicked: null }); }}
+                    >{(this.props.hand.indexOf(card) !== -1 ? "- " : "+ ")}<span className="CardWeight">{card.type.data.weight+"w"}</span></div>
+                    <div
+                      className={"CardButton SeeButton" + ((this.props.selectable(card) || this.props.hand.indexOf(card) !== -1) ? "" : " NotSelectable")}
+                      onClick={()=>this.props.onCardSeen(card)}
+                    >⋯</div>
+                      <div className={"CardButton DeSelectButton"} onClick={()=>this.setState({clicked:null})}>↩</div>
                     </div>
-                  )
-                }}
-              </Droppable>
-            )
-          })}
+                  )}
+                  {(this.state.clicked !== card &&
+                    <CardComponent
+                      card={card}
+                      selected={this.props.hand.indexOf(card) !== -1}
+                      onClick={() => (this.state.clicked === card ? this.setState({ clicked: null }) : this.setState({ clicked: card }))}
+                      selectable={this.props.selectable(card)}
+                      arrow={'⨀'}
+                      onStartHover={() => this.props.onCardStartHover(card)}
+                      onEndHover={() => this.props.onCardEndHover(card)}
+                    ></CardComponent>
+                  )}
+                </div>
+              )
+            }))}
+          </div>
         </div>
-      </DragDropContext>
-    );
+      </Draggable>
+    )
   }
 }

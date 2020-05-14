@@ -5,7 +5,8 @@ import { IpcRenderer } from 'electron';
 import LoginMenuComponent from './loginMenu/loginmenu.component';
 import MainMenuComponent from './mainmenu/mainmenu.component';
 import SettingsMenuComponent from './settingsmenu/settingsmenu.component';
-import LobbyComponent from './lobby/lobby.component';
+import LobbyComponent, { Status } from './lobby/lobby.component';
+import GameComponent from './game/game.component';
 
 var ipcRenderer: null | IpcRenderer = null;
 
@@ -37,7 +38,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       loginData: { loggedIn: false, sessionId: "" },
-      scene: "lobby",
+      scene: "game",
       lastScene: "main",
       lang: "en",
       username: "anonymous",
@@ -142,7 +143,16 @@ export default class App extends React.Component {
           <SettingsMenuComponent
           locs={this.props.locs}
           loc={this.props.locs[this.state.lang]}
-          resolutions={{"1080":"1920x1080 16:9", "768":"1366x768 16:9", "720":"1280x720 16:9"}}
+          resolutions={{
+            "2160": "3840x2160 4K 16:9",
+            "1440": "2560x1440 2K 16:9",
+            "1080": "1920x1080 HD 16:9",
+            "900": "1600x900 16:9",
+            "768": "1366x768 16:9",
+            "720": "1280x720 16:9",
+            "648": "1152x648 16:9",
+            "576": "1024x576 16:9"
+          }}
           onSceneRequest={(scene: string) => this.changeScene(scene)}
           onSettingChange={(name: string, value: any) => this.changeSettings(name, value)}
           currentSettings={{
@@ -157,12 +167,15 @@ export default class App extends React.Component {
           <LobbyComponent
           locs={this.props.locs}
           loc={this.props.locs[this.state.lang]}
-          resolutions={{"1080":"1920x1080 16:9", "768":"1366x768 16:9", "720":"1280x720 16:9"}}
           onSceneRequest={(scene: string) => this.changeScene(scene)}
-          onSettingChange={(name: string, value: any) => this.changeSettings(name, value)}
           username={this.state.username}
+          local={true}
           slots={2}
+          status={Status.LOCAL}
         ></LobbyComponent>
+        )}
+        {(this.state.scene === "game" &&
+          <GameComponent loc={this.props.locs[this.state.lang]}></GameComponent>
         )}
       </div>
     )

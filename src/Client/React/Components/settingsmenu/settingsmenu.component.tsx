@@ -50,7 +50,7 @@ export default class SettingsMenuComponent extends React.Component {
       <SettingsMenuListComponent
         text={this.props.loc["g"]}
         emoji={"æ"}
-        position={{ x: '35%', y: '30%' }}
+        position={{ x: '25%', y: '30%' }}
         content={(() => {
           const content = [];
           for (const [key, value] of Object.entries(this.props.locs)) {
@@ -65,7 +65,7 @@ export default class SettingsMenuComponent extends React.Component {
       <SettingsMenuSwitchComponent
         text={this.props.loc["k"]}
         emoji={"◳"}
-        position={{ x: '67%', y: '60%' }}
+        position={{ x: '58%', y: '80%' }}
         toggled={this.props.currentSettings.fullscreen}
         onClick={(state: boolean) => this.props.onSettingChange("fullscreen", state)}
       ></SettingsMenuSwitchComponent>
@@ -73,7 +73,7 @@ export default class SettingsMenuComponent extends React.Component {
       <SettingsMenuListComponent
         text={this.props.loc["l"]}
         emoji={"▣"}
-        position={{ x: '67%', y: '30%' }}
+        position={{ x: '58%', y: '30%' }}
         content={(() => {
           const content = [];
           for (const [key, value] of Object.entries(this.props.resolutions)) {

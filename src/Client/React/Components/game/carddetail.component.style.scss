@@ -20,7 +20,10 @@ $m: 0.60rem;
 
 .CardLayout {
     position: absolute;
-    width:100%;
+    width:100.3%;
+    top:-0.1%;
+    left:-0.1%;
+    border-radius: 1rem;
 }
 
 /*@keyframes border-dance {
@@ -52,8 +55,8 @@ $m: 0.60rem;
     width: calc(15 * #{$m});
     height: calc(7 * #{$m});
     text-align: center;
-    opacity: 0.3;
-    background-color: rgba($color: $black, $alpha: 0.5);
+    opacity: 0.5;
+    background-color: rgba($color: $black, $alpha: 1);
     border-radius: calc(0.5 * #{$m});
     cursor: pointer;
 
@@ -111,23 +114,25 @@ $m: 0.60rem;
 }
 
 .StatNumber {
+    font-family: 'Cinzel';
+    font-weight: 900;
     font-size: calc(10 * #{$m});
-    font-weight: 300;
     text-align: center;
 }
 
 .StatLetter {
-    font-family: 'Roboto';
+    font-family: 'Cinzel';
+    font-weight: 900;
     font-size: calc(4 * #{$m});
     vertical-align: text-bottom;
 }
 
 .IllustrationContainer {
     position: absolute;
-    top: 2.9%;
-    left: 4.45%;
-    width: calc(61.25 * #{$m});
-    height: calc(61.3 * #{$m});
+    top: 2.7%;
+    left: 4.2%;
+    width: calc(61.4 * #{$m});
+    height: calc(61.4 * #{$m});
 }
 
 .CardIllustration {
@@ -146,7 +151,8 @@ $m: 0.60rem;
     width:92%;
     padding-left: $m;
     border-radius: calc(1 * #{$m});
-    font-weight: 300;
+    font-family: 'Cinzel';
+    font-weight: 900;
     font-size: calc(8 * #{$m});
 }
 

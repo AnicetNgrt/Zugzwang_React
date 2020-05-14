@@ -1,9 +1,10 @@
 import { DisplacementCardType } from "../Classes/CardTypes/DisplacementCardType"
 import { Patterns } from "./Patterns"
+import { Orientation } from "../Enums/Orientation"
 
 
 export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
-    "SmallRivers": () => {return new DisplacementCardType({
+    smallRivers: () => {return new DisplacementCardType({
         weight:0,
         name:"Small Rivers",
         picturePath:undefined,
@@ -13,9 +14,10 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
         displacements: [{
             cost:1,
             pattern:Patterns.smallRivers
-        }]
+        }],
+        defaultRotation: Orientation.NORTH
     })},
-    "Knight": () => {return new DisplacementCardType({
+    knight: () => {return new DisplacementCardType({
         weight:8,
         name:"Knight",
         picturePath:undefined,
@@ -29,9 +31,10 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
         {
             cost:1,
             pattern:Patterns.knightWest
-        }]
+        }],
+        defaultRotation: Orientation.NORTH
     })},
-    "Clockmaker": () => {return new DisplacementCardType({
+    clockMaker: () => {return new DisplacementCardType({
         weight:7,
         name:"Clockmaker",
         picturePath:undefined,
@@ -45,6 +48,24 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
         {
             cost:1,
             pattern:Patterns.clockmakerWest
-        }]
+        }],
+        defaultRotation: Orientation.NORTH
+    })},
+    apollo: () => {return new DisplacementCardType({
+        weight:3,
+        name:"Apollo",
+        picturePath:undefined,
+        maxTurn:999,
+        maxGame:999,
+        fullCircle:false,
+        displacements: [{
+            cost:1,
+            pattern:Patterns.clockmakerEast
+        },
+        {
+            cost:1,
+            pattern:Patterns.clockmakerWest
+        }],
+        defaultRotation: Orientation.SOUTH
     })}
 }

@@ -10,7 +10,7 @@
     height: 98%;
     width: 100%;
     padding-right: 2 * $m;
-    opacity: 0.2;
+    opacity: 0.7;
 }
 
 .HandComponent:hover {
@@ -21,11 +21,12 @@
 .HandDiv {
     display: flex;
     position: absolute;
-    top: 0%;
+    top: 27%;
     left: 25%;
     float:left;
     width: fit-content;
-    height:80%;
+    height: fit-content;
+    max-height: 80%;
 }
 
 .HandDiv:hover {
@@ -38,19 +39,22 @@
     margin-top: $m;
     margin-left: $m * 2;
     width: fit-content;
-    height:100%;
+    height: fit-content;
 }
 
 .SubHandTitle {
     background: $black;
     width: fit-content;
-    padding-left: 2rem;
-    margin-bottom: 1rem;
-    padding-right: 2rem;
-    border-radius: 0.5rem;
+    padding-left: 2vw;
+    margin-bottom: 0.2vw;
+    padding-right: 2vw;
+    border-radius: 0.5vw;
     h1 {
-        font-size: calc(0.015 * #{$gww});
+        font-family: 'Cinzel';
+        font-weight: 900;
+        font-size: 1.2vw;
     }
+    box-shadow: 0 0 0.5vw black;
 } 
 .CardList {
     display:block;
@@ -61,7 +65,12 @@
     width: fit-content;
     height: fit-content;
     max-height: 92.4%;
-    border-radius: 0.5rem;
-    padding-bottom: 2* $m;
-    padding-right: $m;
+    border-radius: 0.5vw;
+    padding-bottom: 0.5vw;
+    padding-right: 0.5vw;
+    box-shadow: 0 0 0.5vw black;
+}
+
+.CardDiv {
+    margin-bottom: 0.25vw;
 }

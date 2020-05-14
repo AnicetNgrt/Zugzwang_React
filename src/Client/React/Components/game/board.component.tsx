@@ -4,7 +4,8 @@ import { Board } from "../../../../Shared/Classes/GameObjects/Board";
 
 export interface BoardProps {
     board: Board,
-    players: string[]
+    refs: React.Ref<HTMLDivElement>[][],
+    onTileClicked: (x: number, y:number)=>void
 }
 
 export type BoardState = {
@@ -16,27 +17,30 @@ export default class BoardComponent extends React.Component {
         super(props);
     }
 
-    componentDidMount() { }
+    componentDidMount() {
+    }
     
     componentDidUpdate() { }
 
     render() {
         return (
             <div className={"BoardDiv"}>
-                <div className="GameHeader">
-                    <h1 className="PlayerName"
-                        style={{float: 'left', backgroundColor:'#c94747'}}>{this.props.players[0]}</h1>
-                    <h1 className="PlayerName"
-                        style={{float:'right', left:'54%', backgroundColor:'#4070bd'}}>{this.props.players[1]}</h1>
-                </div>
                 <div className="TableContainer">
                 <table>
                     <tbody>
-                    {this.props.board.shiftMap.map(line => (
+                    {this.props.board.shiftMap.map((line, i, a) => (
                         <tr className={"Line"}>
-                            {line.map(vec => (
+                            {line.map((vec, j, a) => (
                                 <td className={"Tile"}>
-                                    
+                                    <div ref={this.props.refs[i][j]}
+                                        onClick={() => {
+                                            this.props.onTileClicked(j, i);
+                                        }}
+                                        style={{
+                                            width:"100%",
+                                            height: "100%"
+                                        }}
+                                    ></div> 
                                 </td>
                             ))}
                         </tr>

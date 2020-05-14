@@ -1,0 +1,29 @@
+@import "../../../styles.scss";
+@import "../App.scss";
+
+.PawnBoxDiv {
+    position: relative;
+    top: 15%;
+    left: 10%;
+    width: 20vw;
+    height: 6vw;
+    opacity: 0.7;
+    background-color: rgba(170, 165, 209, 0.89);
+    border-radius: 0.25vw;
+    box-shadow: 0 0 0.5vw black;
+
+    .PawnBoxTitle {
+        width: 100%;
+        font-size: 1.5vw;
+        text-align: center;
+        border-radius: 0.25vw;
+        font-family: 'Cinzel';
+        font-weight: 900;
+        height: 2vw;
+        background-color: rgb(0, 0, 0);
+    }
+}
+
+.PawnBoxDiv:hover {
+    opacity: 1;
+}

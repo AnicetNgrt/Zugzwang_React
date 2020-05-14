@@ -1,0 +1,65 @@
+.PawnDiv {
+    position: absolute;
+    width: 6vh;
+    height: 6vh;
+    pointer-events: none;
+
+    .PawnPics {
+        position: relative;
+        top:0;
+        left:0;
+    }
+
+    .ImgShadow {
+        position: absolute;
+        top:0.2vh;
+        left:-0.3vh;
+        width: 6vh;
+        height: 4.5vh;
+        //pointer-events: none;
+        border: solid 0.25vw rgba(62, 58, 100, 0.527);
+        border-radius: 0.25vw;
+        box-shadow: 0 0 1vw rgba(71, 66, 116, 0.527);
+        box-sizing: content-box;
+    }
+
+    h1 {
+        position: absolute;
+        top:-4.1vh;
+        left:0.1vh;
+        opacity: 1;
+        width: 0%;
+        font-size: 1.9vw;
+        opacity: 0;
+    }
+
+    img {
+        position: absolute;
+        top:-4.1vh;
+        left:0.1vh;
+        opacity: 0.45;
+        width: 100%;
+        pointer-events: all;
+    }
+
+    img:hover {
+        opacity: 0;
+    }
+
+    .PawnIllustration {
+        //filter: invert(100%);
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .PawnIllustration:hover {
+        opacity: 1;
+    }
+}
+
+.Selected {
+    .ImgShadow {
+        border: solid 0.25vw rgba(255, 205, 41, 0.527);
+        box-shadow: 0 0 2vw rgb(255, 205, 41);
+    }
+}

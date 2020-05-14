@@ -1,16 +1,34 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./card.component.style.scss";
 import { Card } from "../../../../Shared/Classes/GameObjects/Card";
 import { cardsImgs } from "../../../Assets/Assets";
 
-function CardComponent(props:{card:Card, selected:boolean, onClick:()=>void}) {
+function CardComponent(props: {
+    card: Card,
+    selected: boolean,
+    selectable: boolean,
+    onClick: () => void,
+    onStartHover: () => void,
+    onEndHover: () => void,
+    arrow: string
+}) {
     return (
         <div 
-        className={"CardDiv "+(props.card.shown ? "":"Hidden ")}
-        onClick={props.onClick}
+            className={"CardDiv " + (props.card.shown ? "" : "Hidden ") + (props.selected ? "Selected " : "") + ((!props.selectable && !props.selected) ? "Unselectable " : "")}
+            onClick={props.onClick}
         >   
-            <img className={"CardImg"} src={cardsImgs[props.card.type.data.name.toLowerCase()]}></img>
-            <h1 className={"CardArrow"}>{'※'}</h1>
+            <img className={"CardImg"}
+                style={{ transform: 'rotate(' + (90 * (props.card.pictureRotation())) + 'deg)' }}
+                src={cardsImgs[props.card.type.data.name.toLowerCase()]}
+                alt=""
+                onMouseEnter={(e) => props.onStartHover()}
+                onMouseLeave={(e)=> props.onEndHover()}
+            ></img>
+            <div
+                className={"CardArrow"}
+            >
+                <h1>{props.arrow}</h1>
+            </div>
         </div>
     )
 }

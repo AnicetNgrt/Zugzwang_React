@@ -1,4 +1,5 @@
 @import "../../../styles.scss";
+@import "../game/card.component.style.scss";
 
 .MainMenuDiv {
     animation: fadeIn 0.5s ease-in;
@@ -26,6 +27,7 @@
         width: calc(385px * 5);
     }*/
     width:100%;
+    pointer-events: none;
 }
 
 @keyframes fadeIn {

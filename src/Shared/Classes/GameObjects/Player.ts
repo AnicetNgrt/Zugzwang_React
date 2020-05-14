@@ -1,11 +1,9 @@
 import { Pawn } from "./Pawn";
 import { IdProvider } from "../../Interfaces/IdProvider";
 import { GameObject } from "./GameObject";
-import { CardType } from "../../Interfaces/CardType";
 import { Card } from "./Card";
 import { Rules } from "../../Types/Rules";
 import { Vec2 } from "../../Types/Vec2";
-import { Board } from "./Board";
 import { ObjectsNames } from "./ObjectsNames";
 
 export type DeckChecker = (cards: Set<Card>) => boolean;
@@ -17,10 +15,13 @@ export class Player extends GameObject {
     pawns: Set<Pawn> = new Set();
     prohibitedTiles: Set<Vec2> = new Set();
     ap: number;
+    name: string;
+    color: string;
 
     constructor(
         readonly deckChecker: DeckChecker,
-        readonly name: string,
+        name: string,
+        color: string,
         readonly team: number,
         readonly rules: Rules,
         readonly idProvider: IdProvider,
@@ -28,6 +29,8 @@ export class Player extends GameObject {
     ) {
         super(idProvider);
         this.ap = ap;
+        this.name = name;
+        this.color = color;
     }
     
     hasLost(): Boolean {
@@ -38,26 +41,44 @@ export class Player extends GameObject {
         return alive;
     }
 
-    addPawn(pos: Vec2, board:Board): boolean {
-        if (!board.isIn(pos)) return false;
-        this.pawns.add(new Pawn(this.idProvider, pos));
-        return true;
+    givePawn(pawn:Pawn) {
+        this.pawns.add(pawn);
     }
 
     addCard(card:Card): boolean {
-        var types = new Set<CardType>();
+        if (this.canAddCard(card)) {
+            this.hand.add(card);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    removeCard(card: Card) {
+        this.hand.delete(card);
+    }
+
+    canAddCard(card:Card): boolean {
+        var types = new Set<string>();
         var weight = 0;
         this.hand.forEach((c: Card) => {
-            types.add(c.type);
-            weight++;
+            types.add(c.type.data.name);
+            weight += c.type.data.weight;
         })
-        if (types.has(card.type)) return false;
+        if (types.has(card.type.data.name)) return false;
         if (weight + card.type.data.weight > this.rules.maxWeight) return false;
         const handCopy = new Set(this.hand);
         handCopy.add(card);
         if (!this.deckChecker(handCopy)) return false;
-        this.hand.add(card);
         return true;
+    }
+
+    getHandWeight(): number {
+        var weight = 0;
+        this.hand.forEach((c: Card) => {
+            weight += c.type.data.weight;
+        });
+        return weight;
     }
 
     owns(object: GameObject): boolean {
@@ -75,6 +96,7 @@ export class Player extends GameObject {
         const p: Player = new Player(
             this.deckChecker,
             this.name,
+            this.color,
             this.team,
             this.rules,
             this.idProvider,
