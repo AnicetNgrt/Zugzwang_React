@@ -8,6 +8,7 @@ import BsComponent from "./bs.component";
 import PawnBoxComponent from "./pawnbox.component";
 
 export default function PlayerComponent(props: {
+  cardsRefs: Map<Card, React.RefObject<HTMLDivElement>>,
   loc: Locs,
   player: Player,
   onCardClicked: (card: Card) => void,
@@ -24,7 +25,11 @@ export default function PlayerComponent(props: {
       <div className="CarpetContainer" style={props.mirror ? {transform:"scale(-1, 1)"} : {}}>
         <img className="BackgroundIllustration" src={carpetsImgs.cloudPanelB} alt=""></img>
       </div>
-      <HandComponent loc={props.loc} hand={Array.from(props.player.hand.values())} onCardClicked={(card: Card) => props.onCardClicked(card)}></HandComponent>
+      <HandComponent
+        cardsRefs={props.cardsRefs}
+        loc={props.loc}
+        hand={Array.from(props.player.hand.values())}
+        onCardClicked={(card: Card) => props.onCardClicked(card)}></HandComponent>
       <PawnBoxComponent
         loc={props.loc}
         pawns={[]}

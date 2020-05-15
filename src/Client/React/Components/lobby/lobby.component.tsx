@@ -73,6 +73,8 @@ export const colors = [
   "#8f563b",
   "#5b6ee1",
   "#76428a",
+  "#df7126",
+  "#d77bba"
 ]
 
 export default class LobbyComponent extends React.Component {
@@ -81,12 +83,13 @@ export default class LobbyComponent extends React.Component {
     players: LobbyPlayer[],
     selectedCards: {color:string, card:Card}[]
   };
+  cardRef: React.RefObject<HTMLDivElement>;
   
   constructor(readonly props:LobbyProps) {
     super(props);
     this.state = {
       players: [{
-        player: new Player((any:any) => true, props.username, colors[0], 0, rules, idpr, rules.maxAp),
+        player: new Player((any:any) => true, props.username, colors[0], 0, rules, idpr, rules.maxAp, false),
         local: true,
         ready: false,
         order: 1
@@ -97,6 +100,8 @@ export default class LobbyComponent extends React.Component {
     for (var i = 1; i < props.slots; i++) {
       this.state.players.push(null);
     }
+
+    this.cardRef = React.createRef<HTMLDivElement>();
   }
   
   componentWillReceiveProps(nextProps: LobbyProps) {
@@ -110,7 +115,7 @@ export default class LobbyComponent extends React.Component {
   fillPlayerSlot(name: string, index: number, color: string, local:boolean) {
     const players = this.state.players;
     players.splice(index, 1, {
-      player: new Player(cards => true, name, color, index, rules, idpr, rules.maxAp),
+      player: new Player(cards => true, name, color, index, rules, idpr, rules.maxAp, false),
       local: local,
       ready: false,
       order: index + 1
@@ -261,14 +266,24 @@ export default class LobbyComponent extends React.Component {
 
       {this.state.selectedCards.length > 0 && 
           this.state.selectedCards.map((v, i, a) => (
-            <CardDetailComponent color={v.color} card={v.card} onClickOutside={() => {
-              this.setState({
-                selectedCard: (() => {
-                  const selected = this.state.selectedCards;
-                  delete selected[i];
-                  return selected;
-              })()});
-            }}></CardDetailComponent>
+            this.state.players.map(p => (
+              p.player.color === v.color &&
+              <CardDetailComponent
+                loc={this.props.loc}
+                cardRef={this.cardRef}
+                color={p.player.color}
+                card={v.card}
+                owner={p.player}
+                onActionSelected={()=>{}}
+                onClickOutside={() => {
+                this.setState({
+                  selectedCard: (() => {
+                    const selected = this.state.selectedCards;
+                    delete selected[i];
+                    return selected;
+                })()});
+              }}></CardDetailComponent>
+            ))
           ))
       }
     </div>  

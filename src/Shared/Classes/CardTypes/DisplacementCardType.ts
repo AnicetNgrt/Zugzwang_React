@@ -38,7 +38,7 @@ export class DisplacementCardType extends ShownCardType {
 
         this.data = {
             ...data,
-            actions: []
+            actions: actions
         }
     }
 

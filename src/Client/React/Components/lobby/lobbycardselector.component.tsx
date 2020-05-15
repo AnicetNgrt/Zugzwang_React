@@ -7,6 +7,7 @@ import CardComponent from "../game/card.component";
 export default class LobbyCardSelectorComponent extends React.Component {
 
   readonly state: { selected: Card[], clicked:Card|null };
+  cardsRefs: Map<Card, React.RefObject<HTMLDivElement>>;
 
   constructor(readonly props: {
     loc: Locs,
@@ -29,9 +30,16 @@ export default class LobbyCardSelectorComponent extends React.Component {
       selected: [],
       clicked: null
     }
+    this.cardsRefs = new Map();
+    for (var card of props.available) {
+      this.cardsRefs.set(card, React.createRef<HTMLDivElement>());
+    }
   }
 
   render() {
+
+    
+
     return (
       <Draggable
         bounds="parent"
@@ -64,6 +72,7 @@ export default class LobbyCardSelectorComponent extends React.Component {
                   )}
                   {(this.state.clicked !== card &&
                     <CardComponent
+                      ref={this.cardsRefs.get(card)}
                       card={card}
                       selected={this.props.hand.indexOf(card) !== -1}
                       onClick={() => (this.state.clicked === card ? this.setState({ clicked: null }) : this.setState({ clicked: card }))}

@@ -8,6 +8,7 @@
         position: relative;
         top:0;
         left:0;
+        pointer-events: none;
     }
 
     .ImgShadow {
@@ -17,43 +18,59 @@
         width: 6vh;
         height: 4.5vh;
         //pointer-events: none;
-        border: solid 0.25vw rgba(62, 58, 100, 0.527);
         border-radius: 0.25vw;
-        box-shadow: 0 0 1vw rgba(71, 66, 116, 0.527);
         box-sizing: content-box;
+        pointer-events: none;
     }
 
     h1 {
         position: absolute;
-        top:-4.1vh;
+        top:-4.2vh;
         left:0.1vh;
         opacity: 1;
         width: 0%;
         font-size: 1.9vw;
         opacity: 0;
+        background-color: red;
+        pointer-events: none;
     }
 
     img {
         position: absolute;
         top:-4.1vh;
         left:0.1vh;
-        opacity: 0.45;
+        opacity: 0.25;
         width: 100%;
-        pointer-events: all;
+        pointer-events: none;
     }
 
-    img:hover {
-        opacity: 0;
-    }
+    /*img:hover {
+        opacity: 0.7;
+    }*/
 
     .PawnIllustration {
         //filter: invert(100%);
         opacity: 1;
-        pointer-events: all;
+        pointer-events: none;
     }
 
-    .PawnIllustration:hover {
+    .PawnHitbox:hover ~ .PawnIllustration {
         opacity: 1;
+    }
+
+    .PawnHitbox {
+        position: absolute;
+        left: -0.2vh;
+        width: 115%;
+        height: 5.4vh;
+        //background-color: red;
+        z-index: 1000;
+        pointer-events: all;
+        cursor: pointer;
+    }
+
+    .PawnHitbox:hover ~ img {
+        opacity: 0.7;
     }
 }
 

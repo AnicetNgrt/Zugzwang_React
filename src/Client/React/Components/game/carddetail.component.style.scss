@@ -24,6 +24,7 @@ $m: 0.60rem;
     top:-0.1%;
     left:-0.1%;
     border-radius: 1rem;
+    pointer-events: none;
 }
 
 /*@keyframes border-dance {
@@ -35,28 +36,42 @@ $m: 0.60rem;
     }
 }*/
 
-.handle {
+.CDicon {
     position: absolute;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
     opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    font-size: 2.5vw;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    border-radius: 2.5vw;
+}
+
+.rotate {
+    position: absolute;
+    top: 52%;
+    left: 0.5%;
+    width: 99%;
+    height: 44.5%;
+    opacity: 1;
     z-index: 200;
-    background-color: rgba($color: $black, $alpha: 0.5);
+    border-radius: 0.5vw;
+    background-color: rgba($color: white, $alpha: 0);
     border-radius: calc(0.5 * #{$m});
-    cursor: grab;
+    cursor: pointer;
 }
 
 .CloseCardButton {
     position: absolute;
-    top: -6%;
+    top: -6.5%;
     left: 82.5%;
     width: calc(15 * #{$m});
     height: calc(7 * #{$m});
     text-align: center;
     opacity: 0.5;
-    background-color: rgba($color: $black, $alpha: 1);
+    background-color: rgba($color: black, $alpha: 1);
     border-radius: calc(0.5 * #{$m});
     cursor: pointer;
 
@@ -83,26 +98,211 @@ $m: 0.60rem;
 .CardDetail {
     animation-duration: 0.2s;
     animation-name: CardFade;
-    position: relative;
-    top: 20%;
-    left: 40.25%;
+    position: absolute;
+    transform: scale(1);
+    top: 0%;
+    left: 0%;
     width: calc(83.7 * #{$m});
     height: calc(126 * #{$m});
+    //box-shadow: 0 0 calc(2 * #{$m}) $black;
+    border-radius: 1rem;
+    //background: $gray2;
+    //z-index: 102;
+    pointer-events: all;
+}
+
+.Faces {
+    transition: box-shadow 0.4s;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: calc(83.7 * #{$m});
+    height: calc(122 * #{$m});
+    //box-shadow: 0 0 calc(2 * #{$m}) $black;
+    border-radius: 1rem;
+    //background-color: $gray2;
+    //z-index: 102;
+    pointer-events: all;
+    cursor: grab;
+}
+
+.Face {
+    transition: box-shadow 0.4s;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: calc(83.7 * #{$m});
+    height: calc(122 * #{$m});
     box-shadow: 0 0 calc(2 * #{$m}) $black;
     border-radius: 1rem;
     background: $gray2;
     z-index: 102;
     pointer-events: all;
+
+    .Actions {
+        position: absolute;
+        top: 64%;
+        left: 4%;
+        width: 150%;
+        max-width: 150%;
+        height: 100%;
+        //background-color: red;
+        //z-index: 3000;
+        //pointer-events: all;
+    }
+
+    .ActionDetail {
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: fit-content;
+        max-width: 150%;
+        height: fit-content;
+        border-radius: 0.7rem;
+        padding-left: 0.4vw;
+        padding-right: 0.6vw;
+        padding-top: 0.5vw;
+        padding-bottom: 0.4vw;
+        margin-top: 0.4vw;
+        margin-left: 0.4vw;
+        background-color: rgb(0, 0, 0);
+        opacity: 1;
+        transform:translate(-13.5%, -13%) scale(0.72);
+        box-sizing: border-box;
+        //z-index: 1000;
+
+        .ActionName {
+            position: relative;
+            top: 0; left: 0;
+            font-family: 'Cinzel';
+            font-weight: 900;
+            font-size: 2vw;
+        }
+
+        .ActionCost {
+            display: inline-block;
+            font-family: 'Cinzel';
+            font-weight: 900;
+            font-size: 2vw;
+            margin-left: 0.1vw;
+            margin-right: 0.1vw;
+            width: fit-content;
+            background-color: white;
+            border-radius: 2vw;
+            padding: 0;
+            padding-left: 1vw;
+            padding-right: 0.5vw;
+            vertical-align: tex-top;
+            color: black;
+
+            .ApCost {
+                transition: font-size 0.3s;
+                display: inline-block;
+                font-size:0vw; 
+            }
+        }
+
+        .ActionDesc {
+            position: absolute;
+            top: 110%;
+            left: 0%;
+            background-color: rgba(0, 0, 0, 0.61);
+            padding: 0.25vw;
+            border-radius: 0.25vw;
+            opacity: 0;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-weight: 300;
+            font-size: 1.4vw;
+            width: 98%;
+            pointer-events: none;
+            //background-color: blue;
+        }
+
+        .PlayActionButton {
+            transition: color 0.4s, background-color 0.4s;
+            font-family: 'Cinzel';
+            font-weight: 900;
+            font-size: 2.5vw;
+            margin-top: 0.5vw;
+            text-align: center;
+            width: 100%;
+            border-radius: 0.25vw;
+            color: black;
+            background-color: rgb(255, 255, 255);
+            //pointer-events: all;
+            //z-index: 310;
+            cursor: pointer;
+        }
+        .PlayActionButton:hover {
+            transition: color 0.4s, background-color 0.4s;
+            color: rgb(255, 255, 255);
+            background-color: rgb(0, 0, 0);
+        }
+        .PlayActionButton:active {
+            background-color: rgb(110, 110, 110);
+        }
+    }
+
+    .ActionDetail:hover {
+        transition: transform 0.4s, box-shadow 0.4s, opacity 0s;
+        transform: translate(0%, 0%) scale(1);
+        box-shadow: 0 0 1vw black;
+        opacity: 1;
+
+        .ActionDesc {
+            transition: opacity 0.4s;
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
+
+    .ActionDetail:hover .ApCost {
+        transition: font-size 0.4s;
+        font-size:3rem;
+    }
 }
 
-.CardDetail:hover {
+.Face:hover {
+    transition: box-shadow 0.4s;
+    box-shadow: 0 0 1vw rgb(154, 241, 237);
+    //background-color: rgba($color: rgb(154, 241, 237), $alpha: 0.1);
+}
+
+.Face:hover .CDicon {
+    transition: opacity 0.4s, box-shadow 0.4s;
+    box-shadow: 0 0 1vw rgb(154, 241, 237);
+    opacity: 0.5;
+    left: 110%;
+}
+
+.Face:active {
+    transition: box-shadow 0.4s;
+    box-shadow: 0 0 1vw rgb(241, 228, 154);
+}
+
+.Face:active .CDicon {
+    transition: box-shadow 0.4s;
+    box-shadow: 0 0 1vw rgb(241, 228, 154);
+}
+
+.rotate:hover {
+    transition: box-shadow 0.4s;
+    box-shadow: 0 0 1vw rgb(241, 154, 154);
+    background-color: rgba($color: rgb(241, 154, 154), $alpha: 0.1);
+    .CDicon {
+        opacity: 0.5;
+    }
+}
+
+/*.Face:hover {
     box-shadow: 0 0 calc(2 * #{$m}) $black, 0rem 0rem calc(20 * #{$m}) rgba($color: $yellow3, $alpha: 0.5);
-}
+}*/
 
-.CardDetail:active {
+/*.Face:active {
     box-shadow: 0 0 calc(2 * #{$m}) $black;
     cursor: grabbing;
-}
+}*/
 
 .Stats{
     position: absolute;
@@ -140,11 +340,12 @@ $m: 0.60rem;
     top: 0;
     left: 0;
     width: 100%; 
+    pointer-events: none;
 }
 
 .CardName {
     position: absolute;
-    top:52.5%;
+    top:53.5%;
     left:3%;
     text-align: center;
     z-index: 105;
@@ -154,6 +355,7 @@ $m: 0.60rem;
     font-family: 'Cinzel';
     font-weight: 900;
     font-size: calc(8 * #{$m});
+    text-shadow: 0 0 1vw black;
 }
 
 @keyframes CardFade {

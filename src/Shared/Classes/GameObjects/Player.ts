@@ -17,6 +17,7 @@ export class Player extends GameObject {
     ap: number;
     name: string;
     color: string;
+    playing: boolean;
 
     constructor(
         readonly deckChecker: DeckChecker,
@@ -25,12 +26,14 @@ export class Player extends GameObject {
         readonly team: number,
         readonly rules: Rules,
         readonly idProvider: IdProvider,
-        ap: number
+        ap: number,
+        playing: boolean
     ) {
         super(idProvider);
         this.ap = ap;
         this.name = name;
         this.color = color;
+        this.playing = playing;
     }
     
     hasLost(): Boolean {
@@ -100,7 +103,8 @@ export class Player extends GameObject {
             this.team,
             this.rules,
             this.idProvider,
-            this.ap
+            this.ap,
+            this.playing
         );
         p.isFocused = this.isFocused;
         p.hand = new Set(this.hand);

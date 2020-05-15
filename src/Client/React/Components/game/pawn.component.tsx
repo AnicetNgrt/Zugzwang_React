@@ -2,6 +2,7 @@ import './pawn.component.style.scss';
 import { Pawn } from 'Shared/Classes/GameObjects/Pawn';
 import React from 'react';
 import { ReactImageTint } from 'react-image-tint';
+import { tween, easing, chain, delay } from 'popmotion';
 
 type PawnProps = {
   picture: string,
@@ -11,36 +12,35 @@ type PawnProps = {
   color: string,
   onClick: () => void,
   selected: boolean,
+  addHeight: number,
   pawn:Pawn
 }
 
-export default class PawnComponent extends React.Component {
-  ref: React.RefObject<HTMLDivElement>;
-
-  constructor(readonly props: PawnProps) {
-    super(props);
-    this.ref = React.createRef<HTMLDivElement>();
-  }
-
-  render() {
-    return (
-      <div ref={this.ref} className={"PawnDiv"+(this.props.selected ? " Selected" : "")}
-        style={{
-          top: (this.props.selected ? ("calc("+this.props.top+"px - 1vw)") : this.props.top+"px"),
-          left: this.props.left + "px",
-          zIndex: Math.floor(this.props.top/10)
-        }}>
-        <div className="PawnPics" onClick={() => {
-            this.props.onClick();
-          }}> 
-          <div className="ImgShadow"></div>
-          <img className="PawnIllustration" src={this.props.picture} alt="">
-          </img>
-          
-          <ReactImageTint src={this.props.picture} color={this.props.color} />     
-          <h1>{this.props.pawn.id}</h1>
-        </div>
+const PawnComponent = React.forwardRef((props: PawnProps, ref: any) => {
+  return (
+    <div className={"PawnDiv"+(props.selected ? " Selected" : "")}
+      style={{
+        top: "calc("+props.top+"px - "+props.addHeight+"vw)",
+        left: props.left + "px",
+        zIndex: Math.floor(props.top / 10),
+        pointerEvents: props.selected ? "none" : "all"
+      }}>
+      <div className="PawnPics"> 
+        <div className="ImgShadow"
+          style={(props.selected ? {} : {
+            border: "solid 0.25vw "+props.color+"88",
+            boxShadow: "0 0 1vw " + props.color + "ff"
+        })}></div>
+        <div className="PawnHitbox" onClick={() => {
+          props.onClick();
+        }}> </div>
+        <img ref={ref} className="PawnIllustration" src={props.picture} alt="">
+        </img>
+        <ReactImageTint src={props.picture} color={props.color} />  
+        <h1>{props.pawn.id}</h1>
       </div>
-    )
-  }
-}
+    </div>
+  )
+});
+
+export default PawnComponent;

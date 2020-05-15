@@ -43,7 +43,7 @@ export default class App extends React.Component {
       lang: "en",
       username: "anonymous",
       fullscreen: false,
-      resolution: "1080"
+      resolution: "900"
     };
   }
 
@@ -67,7 +67,7 @@ export default class App extends React.Component {
         this.forceUpdate();
     });
     
-    getLocalData("fullscreen")
+    /*getLocalData("fullscreen")
       .then(data => {
         if (data != null) {
           this.setState({ fullscreen: JSON.parse(data) });
@@ -81,7 +81,7 @@ export default class App extends React.Component {
           this.setState({ resolution: data });
           if(ipcRenderer != null) ipcRenderer.send('resize'+data);
         }   
-    });
+    });*/
   }
 
   updateFullscreen(value: boolean) {

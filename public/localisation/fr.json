@@ -24,5 +24,8 @@
   "v": "Jouer",
   "w": "Pions à placer",
   "x": "Visible",
-  "y": "Caché"
+  "y": "Caché",
+  "z": "Essayer",
+  "moveActionTitle": "Déplacer un pion",
+  "moveActionDesc": "Déplacez un de vos pions vers l'une des cases indiquées."
 }

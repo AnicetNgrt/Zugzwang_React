@@ -24,5 +24,8 @@
   "v": "Start game",
   "w": "Pawns to place",
   "x": "Revealed",
-  "y": "Hidden"
+  "y": "Hidden",
+  "z": "Preview",
+  "moveActionTitle": "Move a pawn",
+  "moveActionDesc": "Move one of your pawns to one of the highlighted tiles."
 }

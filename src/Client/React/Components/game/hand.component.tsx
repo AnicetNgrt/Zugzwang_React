@@ -6,8 +6,8 @@ import Draggable from "react-draggable";
 
 const HandComponent = (props: {
     loc:Locs,
-    hand: Card[], onCardClicked: (card: Card) => void
-}) => {
+    hand: Card[], onCardClicked: (card: Card) => void,
+    cardsRefs: Map<Card, React.RefObject<HTMLDivElement>>}) => {
     const hidden = props.hand.filter(c=>!c.shown);
     const shown = props.hand.filter(c=>c.shown);
 
@@ -23,7 +23,8 @@ const HandComponent = (props: {
                         <div className="CardList">
                             {hidden.map(card => (
                                 <CardComponent 
-                                card={card} 
+                                card={card}
+                                ref={props.cardsRefs.get(card)}  
                                 selected={false}
                                 selectable={true}
                                 onClick={() => {
@@ -45,6 +46,7 @@ const HandComponent = (props: {
                                 card={card} 
                                 selected={false}
                                 selectable={true}
+                                ref={props.cardsRefs.get(card)}    
                                 onClick={() => {
                                     props.onCardClicked(card);
                                 }}

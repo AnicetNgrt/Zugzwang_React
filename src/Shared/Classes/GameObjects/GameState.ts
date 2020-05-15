@@ -5,6 +5,7 @@ import { CopyIdProvider } from "../IdProviders/CopyIdProvider";
 import { ObjectsNames } from "./ObjectsNames";
 import { Rules } from "../../Types/Rules";
 import { Board } from "./Board";
+import { Pawn } from "./Pawn";
 
 export class GameState extends GameObject {
 
@@ -56,5 +57,12 @@ export class GameState extends GameObject {
         }
         newGs.currentPlayerIndex = (newGs.currentPlayerIndex + 1) % newGs.players.length;
         return newGs;
+    }
+
+    findOwner(pawn: Pawn): Player | null {
+        for (var p of this.players) {
+            if (p.owns(pawn)) return p;
+        }
+        return null;
     }
 }
