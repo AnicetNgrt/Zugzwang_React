@@ -10,9 +10,9 @@ export enum Orientation {
 
 export function getVec(or: Orientation): Vec2 {
     switch (or) {
-        case Orientation.NORTH: return { x: 0, y: 1 };
+        case Orientation.NORTH: return { x: 0, y: -1 };
         case Orientation.EAST: return { x: 1, y: 0 };
-        case Orientation.SOUTH: return { x: 0, y: -1 };
+        case Orientation.SOUTH: return { x: 0, y: 1 };
         case Orientation.WEST: return { x: -1, y: 0 };
     }
 }

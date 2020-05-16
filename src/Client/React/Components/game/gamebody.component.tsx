@@ -85,6 +85,7 @@ export default class GameBodyComponent extends React.Component {
 
     for (var player of props.gameState.players) {
       for (var pawn of Array.from(player.pawns.values())) {
+        if (!(pawn instanceof Pawn)) continue;
         this.pawnRefs.set(pawn.id, React.createRef<HTMLDivElement>());
       }
     }
@@ -111,7 +112,7 @@ export default class GameBodyComponent extends React.Component {
         ref = this.pawnRefs.get(hbhl.object.id);
       } else if (hbhl.object instanceof Card) {
         ref = this.props.cardsRefs.get(hbhl.object);
-      } else if (hbhl.object.x && hbhl.object.y) {
+      } else if (hbhl.object.x !== undefined && hbhl.object.y !== undefined) {
         ref = this.boardRefs[hbhl.object.y][hbhl.object.x];
       }
       if(ref) ret.push({ ref: ref, ...hbhl });
@@ -157,6 +158,7 @@ export default class GameBodyComponent extends React.Component {
                 this.setState({ movingPawn: { ...this.state.movingPawn, addHeight: v } });
               },
               complete: () => {
+                this.setState({selectedPawn:undefined})
                 tween({ from: this.state.movingPawn.addHeight, to: 0, duration: 150, ease: easing.easeIn }).start(
                   {
                     update: (v: any) => {
@@ -195,8 +197,10 @@ export default class GameBodyComponent extends React.Component {
     return (
       <div className="GameBodyDiv">
         {(this.props.gameState.players.map((p, pi, parr) => (
-          Array.from(p.pawns.values()).map((pa, pai, pawrr) => (
-            <PawnComponent
+          Array.from(p.pawns.values()).map((pa, pai, pawrr) => {
+            if (!(pa instanceof Pawn)) return (<div></div>);
+            return (
+              <PawnComponent
               ref={this.pawnRefs.get(pa.id)}
               picture={pawns.basic}
               color={p.color}
@@ -204,10 +208,11 @@ export default class GameBodyComponent extends React.Component {
               top={(movingPawn.pawn === pa ? movingPawn.pos.y : boardPos[pa.pos.y][pa.pos.x].y)}
               left={(movingPawn.pawn === pa ? movingPawn.pos.x : boardPos[pa.pos.y][pa.pos.x].x)}
               directed={true}
-              selected={selectedPawn.pawn === pa || movingPawn.pawn === pa}
+              moving={movingPawn.pawn === pa}
+              selected={selectedPawn.pawn === pa}
               pawn={pa}
               onClick={() => {
-                if (pa === selectedPawn.pawn) {
+                /*if (pa === selectedPawn.pawn) {
                   tween({ from: 2, to: 0, duration: 400 }).start({
                     update: (v: any) => { this.setState({ selectedPawn: { pawn: pa, addHeight: v } }) },
                     complete: () => { this.setState({ selectedPawn: undefined }); }
@@ -217,10 +222,11 @@ export default class GameBodyComponent extends React.Component {
                   tween({ from: 0, to: 2, duration: 400 }).start({
                     update: (v: any) => { this.setState({ selectedPawn: { pawn: pa, addHeight: v } }) }
                   });
-                }
+                }*/
               }}
             ></PawnComponent>
-          ))
+            )
+          })
         )))}
         {(this.state.highlights.map(h => {
           const rect = h.ref.current.getBoundingClientRect();
@@ -260,9 +266,9 @@ export default class GameBodyComponent extends React.Component {
           refs={this.boardRefs}
           board={this.props.gameState.board}
           onTileClicked={(x: number, y: number) => {
-            console.log(x + "|" + y);
+            /*console.log(x + "|" + y);
             if (!this.state.selectedPawn) {
-              /*const highlights = this.state.highlights;
+              const highlights = this.state.highlights;
               highlights.push({
                 ref: this.boardRefs[y][x],
                 object: { x: x, y: y },
@@ -277,7 +283,7 @@ export default class GameBodyComponent extends React.Component {
                   this.setState({ highlights: hs });
                 }
               });
-              this.setState({ highlights: highlights });*/
+              this.setState({ highlights: highlights });
               return
             }
             var player;
@@ -294,7 +300,7 @@ export default class GameBodyComponent extends React.Component {
                 this.setState({ selectedPawn: pawn });
               }
               this.handleEffects(this.props.onModification(ccl));
-            }
+            }*/
           }}
         />
         <PlayerComponent

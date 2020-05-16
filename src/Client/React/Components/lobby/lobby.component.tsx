@@ -216,11 +216,11 @@ export default class LobbyComponent extends React.Component {
           <LobbyCardSelectorComponent
             loc={this.props.loc}
             username={p.player.name}
-            hand={Array.from(p.player.hand.values())}
+            hand={Array.from(p.player.hand.valuesCard())}
             color={p.player.color}
             available={
               [
-                ...Array.from(p.player.hand.values()),
+                ...Array.from(p.player.hand.valuesCard()),
                 ...availableCards[i].filter(card => !(p.player.hand.has(card)) && p.player.canAddCard(card)),
                 ...availableCards[i].filter(card => !(p.player.hand.has(card)) && !p.player.canAddCard(card))
               ]

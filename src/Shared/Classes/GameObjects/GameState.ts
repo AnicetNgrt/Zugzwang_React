@@ -6,6 +6,7 @@ import { ObjectsNames } from "./ObjectsNames";
 import { Rules } from "../../Types/Rules";
 import { Board } from "./Board";
 import { Pawn } from "./Pawn";
+import { Card } from "./Card";
 
 export class GameState extends GameObject {
 
@@ -25,7 +26,11 @@ export class GameState extends GameObject {
     }
     
     copy(): GameState {
-        return new GameState(this.players, CopyIdProvider.getYours(this), this.board, this.rules, this.currentPlayerIndex);
+        const players = [];
+        for (var p of this.players) {
+            players.push(p);
+        }
+        return new GameState(players, CopyIdProvider.getYours(this), this.board, this.rules, this.currentPlayerIndex);
     }
 
     getStaticClassName(): string {
@@ -33,6 +38,10 @@ export class GameState extends GameObject {
     }
 
     replacePlayerWith(young: Player): boolean {
+        /*console.log("YOUNG");
+        console.log(young);
+        console.log("OLDS");
+        console.log(this.players);*/
         for (var p of this.players) {
             if (p.id === young.id) {
                 var i = this.players.indexOf(p);
@@ -48,6 +57,7 @@ export class GameState extends GameObject {
         for (var player of this.players) {
             const newPlayer = player.copy();
             for (var card of Array.from(newPlayer.hand.values())) {
+                if (!(card instanceof Card)) continue;
                 const newCard = card.copy();
                 newCard.playedTurn = 0;
                 newPlayer.replaceCardWith(card);

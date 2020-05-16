@@ -3,5 +3,6 @@ export enum ObjectsNames {
   BOARD = "Board",
   CARD = "Card",
   PAWN = "Pawn",
-  GAMESTATE = "GameState"
+  GAMESTATE = "GameState",
+  VEC = "Vec2"
 }

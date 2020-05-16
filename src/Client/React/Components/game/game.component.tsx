@@ -17,6 +17,7 @@ import { ModifierEffect, ModifierInput, ModifierObjects, ModifierConclusion } fr
 import { Action } from "Shared/Classes/Other/Action";
 import { ObjectsNames } from "Shared/Classes/GameObjects/ObjectsNames";
 import { GameObject } from "Shared/Classes/GameObjects/GameObject";
+import Pset from "Shared/Classes/Other/Pset";
 
 function randInt(min:number, max:number) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -57,8 +58,8 @@ const rules = {
 var ciAnicet = randInt(0, colors.length - 1);
 var ciThibo = (ciAnicet + randInt(1, colors.length - 2))%colors.length;
 
-var anicet: Player = new Player((cards: Set<Card>)=>true, "Anicet", colors[ciAnicet], 1, rules, idpr, 4, true);
-var thibo: Player = new Player((cards: Set<Card>)=>true, "Thibo", colors[ciThibo], 2, rules, idpr, 4, false);
+var anicet: Player = new Player((cards: Pset)=>true, "Anicet", colors[ciAnicet], 1, rules, idpr, 4, true);
+var thibo: Player = new Player((cards: Pset)=>true, "Thibo", colors[ciThibo], 2, rules, idpr, 4, false);
 var players: Player[] = [anicet, thibo];
 var board: Board = Board.getFromSize(rules.boardSize, idpr);
 
@@ -75,6 +76,13 @@ thibo.givePawn(new Pawn(idpr, { x: 3, y: 3 }));
 thibo.givePawn(new Pawn(idpr, { x: 7, y: 6 }));
 thibo.givePawn(new Pawn(idpr, { x: 5, y: 0 }));
 
+board.obstructed.add({ x: 2, y: 3 });
+board.obstructed.add({ x: 3, y: 4 });
+board.obstructed.add({ x: 9, y: 14 });
+board.obstructed.add({ x: 3, y: 3 });
+board.obstructed.add({ x: 7, y: 6 });
+board.obstructed.add({ x: 5, y: 0 });
+
 var cgs = new GameState(players, idpr, board, rules, 0);
 
 
@@ -89,12 +97,19 @@ export class Game {
   }
 }
 
+type HalfBakedHlight = { object: any, type: string, onClicked: (object: any, type: string) => void };
+type ModInputsRequests = {
+  todo: { name: string, mi: ModifierInput }[],
+  onFullFilled: (objects: ModifierObjects) => void,
+  test: (objects: ModifierObjects)=>boolean
+};
+
 export type GameComponentState = {
   selectedCards: Card[],
   status: Status,
   game: Game,
-  hbhls: { object: any, type: string, onClicked: (object: any, type: string) => void }[],
-  modInputsRequests: { todo: { name: string, mi: ModifierInput }[], onFullFilled:(objects:ModifierObjects)=>void },
+  hbhls: HalfBakedHlight[],
+  modInputsRequests: ModInputsRequests,
   modInputs: ModifierObjects
 }
 
@@ -113,13 +128,14 @@ export default class GameComponent extends React.Component {
       status: Status.LOCAL,
       game: new Game(cgs),
       hbhls: [],
-      modInputsRequests: {todo:[], onFullFilled:()=>{}},
+      modInputsRequests: {todo:[], onFullFilled:()=>{}, test:()=>false},
       modInputs: {}
     }
 
     this.cardsRefs = new Map<Card, React.RefObject<HTMLDivElement>>();
     for (var player of this.state.game.states[this.state.game.states.length-1].players) {
       for (var card of Array.from(player.hand.values())) {
+        if (!(card instanceof Card)) continue;
         this.cardsRefs.set(card, React.createRef<HTMLDivElement>());
       }
     }
@@ -131,97 +147,164 @@ export default class GameComponent extends React.Component {
     this.cardsRefs = new Map<Card, React.RefObject<HTMLDivElement>>();
     for (var player of this.state.game.states[this.state.game.states.length-1].players) {
       for (var card of Array.from(player.hand.values())) {
+        if (!(card instanceof Card)) continue;
         this.cardsRefs.set(card, React.createRef<HTMLDivElement>());
       }
     }
   }
 
+  cgs(): GameState {
+    return this.state.game.states[this.state.game.states.length - 1];
+  }
+
   fullFillMi(object: any) {
     const modInputsRequests = this.state.modInputsRequests;
     const modInputs = this.state.modInputs;
-    modInputs[modInputsRequests.todo[0].name].push(object);
-    if(modInputs[modInputsRequests.todo[0].name].length === modInputsRequests.todo[0].mi.count) modInputsRequests.todo.splice(0, 1);
-    if (modInputsRequests.todo.length === 0) modInputsRequests.onFullFilled(modInputs);
+    if (modInputs[modInputsRequests.todo[0].name]) {
+      modInputs[modInputsRequests.todo[0].name].push(object);
+    } else {
+      modInputs[modInputsRequests.todo[0].name] = [object];
+    }
+    
+    if (modInputs[modInputsRequests.todo[0].name].length === modInputsRequests.todo[0].mi.count) {
+      modInputsRequests.todo.splice(0, 1);
+      this.setHbhls(modInputs, modInputsRequests);
+    }
+
+    //console.log(modInputsRequests.todo);
+
+    if (modInputsRequests.todo.length === 0) {
+      modInputsRequests.onFullFilled(modInputs);
+      this.setState({ hbhls: [] });
+    }
     this.setState({ modInputsRequests: modInputsRequests, modInputs: modInputs });
   }
 
   onActionSelected(action: Action, card: Card, player: Player) {
     if (!player.playing) return alert("tu ne joues pas");
-    if (this.state.modInputs.todo !== []) {
-      this.setState({ modInputsRequests: [], modInputs: [] });
+    if (this.state.modInputsRequests.todo.length !== 0) {
+      this.setState({ modInputsRequests: {todo:[], onFullFilled:this.state.modInputs.onFullFilled}, modInputs: {} });
       return;
     }
     const mod = action.modifier;
     const todo = [];
     var addOwner = false;
-    for (var [key, modInput] of Object.entries(mod.inputs)) {
+    for (let key in mod.inputs) {
       if (key === "owner") {
         addOwner = true;
-        break;
+        continue;
       }
-      todo.push({name:key, mi:modInput});
+      todo.push({name:key, mi:mod.inputs[key]});
     }
-    this.setState({
-      modInputsRequests: {
-        todo: todo,
-        onFullFilled: (objects:ModifierObjects) => {
-          this.handleCcl(card.play(
-            this.state.game.states[this.state.game.states.length - 1],
-            card.type.data.actions.indexOf(action),
-            player,
-            objects
-          ));
-        }
+
+    const modInputsRequests = {
+      todo: todo,
+      onFullFilled: (objects: ModifierObjects) => {
+        this.handleCcl(card.play(
+          this.cgs(),
+          card.type.data.actions.indexOf(action),
+          player,
+          objects
+        ));
       },
-      modInputs: addOwner ? [player] : []
+      test: (objects: ModifierObjects): boolean => {
+        //console.log(objects);
+        const ccl = card.play(
+          this.cgs(),
+          card.type.data.actions.indexOf(action),
+          player,
+          objects
+        );
+        return ccl.success;
+      }
+    }
+
+    this.setState({
+      modInputsRequests: modInputsRequests,
+      modInputs: addOwner ? {"owner": [player] } : {}
     });
+    this.setHbhls(addOwner ? { "owner": [player] } : {}, modInputsRequests);
   }
 
-  handleCcl(ccl:ModifierConclusion): ModifierEffect[] {
+  setHbhls(modInputs: ModifierObjects, modInputsRequests:ModInputsRequests) {
+    if (modInputsRequests.todo.length === 0) return;
+    const gs = this.cgs();
+    const current = modInputsRequests.todo[0];
+    const hbhls: HalfBakedHlight[] = [];
+    if (current.name === "movedPawn") {
+      for (var pa of Array.from(modInputs["owner"][0].pawns.values())) {
+        const pawn = pa;
+        hbhls.push({ object: pawn, type: current.name, onClicked: () => this.fullFillMi(pawn) });
+      }
+    } else if (current.name === "pos") {
+      for (var x = 0; x <= gs.board.maxCrd.x; x++) {
+        for (var y = 0; y <= gs.board.maxCrd.y; y++) {
+          const vec = { x: 0 + x, y: 0 + y };
+          if (modInputsRequests.test({ ...modInputs, [current.name]: [vec] })) {
+            hbhls.push({ object: vec, type: current.name, onClicked: () => this.fullFillMi(vec) });
+          }
+        }
+      }
+    }
+    this.setState({ hbhls: hbhls });
+  }
+
+  handleCcl(ccl: ModifierConclusion): ModifierEffect[] {
+    console.log("HANDLE");
+    console.log(ccl);
     if (!ccl.success) return [];
     else {
       const game = this.state.game;
-      var lastgs: GameState = this.state.game.states[this.state.game.states.length - 1];
+      var lastgs: GameState = this.cgs();
       for (var effect of ccl.effects) {
         if (effect.new instanceof GameState) {
+          //console.log(effect);
           lastgs = effect.new;
         }
       }
       game.states.push(lastgs);
-      console.log(game);
+      //console.log(game);
       this.setState({ game: game });
       this.forceUpdate();
       return ccl.effects;
     }
   }
 
+  getLatestCard(card: Card) {
+    for (var p of this.cgs().players) {
+      for (var ca of Array.from(p.hand.values())) {
+        if (!(ca instanceof Card)) continue;
+        if (card.id === ca.id) return ca;
+      }
+    }
+    return card;
+  }
+
   render() {
     const { selectedCards } = this.state;
-
     return (
       <div className="GameDiv">
         <img className="GameBackground" src={backgroundsImgs.game} alt=""></img>
         <GameBodyComponent
-          halfBakedHlights={[]}
+          halfBakedHlights={this.state.hbhls}
           loc={this.props.loc}
           cardsRefs={this.cardsRefs}
-          gameState={this.state.game.states[this.state.game.states.length - 1]}
-          onCardClicked={(card: Card, owner:Player) => {
-          if (selectedCards.indexOf(card) !== -1) return;
-          this.setState({ selectedCard: selectedCards.push(card) });
+          gameState={this.cgs()}
+          onCardClicked={(card: Card, owner: Player) => {
+            if (selectedCards.indexOf(card) !== -1) return;
+            this.setState({ selectedCard: selectedCards.push(card) });
           }}
           onModification={(ccl):ModifierEffect[] => {
             if (!ccl.success) return [];
             else {
               const game = this.state.game;
-              var lastgs: GameState = this.state.game.states[this.state.game.states.length - 1];
+              var lastgs: GameState = this.cgs();
               for (var effect of ccl.effects) {
                 if (effect.new instanceof GameState) {
                   lastgs = effect.new;
                 }
               }
               game.states.push(lastgs);
-              console.log(game);
               this.setState({ game: game });
               this.forceUpdate();
               return ccl.effects;
@@ -230,26 +313,38 @@ export default class GameComponent extends React.Component {
         />
         
         {selectedCards.length > 0 && 
-          this.state.game.states[this.state.game.states.length - 1].players.map((p, pi, parr) => (
-            selectedCards.map((v, i, a) => (
-              p.owns(v) &&
-              <CardDetailComponent
-                loc={this.props.loc}
-                color={p.color}
-                card={v}
-                owner={p}
-                cardRef={this.cardsRefs.get(v)}
-                onActionSelected={(action: Action) => {
-                  this.onActionSelected(action, v, p);
-                }}
-                onClickOutside={() => {
-                this.setState({
-                  selectedCard: (() => {
-                    delete selectedCards[i];
-                    return selectedCards;
-                })()});
-              }}></CardDetailComponent>
-            ))
+          this.cgs().players.map((p, pi, parr) => (
+            selectedCards.map((v, i, a) => {
+              if (!p.owns(v)) {
+                return (<div></div>); 
+              }
+              return(
+                <CardDetailComponent
+                  loc={this.props.loc}
+                  color={p.color}
+                  card={(()=>{
+                    for (var p of this.cgs().players) {
+                      for (var card of Array.from(p.hand.values())) {
+                        if (!(card instanceof Card)) continue;
+                        if (v.id === card.id) return card;
+                      }
+                    }
+                    return v;
+                  })()}
+                  owner={p}
+                  cardRef={this.cardsRefs.get(v)}
+                  onActionSelected={(action: Action) => {
+                    this.onActionSelected(action, this.getLatestCard(v), p);
+                  }}
+                  onClickOutside={() => {
+                  this.setState({
+                    selectedCard: (() => {
+                      delete selectedCards[i];
+                      return selectedCards;
+                  })()});
+                }}></CardDetailComponent>
+              )
+            })
           ))
         }
         <BsComponent strength={10} color="#02001b"></BsComponent>

@@ -28,8 +28,10 @@ export default function PlayerComponent(props: {
       <HandComponent
         cardsRefs={props.cardsRefs}
         loc={props.loc}
-        hand={Array.from(props.player.hand.values())}
-        onCardClicked={(card: Card) => props.onCardClicked(card)}></HandComponent>
+        hand={Array.from(props.player.hand.valuesCard())}
+        onCardClicked={(card: Card) => {
+          props.onCardClicked(card);
+        }}></HandComponent>
       <PawnBoxComponent
         loc={props.loc}
         pawns={[]}

@@ -7,12 +7,13 @@ import { Pawn } from "./Pawn";
 import { Pattern } from "../../Types/Pattern";
 import { getVec } from "../../Enums/Orientation";
 import { Player } from "./Player";
+import Pset from "../Other/Pset";
 
 export class Board extends GameObject {
     constructor(
         readonly maxCrd: Vec2,
-        readonly slippery: Set<Vec2>,
-        readonly obstructed: Set<Vec2>,
+        readonly slippery: Pset,
+        readonly obstructed: Pset,
         readonly shiftMap: Array<Array<Vec2>>,
         idProvider:IdProvider
     ) {
@@ -20,8 +21,14 @@ export class Board extends GameObject {
     }
 
     copy():Board {
-        const slipperyCopy = new Set(this.slippery);
-        const obstructedCopy = new Set(this.obstructed);
+        const slipperyCopy = new Pset();
+        for (var slippery of Array.from(this.slippery.values())) {
+            slipperyCopy.add(slippery);
+        }
+        const obstructedCopy = new Pset();
+        for (var obstructed of Array.from(this.obstructed.values())) {
+            obstructedCopy.add(obstructed);
+        } 
         return new Board(
             this.maxCrd,
             slipperyCopy,
@@ -41,6 +48,7 @@ export class Board extends GameObject {
     }
 
     isObstructed(pos: Vec2): boolean {
+
         return this.obstructed.has(pos);
     }
 
@@ -102,7 +110,7 @@ export class Board extends GameObject {
             }
         }
 
-        return new Board({x:size.x-1, y:size.y-1}, new Set(),  new Set(), shiftMap, idProvider);
+        return new Board({x:size.x-1, y:size.y-1}, new Pset(),  new Pset(), shiftMap, idProvider);
     }
 
     movePawnFromPattern(pawn: Pawn, owner: Player, pattern: Pattern): boolean {
@@ -116,15 +124,15 @@ export class Board extends GameObject {
     }
 
     movePawn(pawn: Pawn, owner: Player, newPos: Vec2): boolean {
-        console.log("pos: " + JSON.stringify(newPos));
+        //console.log("pos: " + JSON.stringify(newPos));
         newPos = { x: newPos.x % (this.maxCrd.x + 1), y: newPos.y % (this.maxCrd.y + 1) };
-        console.log("adjustedPos: " + JSON.stringify(newPos));
+        //console.log("adjustedPos: " + JSON.stringify(newPos));
         if (owner.prohibitedTiles.has(newPos)) return false;
 
         if (this.isObstructed(newPos)) return false;
 
         const shiftedPos: Vec2 = add(newPos, this.getSlippery(newPos));
-        console.log("shiftedPos: " + JSON.stringify(newPos));
+        //console.log("shiftedPos: " + JSON.stringify(newPos));
         if (shiftedPos.x === newPos.x && shiftedPos.y === newPos.y) {
             pawn.pos = { x: newPos.x, y: newPos.y };
             return true;

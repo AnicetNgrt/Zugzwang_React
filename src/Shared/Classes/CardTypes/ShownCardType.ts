@@ -13,8 +13,14 @@ export class ShownCardType implements CardType, Hidable {
     ) { }
     
     play(gameState: GameState, actionIndex: number, player: Player, objects: ModifierObjects): ModifierConclusion {
-        if (this.data.actions.length >= actionIndex || actionIndex < 0) return getFailedConclusion();
+        if (this.data.actions.length <= actionIndex || actionIndex < 0) return getFailedConclusion("action index is incorrect");
         const action: Action = this.data.actions[actionIndex];
-        return action.play(gameState, player, objects);
+
+        const ccl = action.play(gameState, player, objects);
+        if (ccl.success) {
+            //console.log(gameState.players[0].pawns.values());
+            //console.log({...ccl});
+        }
+        return ccl;
     }
 }

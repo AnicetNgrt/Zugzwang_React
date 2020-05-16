@@ -4,7 +4,7 @@ import { CardTypeData } from "../../Interfaces/CardType";
 import { Pattern } from "../../Types/Pattern";
 import { Orientation, reOrient } from "../../Enums/Orientation";
 import { Displacement } from "../../Types/Displacement";
-import { getFromPattern } from "../../Consts/Modifiers";
+import { getFromPatterns } from "../../Consts/Modifiers";
 
 export interface DisplacementCardTypeData {
     readonly weight: number,
@@ -33,7 +33,7 @@ export class DisplacementCardType extends ShownCardType {
 
         const actions: Action[] = [];
         for (var disp of data.displacements) {
-            actions.push(new Action(disp.cost, "moveActionTitle", "moveActionDesc", getFromPattern(disp.pattern)));
+            actions.push(new Action(disp.cost, "moveActionTitle", "moveActionDesc", getFromPatterns(disp.patterns)));
         }
 
         this.data = {
@@ -45,8 +45,12 @@ export class DisplacementCardType extends ShownCardType {
     rotate(rotation:Orientation) {
         if(this.data.fullCircle) return;
         for(var i:number = 0; i < this.data.displacements.length; i++) {
-            const rotated:Pattern = reOrient(this.data.displacements[i].pattern, rotation);
-            this.data.displacements[i].pattern = rotated;
+            const torotate: Pattern[] = this.data.displacements[i].patterns;
+            for (var pattern of torotate) {
+                const rotated = reOrient(pattern, rotation);
+                pattern = rotated;
+            }
+            this.data.displacements[i].patterns = torotate;
         }
     }
 }

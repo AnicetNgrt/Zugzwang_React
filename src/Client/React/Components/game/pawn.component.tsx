@@ -12,13 +12,29 @@ type PawnProps = {
   color: string,
   onClick: () => void,
   selected: boolean,
+  moving: boolean,
   addHeight: number,
   pawn:Pawn
 }
 
+
 const PawnComponent = React.forwardRef((props: PawnProps, ref: any) => {
+
+  const [lastHeight, setLastHeight] = React.useState(0);
+  const [showShadow, setShowShadow] = React.useState(false);
+
+  if (!showShadow && props.addHeight > lastHeight) {
+    setShowShadow(true);
+  } else if (showShadow && props.addHeight < lastHeight) {
+    setShowShadow(false);
+  }
+
+  if (props.addHeight !== lastHeight) {
+    setLastHeight(props.addHeight);
+  }
+
   return (
-    <div className={"PawnDiv"+(props.selected ? " Selected" : "")}
+    <div className={"PawnDiv"+((props.selected || props.moving) ? " Selected" : "")}
       style={{
         top: "calc("+props.top+"px - "+props.addHeight+"vw)",
         left: props.left + "px",
@@ -27,9 +43,11 @@ const PawnComponent = React.forwardRef((props: PawnProps, ref: any) => {
       }}>
       <div className="PawnPics"> 
         <div className="ImgShadow"
-          style={(props.selected ? {} : {
+          style={(showShadow ? {
             border: "solid 0.25vw "+props.color+"88",
-            boxShadow: "0 0 1vw " + props.color + "ff"
+          } : {
+            border: "solid 0.25vw "+props.color+"88",
+            boxShadow: "0 0 1vw " + props.color + "ff, 0 0vw 0vw rgba(0, 0, 50, 0)"
         })}></div>
         <div className="PawnHitbox" onClick={() => {
           props.onClick();

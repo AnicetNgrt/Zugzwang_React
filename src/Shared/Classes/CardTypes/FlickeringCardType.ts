@@ -13,7 +13,7 @@ export class FlickeringCardType implements CardType, Hidable {
     ) {}
 
     play(gameState: GameState, actionIndex: number, player: Player, objects: ModifierObjects): ModifierConclusion {
-        if (this.data.actions.length >= actionIndex || actionIndex < 0) return getFailedConclusion();
+        if (this.data.actions.length <= actionIndex || actionIndex < 0) return getFailedConclusion("action index is incorrect");
         const action: Action = this.data.actions[actionIndex];
         return action.play(gameState, player, objects);
     }

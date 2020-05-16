@@ -12,18 +12,21 @@ export class Action {
     ) { }
 
     play(gameState: GameState, player: Player, objects: ModifierObjects): ModifierConclusion {
-        if (player.ap < this.cost) return getFailedConclusion();
+        if (player.ap < this.cost) return getFailedConclusion("can't afford this action");
         
         const ccl: ModifierConclusion = this.modifier.execute(gameState, objects);
-        if (!ccl.success) return getFailedConclusion();
+        if (!ccl.success) return getFailedConclusion(ccl.reason ? ccl.reason : "unknown");
         
         var newGs: GameState;
         var newPlayer: Player;
 
         for (var effect of ccl.effects) {
             if (effect.new.id === player.id) {
+                //console.log(player);
+                //console.log(effect.new);
                 (effect.new as Player).ap -= this.cost;
-                if ((effect.new as Player).ap < 0) return getFailedConclusion();
+                if ((effect.new as Player).ap < 0) return getFailedConclusion("AFTERHAND: can't afford this action");
+                
                 ccl.effects.push({ name: ModEffNames.APCHANGE, old: effect.old, new: effect.new });
                 return ccl;
             }
@@ -31,7 +34,7 @@ export class Action {
 
         newPlayer = player.copy();
         newPlayer.ap -= this.cost;
-        if (newPlayer.ap < 0) return getFailedConclusion();
+        if (newPlayer.ap < 0) return getFailedConclusion("AFTERHAND: can't afford this action");
 
         for (effect of ccl.effects) {
             if (effect.new.id === gameState.id) {

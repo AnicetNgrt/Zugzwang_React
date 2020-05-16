@@ -51,7 +51,7 @@ export class Pawn extends GameObject {
         return ObjectsNames.PAWN;
     }
 
-    editSafe(gameState: GameState, owner: Player, fn: (gameState: GameState, owner: Player, pa: Pawn) => ModifierConclusion): ModifierConclusion {
+    editSafe(gameState: GameState, owner: Player, fn: (newGs: GameState, newOw: Player, newPa: Pawn) => ModifierConclusion): ModifierConclusion {
         const newGs: GameState = gameState.copy();
         const newOw: Player = owner.copy();
         const newPa: Pawn = this.copy();
@@ -59,9 +59,10 @@ export class Pawn extends GameObject {
         const ccl: ModifierConclusion = fn(newGs, newOw, newPa);
         if (!ccl.success) return ccl;
         
-        newGs.replacePlayerWith(newOw);
+        //console.log(gameState);
         newOw.replacePawnWith(newPa);
-        ccl.effects.push({ name: ModEffNames.INTERNALREFCHANGE, old: gameState, new: gameState });
+        var s = newGs.replacePlayerWith(newOw);
+        ccl.effects.push({ name: ModEffNames.INTERNALREFCHANGE, old: gameState, new: newGs });
         ccl.effects.push({ name:ModEffNames.INTERNALREFCHANGE, old: owner, new: newOw });
         
         return ccl;

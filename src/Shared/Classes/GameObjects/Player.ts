@@ -5,14 +5,16 @@ import { Card } from "./Card";
 import { Rules } from "../../Types/Rules";
 import { Vec2 } from "../../Types/Vec2";
 import { ObjectsNames } from "./ObjectsNames";
+import { CopyIdProvider } from "../IdProviders/CopyIdProvider";
+import Pset from "../Other/Pset";
 
-export type DeckChecker = (cards: Set<Card>) => boolean;
+export type DeckChecker = (cards: Pset) => boolean;
 
 export class Player extends GameObject {
 
     isFocused: boolean = false;
-    hand: Set<Card> = new Set();
-    pawns: Set<Pawn> = new Set();
+    hand: Pset = new Pset();
+    pawns: Pset = new Pset();
     prohibitedTiles: Set<Vec2> = new Set();
     ap: number;
     name: string;
@@ -38,9 +40,9 @@ export class Player extends GameObject {
     
     hasLost(): Boolean {
         var alive = false;
-        this.pawns.forEach((pawn: Pawn) => {
-            alive = pawn.isAlive;
-        });
+        for (var pawn of Array.from(this.pawns.values())) {
+            alive = (pawn as Pawn).isAlive;
+        }
         return alive;
     }
 
@@ -64,13 +66,15 @@ export class Player extends GameObject {
     canAddCard(card:Card): boolean {
         var types = new Set<string>();
         var weight = 0;
-        this.hand.forEach((c: Card) => {
+        const handCopy = new Pset();
+        for (var c of Array.from(this.hand.values())) {
+            if (!(c instanceof Card)) continue;
             types.add(c.type.data.name);
+            handCopy.add(c);
             weight += c.type.data.weight;
-        })
+        }
         if (types.has(card.type.data.name)) return false;
         if (weight + card.type.data.weight > this.rules.maxWeight) return false;
-        const handCopy = new Set(this.hand);
         handCopy.add(card);
         if (!this.deckChecker(handCopy)) return false;
         return true;
@@ -78,20 +82,16 @@ export class Player extends GameObject {
 
     getHandWeight(): number {
         var weight = 0;
-        this.hand.forEach((c: Card) => {
-            weight += c.type.data.weight;
-        });
+        for (var card of Array.from(this.hand.values())) {
+            if (!(card instanceof Card)) continue;
+            weight += card.type.data.weight; 
+        }
         return weight;
     }
 
     owns(object: GameObject): boolean {
-        var id = object.id;
-        for (var pawn of Array.from(this.pawns.values())) {
-            if (pawn.id === id) return true;
-        }
-        for (var card of Array.from(this.hand.values())) {
-            if (card.id === id) return true;
-        }
+        if (object instanceof Pawn) return this.pawns.has(object);
+        if (object instanceof Card) return this.hand.has(object);
         return false;
     }
 
@@ -102,14 +102,23 @@ export class Player extends GameObject {
             this.color,
             this.team,
             this.rules,
-            this.idProvider,
+            CopyIdProvider.getYours(this),
             this.ap,
             this.playing
         );
         p.isFocused = this.isFocused;
-        p.hand = new Set(this.hand);
-        p.pawns = new Set(this.pawns);
-        p.prohibitedTiles = new Set(this.prohibitedTiles);
+        p.hand = new Pset();
+        for (var ca of Array.from(this.hand.values())) {
+            p.hand.add(ca);
+        }
+        p.pawns = new Pset();
+        for (var pa of Array.from(this.pawns.values())) {
+            p.pawns.add(pa);
+        }
+        p.prohibitedTiles = new Set();
+        for (var tile of Array.from(this.prohibitedTiles.values())) {
+            p.prohibitedTiles.add(tile);
+        }
         return p;
     }
 
@@ -118,23 +127,17 @@ export class Player extends GameObject {
     }
 
     replacePawnWith(young: Pawn): boolean {
-        for (var pa of Array.from(this.pawns.values())) {
-            if (pa.id === young.id) {
-                this.pawns.delete(pa);
-                this.pawns.add(young);
-                return true;
-            }
+        if (this.pawns.has(young)) {
+            this.pawns.add(young);
+            return true;
         }
         return false;
     }
 
     replaceCardWith(young: Card): boolean {
-        for (var ca of Array.from(this.hand.values())) {
-            if (ca.id === young.id) {
-                this.hand.delete(ca);
-                this.hand.add(young);
-                return true;
-            }
+        if (this.hand.has(young)) {
+            this.hand.add(young);
+            return true;
         }
         return false;
     }

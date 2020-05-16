@@ -13,7 +13,7 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
         fullCircle:false,
         displacements: [{
             cost:1,
-            pattern:Patterns.smallRivers
+            patterns: [Patterns.smallRivers]
         }],
         defaultRotation: Orientation.NORTH
     })},
@@ -21,16 +21,12 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
         weight:8,
         name:"Knight",
         picturePath:undefined,
-        maxTurn:2,
+        maxTurn:999,
         maxGame:999,
         fullCircle:false,
         displacements: [{
-            cost:1,
-            pattern:Patterns.knightEast
-        },
-        {
-            cost:1,
-            pattern:Patterns.knightWest
+            cost:0,
+            patterns: [Patterns.knightEast, Patterns.knightWest]
         }],
         defaultRotation: Orientation.NORTH
     })},
@@ -43,11 +39,7 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
         fullCircle:false,
         displacements: [{
             cost:1,
-            pattern:Patterns.clockmakerEast
-        },
-        {
-            cost:1,
-            pattern:Patterns.clockmakerWest
+            patterns:[Patterns.clockmakerEast, Patterns.clockmakerWest]
         }],
         defaultRotation: Orientation.NORTH
     })},
@@ -60,11 +52,7 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
         fullCircle:false,
         displacements: [{
             cost:1,
-            pattern:Patterns.clockmakerEast
-        },
-        {
-            cost:1,
-            pattern:Patterns.clockmakerWest
+            patterns: [Patterns.clockmakerEast, Patterns.clockmakerWest]
         }],
         defaultRotation: Orientation.SOUTH
     })}

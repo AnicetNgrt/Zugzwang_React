@@ -63,11 +63,12 @@ export class Card extends GameObject {
     }
 
     play(gameState: GameState, actionIndex:number, player: Player, objects: ModifierObjects): ModifierConclusion {
-        if (!player.owns(this)) return getFailedConclusion();
-        if (this.playedGame >= this.type.data.maxGame) return getFailedConclusion();
-        if (this.playedTurn >= this.type.data.maxTurn) return getFailedConclusion();
+        if (!player.owns(this)) return getFailedConclusion("player does not own this card");
+        if (this.playedGame >= this.type.data.maxGame) return getFailedConclusion("this card has been played too many times this game");
+        if (this.playedTurn >= this.type.data.maxTurn) return getFailedConclusion("this card has been played too many times this turn");
+        
         const ccl = this.type.play(gameState, actionIndex, player, objects);
-        if (!ccl.success) return getFailedConclusion();
+        if (!ccl.success) return getFailedConclusion(ccl.reason ? ccl.reason : "unknown");
 
         var newGs: GameState | undefined = undefined;
         var newPlayer: Player | undefined = undefined;
@@ -102,11 +103,11 @@ export class Card extends GameObject {
         ccl.effects.push({ name: ModEffNames.INTERNALREFCHANGE, old: gameState, new: newGs });
 
         newCard.playedGame += 1;
-        if (newCard.type.data.maxGame < newCard.playedGame) return getFailedConclusion();
+        if (newCard.type.data.maxGame < newCard.playedGame) return getFailedConclusion("AFTERHAND: this card has been played too many times this game");
         ccl.effects.push({ name: ModEffNames.CARDPGCHANGE, old: this, new: newCard });
         
         newCard.playedTurn += 1;
-        if (newCard.type.data.maxTurn < newCard.playedTurn) return getFailedConclusion();
+        if (newCard.type.data.maxTurn < newCard.playedTurn) return getFailedConclusion("AFTERHAND: this card has been played too many times this turn");
         ccl.effects.push({ name: ModEffNames.CARDPTCHANGE, old: this, new: newCard });
         if (newCard.type instanceof FlickeringCardType && !newCard.shown) {
             newCard.shown = true;

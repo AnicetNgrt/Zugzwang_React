@@ -20,8 +20,10 @@ class CardDetailComponent extends React.Component {
         face2Opacity: number,
         animated: boolean,
         pos: Vec2,
-        cardPos: Vec2
+        cardPos: Vec2,
     }
+
+    shownAction: Action[];
 
     constructor(readonly props: {
         loc: Locs,
@@ -39,7 +41,8 @@ class CardDetailComponent extends React.Component {
             pos: { y: 0, x: 0 },
             cardPos: { y: 0, x: 0}
         }
-        console.log(props.card);
+        this.shownAction = []
+        //console.log(props.card);
         this.detailRef = React.createRef();
     }
 
@@ -81,7 +84,7 @@ class CardDetailComponent extends React.Component {
                     axis={"both"}
                     disabled={this.state.animated}
                     onStop={(...args: any[]) => {
-                        console.log(args);
+                        //console.log(args);
                         const { x, y } = args[1];
                         this.setState({ pos: { x: x, y: y} });
                     }}
@@ -138,15 +141,29 @@ class CardDetailComponent extends React.Component {
                                     <h1 className="CardName">{this.props.card.type.data.name}</h1>
                                 </div>
                                 <div className="Actions">
-                                {(this.props.card.type.data.actions.map(a => {
+                                    {(this.props.card.type.data.actions.map((a, i, arr) => {
                                     return (
-                                        <div className="ActionDetail">
-                                            <h1 className="ActionName">
+                                        <div
+                                            className={"ActionDetail" + (this.shownAction.indexOf(a) !== -1 ? " ShownAction" : "")}
+                                            //style={{opacity: hide ? 0: 1}}
+                                        >
+                                            <div className="ActionName"
+                                                onClick={() => {
+                                                    if (this.shownAction.indexOf(a) !== -1) {
+                                                        this.shownAction.splice(this.shownAction.indexOf(a), 1);
+                                                        this.forceUpdate();
+                                                        this.forceUpdate();
+                                                    } else {
+                                                        this.shownAction = [...this.shownAction, a];
+                                                        this.forceUpdate();
+                                                        this.forceUpdate();
+                                                    }
+                                            }}>
                                                 <span className="ActionCost">
                                                     {a.cost} <span className="ApCost">AP</span>
                                                 </span>
                                                 {" " + this.props.loc[a.name]}
-                                                <p className="ActionDesc">
+                                                <div className="ActionDesc">
                                                     {this.props.loc[a.description]}
                                                     <div
                                                         className="PlayActionButton"
@@ -154,8 +171,8 @@ class CardDetailComponent extends React.Component {
                                                     >
                                                         {this.props.loc["z"]}
                                                     </div>
-                                                </p>
-                                            </h1>
+                                                </div>
+                                            </div>
                                         </div>
                                     )
                                 }))}
