@@ -145,7 +145,7 @@ $m: 0.60rem;
         left: 0%;
         width: 100%;
         max-width: 100%;
-        height: 100%;
+        height: fit-content;
         //background-color: red;
         //z-index: 3000;
         //pointer-events: all;
@@ -153,31 +153,34 @@ $m: 0.60rem;
 
     .ActionDetail {
         cursor: pointer;
-        box-sizing: content-box;
         transition: transform 0.3s, box-shadow 0.3s;
         display:block;
         width: 90%;
         max-width: 90%;
         height: fit-content;
-        border-radius: 0.7rem;
-        padding-left: 0.4vw;
-        padding-right: 0.6vw;
-        padding-top: 0.5vw;
-        padding-bottom: 0.4vw;
+        border-radius: 0.25vw;
         margin-top: 0.2vw;
         margin-left: 0.4vw;
         background-color: rgb(0, 0, 0);
         opacity: 1;
         transform:translate(3.5%, 1%) scale(1);
         box-sizing: border-box;
+        box-shadow: 0 0 0.5vw black;
+        border: solid 0.1vw rgb(0, 0, 0);
         //z-index: 1000;
 
         .ActionName {
             cursor: pointer;
+            padding-left: 0.15vw;
+            padding-right: 0.6vw;
+            padding-top: 0.2vw;
+            padding-bottom: 0.2vw;
             font-family: 'Cinzel';
             font-weight: 900;
             font-size: 1.3vw;
+            color: #eec39a;
             margin: 0;
+            //background-color: red;
         }
 
         .ActionCost {
@@ -185,12 +188,12 @@ $m: 0.60rem;
             display: inline-block;
             font-family: 'Cinzel';
             font-weight: 900;
-            font-size: 1.3vw;
+            font-size: 2vw;
             margin-left: 0.1vw;
             margin-right: 0.1vw;
             width: fit-content;
-            background-color: white;
-            border-radius: 1.3vw;
+            background-color: #eec39a;
+            border-radius: 0.25vw;
             padding: 0;
             padding-left: 0.65vw;
             padding-right: 0.35vw;
@@ -200,7 +203,8 @@ $m: 0.60rem;
             .ApCost {
                 transition: font-size 0.3s;
                 display: inline-block;
-                font-size:0vw;
+                
+                font-size:1vw;
             }
         }
 
@@ -211,7 +215,8 @@ $m: 0.60rem;
             border-bottom-left-radius: 0.25vw;
             border-bottom-right-radius: 0.25vw;
             opacity: 0;
-            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            color: white;
+            font-family: 'Jost', sans-serif;
             font-weight: 300;
             font-size: 1.4vw;
             width: 100%;
@@ -221,27 +226,59 @@ $m: 0.60rem;
 
         .PlayActionButton {
             transition: color 0.4s, background-color 0.4s;
+            position: relative;
             font-family: 'Cinzel';
             font-weight: 900;
             font-size: 2.5vw;
-            margin-top: 0.5vw;
+            margin-left: 0.25vw;
+            margin-bottom: 0.25vw;
+            padding-left: 0.25vw;
+            padding-right: 0.25vw;
             text-align: center;
-            width: 100%;
+            width: 97%;
+            //height: 3vw;
             border-radius: 0.25vw;
+            background-color: #eec39a;
+            pointer-events: all;
+            font-family: 'Cinzel';
+            font-weight: 900;
+            //font-size: 2.5vw;
             color: black;
-            background-color: rgb(255, 255, 255);
-            //pointer-events: all;
             //z-index: 310;
             cursor: pointer;
+
+            &.Locked {
+                background-color: rgb(255, 85, 85);
+                color: rgb(0, 0, 0);
+            }
+
+            &.Cancel {
+                background-color: rgb(255, 139, 85);
+                color: rgb(0, 0, 0);
+            }
         }
+
         .PlayActionButton:hover {
             transition: color 0.4s, background-color 0.4s;
-            color: rgb(255, 255, 255);
+            color: #eec39a;
             background-color: rgb(0, 0, 0);
+
+            &.Cancel {
+                color:rgb(255, 139, 85);
+            }
         }
+        .Locked:hover {
+            background-color: rgb(255, 85, 85);
+            color: rgb(0, 0, 0);
+        }
+
         .PlayActionButton:active {
             transition: color 0s, background-color 0s;
             background-color: rgb(110, 110, 110);
+        }
+        .Locked:active {
+            background-color: rgb(255, 85, 85);
+            color: rgb(0, 0, 0);
         }
     }
 
@@ -359,12 +396,14 @@ $m: 0.60rem;
 
 .CardName {
     position: absolute;
-    top:53.5%;
-    left:3%;
+    top:57.5%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    //background-color: red;
     text-align: center;
     z-index: 105;
-    width:92%;
-    padding-left: $m;
+    height: 2vw;
+    //padding-left: $m;
     border-radius: calc(1 * #{$m});
     font-family: 'Cinzel';
     font-weight: 900;

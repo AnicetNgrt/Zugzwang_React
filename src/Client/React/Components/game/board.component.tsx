@@ -1,6 +1,7 @@
 import "./board.component.style.scss";
 import React from "react";
 import { Board } from "../../../../Shared/Classes/GameObjects/Board";
+import { mod } from "./game.component";
 
 export interface BoardProps {
     board: Board,
@@ -31,7 +32,7 @@ export default class BoardComponent extends React.Component {
                     {this.props.board.shiftMap.map((line, i, a) => (
                         <tr className={"Line"}>
                             {line.map((vec, j, a) => (
-                                <td className={"Tile"}>
+                                <td className={"Tile "+(mod(i,2) === mod(j,2) ? "Darker":"")}>
                                     <div ref={this.props.refs[i][j]}
                                         onClick={() => {
                                             this.props.onTileClicked(j, i);

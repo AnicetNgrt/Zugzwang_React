@@ -24,7 +24,7 @@ export class Pawn extends GameObject {
         this.isAlive = true;
         this.isExiled = false;
         this.isActive = true;
-        this.isPlacable = false;
+        this.isPlacable = true;
     }
 
     distanceTo(pawn:Pawn) {
@@ -43,9 +43,6 @@ export class Pawn extends GameObject {
         return pawn;
     }
 
-    isPlayable(): boolean {
-        return this.isActive && this.isAlive && !this.isExiled;
-    }
 
     getStaticClassName(): string {
         return ObjectsNames.PAWN;

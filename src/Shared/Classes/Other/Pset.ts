@@ -55,5 +55,9 @@ export default class PSet {
       return this.map.delete(item.x + "|"+item.y);
     }
   }
+
+  deleteFromKey(key: string) {
+    this.map.delete(key);
+  }
   // ...
 }

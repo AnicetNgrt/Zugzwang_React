@@ -37,7 +37,11 @@ table {
     font-size: 3rem;
     color: $gray2;
     text-align: center;
-    background-color:rgba($color: #613848, $alpha: 0.4);
+    background-color:rgba($color: #3f3f74, $alpha: 0.1);
+}
+
+.Darker {
+    background-color:rgba($color: #222034, $alpha: 0.1);
 }
 
 td {

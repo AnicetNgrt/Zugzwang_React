@@ -9,6 +9,7 @@ import { RandomIdProvider } from "Shared/Classes/IdProviders/RandomIdProvider";
 import { DisplacementCardTypes } from "Shared/Consts/DisplacementCardTypes";
 import { Player } from "Shared/Classes/GameObjects/Player";
 import CardDetailComponent from "../game/carddetail.component";
+import { Action } from "Shared/Classes/Other/Action";
 //import Draggable from 'react-draggable';
 
 const idpr = new RandomIdProvider(4);
@@ -269,6 +270,8 @@ export default class LobbyComponent extends React.Component {
             this.state.players.map(p => (
               p.player.color === v.color &&
               <CardDetailComponent
+                playableActions={new Map<Action, string>()}
+                played={false}
                 loc={this.props.loc}
                 cardRef={this.cardRef}
                 color={p.player.color}

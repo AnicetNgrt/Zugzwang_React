@@ -21,11 +21,11 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
         weight:8,
         name:"Knight",
         picturePath:undefined,
-        maxTurn:999,
+        maxTurn:2,
         maxGame:999,
-        fullCircle:false,
+        fullCircle:true,
         displacements: [{
-            cost:0,
+            cost:1,
             patterns: [Patterns.knightEast, Patterns.knightWest]
         }],
         defaultRotation: Orientation.NORTH
@@ -36,7 +36,7 @@ export const DisplacementCardTypes: {[key:string]:()=>DisplacementCardType} = {
         picturePath:undefined,
         maxTurn:2,
         maxGame:999,
-        fullCircle:false,
+        fullCircle:true,
         displacements: [{
             cost:1,
             patterns:[Patterns.clockmakerEast, Patterns.clockmakerWest]

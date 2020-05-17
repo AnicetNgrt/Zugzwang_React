@@ -46,7 +46,7 @@ $cs: calc(0.09 * #{$gww});
 
 .CardDiv:hover .CardArrow {
     opacity: 1;
-    background-color: change-color($color: #3f3f74, $alpha: 0.5);
+    background-color: change-color($color: #000000, $alpha: 0.2);
 
     h1 {
         transition: font-size 0.3s, padding-top 0.3s;

@@ -9,6 +9,10 @@ import { getVec } from "../../Enums/Orientation";
 import { Player } from "./Player";
 import Pset from "../Other/Pset";
 
+function mod(n:number, m:number):number {
+    return ((n % m) + m) % m;
+}
+
 export class Board extends GameObject {
     constructor(
         readonly maxCrd: Vec2,
@@ -57,13 +61,13 @@ export class Board extends GameObject {
         var mys: number[] = [];
         var mxs: number[] = [];
 
-        if (size.y % 2 === 0) {
+        if (mod(size.y,2) === 0) {
             mys.push(size.y / 2);
             mys.push((size.y / 2) - 1);
         } else {
             mys.push((size.y - 1) / 2);
         }
-        if (size.x % 2 === 0) {
+        if (mod(size.x,2) === 0) {
             mxs.push(size.x / 2);
             mxs.push((size.x / 2) - 1);
         } else {
@@ -123,9 +127,33 @@ export class Board extends GameObject {
         return this.movePawn(pawn, owner, newPos);
     }
 
+    movePawnFromPatternAnyway(pawn: Pawn, owner: Player, pattern: Pattern) {
+        const oldPos: Vec2 = pawn.pos; 
+        var newPos: Vec2 = { x: oldPos.x, y: oldPos.y };
+        for (var or of pattern) {
+            const vec: Vec2 = getVec(or);
+            newPos = add(newPos, vec);
+        }
+        this.movePawnAnyway(pawn, owner, newPos);
+    }
+
+    movePawnAnyway(pawn: Pawn, owner: Player, newPos: Vec2) {
+        //console.log("pos: " + JSON.stringify(newPos));
+        newPos = { x: mod(newPos.x,(this.maxCrd.x + 1)), y: mod(newPos.y,(this.maxCrd.y + 1)) };
+        //console.log("adjustedPos: " + JSON.stringify(newPos));
+
+        const shiftedPos: Vec2 = add(newPos, this.getSlippery(newPos));
+        //console.log("shiftedPos: " + JSON.stringify(newPos));
+        if (shiftedPos.x === newPos.x && shiftedPos.y === newPos.y) {
+            pawn.pos = { x: newPos.x, y: newPos.y };
+            return;
+        }
+        this.movePawnAnyway(pawn, owner, shiftedPos);
+    }
+
     movePawn(pawn: Pawn, owner: Player, newPos: Vec2): boolean {
         //console.log("pos: " + JSON.stringify(newPos));
-        newPos = { x: newPos.x % (this.maxCrd.x + 1), y: newPos.y % (this.maxCrd.y + 1) };
+        newPos = { x: mod(newPos.x,(this.maxCrd.x + 1)), y: mod(newPos.y,(this.maxCrd.y + 1)) };
         //console.log("adjustedPos: " + JSON.stringify(newPos));
         if (owner.prohibitedTiles.has(newPos)) return false;
 

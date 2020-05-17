@@ -8,8 +8,11 @@ import { cardsLayoutsImgs, cardsImgs } from "../../../Assets/Assets";
 import { Action } from "Shared/Classes/Other/Action";
 import { Player } from "Shared/Classes/GameObjects/Player";
 import { Vec2 } from "Shared/Types/Vec2";
-import { tween, keyframes, everyFrame } from "popmotion";
+import { tween, keyframes, everyFrame, easing } from "popmotion";
 import { BsArrowsMove } from "react-icons/bs";
+import { Textfit } from 'react-textfit';
+import { GiVenusOfWillendorf } from "react-icons/gi";
+
 
 class CardDetailComponent extends React.Component {
     
@@ -31,7 +34,9 @@ class CardDetailComponent extends React.Component {
         color: string,
         onActionSelected: (action: Action) => void,
         owner: Player,
-        cardRef: React.RefObject<HTMLDivElement>
+        cardRef: React.RefObject<HTMLDivElement>,
+        playableActions: Map<Action, string>,
+        played: boolean
     }) {
         super(props);
         this.state = {
@@ -47,12 +52,21 @@ class CardDetailComponent extends React.Component {
     }
 
     componentDidMount() {
+        if (!this.props.cardRef) {
+            alert("whot");
+            return;
+        }
         const fromRect = this.props.cardRef.current.getBoundingClientRect();
         const from = { y: fromRect.top, x: fromRect.left };
         const detailRect = this.detailRef.current.getBoundingClientRect();
-        const to = { y: (window.innerHeight / 2) - (detailRect.height/2), x: (window.innerWidth / 2) - (detailRect.width/2) }
+        var to;
+        if (this.props.owner.team === 1) {
+            to = { y: (window.innerHeight / 2) - (detailRect.height/2), x: (window.innerWidth / 4) - (detailRect.width/2) }
+        } else {
+            to = { y: (window.innerHeight / 2) - (detailRect.height/2), x: (window.innerWidth / 1.32) - (detailRect.width/2) }
+        }
         
-        tween({ from: from, to: to, duration: 500 })
+        tween({ from: from, to: to, duration: 300, ease:easing.easeInOut })
             .start({
                 update: (v: any) => {
                     this.setState({ pos: v });
@@ -76,6 +90,10 @@ class CardDetailComponent extends React.Component {
     }
     
     render() {
+
+        const pt = Math.max(this.props.card.type.data.maxTurn - this.props.card.playedTurn, 0);
+        const pg = Math.max(this.props.card.type.data.maxGame - this.props.card.playedGame, 0);
+
         return (
             <div className={"CardDetailDiv "}>
                 <Draggable
@@ -109,7 +127,12 @@ class CardDetailComponent extends React.Component {
                                 backgroundColor: this.props.color
                                 }}>
                                 <div className="IllustrationContainer">
-                                <img className="CardIllustration" src={cardsImgs[this.props.card.type.data.name.toLowerCase()]} alt=""/>
+                                <img
+                                    style={{ transform: this.props.card.pictureRotation() !== 0 ? 'rotate(' + (90 * (this.props.card.pictureRotation())) + 'deg)' : ""}}
+                                    className="CardIllustration"
+                                    src={cardsImgs[this.props.card.type.data.name.toLowerCase()]}
+                                    alt=""
+                                />
                                 <BsComponent strength={10} color="#000000"/>
                                 </div>
                             
@@ -121,24 +144,26 @@ class CardDetailComponent extends React.Component {
                                 </div>
                                 <div className="Stats" style={{
                                     top: '14.5%', left: '78.5%',
-                                    backgroundColor: (this.props.card.type.data.maxTurn - this.props.card.playedTurn === 0 ? '#c9001e' : (this.props.card.type.data.maxTurn === 999 ? '#009e74' : '#c96100'))
+                                    backgroundColor: (pt === 0 ? '#c9001e' : (this.props.card.type.data.maxTurn === 999 ? '#009e74' : '#c96100'))
                                 }}>
                                     <h1><span className="StatNumber">{
-                                        (this.props.card.type.data.maxTurn === 999 ? "∞" : this.props.card.type.data.maxTurn - this.props.card.playedTurn)
+                                        (pt >= 99 ? "∞" : pt)
                                     }</span><span className="StatLetter">{"t"}</span></h1>
                                 </div>
                                 <div className="Stats" style={{
                                     top: '27%', left: '78.5%',
-                                    backgroundColor: (this.props.card.type.data.maxGame - this.props.card.playedGame === 0 ? '#c9001e' : (this.props.card.type.data.maxGame === 999 ? '#009e74' : '#c96100'))
+                                    backgroundColor: (pg === 0 ? '#c9001e' : (this.props.card.type.data.maxGame === 999 ? '#009e74' : '#c96100'))
                                 }}>
                                     <h1><span className="StatNumber">{
-                                        (this.props.card.type.data.maxGame === 999 ? "∞" : this.props.card.type.data.maxGame - this.props.card.playedGame)
+                                        (pg >= 99 ? "∞" : pg)
                                     }</span><span className="StatLetter">{"g"}</span></h1>
                                 </div>
                             
                                 <img className="CardLayout" src={cardsLayoutsImgs.default} alt=""></img>
                                 <div>
-                                    <h1 className="CardName">{this.props.card.type.data.name}</h1>
+                                    <h1 className="CardName">
+                                    <Textfit style={{height: "2.5vw", width:"17vw"}} mode="multi">{this.props.card.type.data.name}</Textfit>
+                                    </h1>
                                 </div>
                                 <div className="Actions">
                                     {(this.props.card.type.data.actions.map((a, i, arr) => {
@@ -162,18 +187,40 @@ class CardDetailComponent extends React.Component {
                                                 <span className="ActionCost">
                                                     {a.cost} <span className="ApCost">AP</span>
                                                 </span>
-                                                {" " + this.props.loc[a.name]}
+                                                <Textfit style={{ display: "inline-block", marginLeft: "0.5vw", width:"72%", height: "2.5vw" }} mode="multi">{" " + this.props.loc[a.name]}</Textfit>
+                                                
                                                 <div className="ActionDesc">
                                                     {this.props.loc[a.description]}
-                                                    <div
-                                                        className="PlayActionButton"
-                                                        onClick={()=>{this.props.onActionSelected(a)}}
-                                                    >
-                                                        {this.props.loc["z"]}
-                                                    </div>
                                                 </div>
                                             </div>
+                                            {(() => {
+                                                if (this.shownAction.indexOf(a) === -1 || this.props.playableActions.get(a) === undefined) return (<div></div>);
+                                                var playStr = this.props.loc["z"];
+                                                var status = this.props.playableActions.get(a);
+                                                if (status === "expensive") playStr = this.props.loc["1"];
+                                                if (!this.props.owner.playing) {
+                                                    status = "no-playing";
+                                                    playStr = this.props.loc["2"];
+                                                }
+                                                if (status === "no-turn") playStr = this.props.loc["3"];
+                                                if (status === "no-game") playStr = this.props.loc["5"];
+                                                if (this.props.played) {
+                                                    status = "cancel";
+                                                    playStr = this.props.loc["4"];
+                                                }
+                                                return (
+                                                    
+                                                    <div
+                                                        className={"PlayActionButton"+(status !== "playable" ? (status !== "cancel" ? " Locked" : " Cancel") : "")}
+                                                    onClick={()=>{if(status === "playable" || status === "cancel") this.props.onActionSelected(a)}}
+                                                    > 
+                                                        <Textfit style={{ height: "4vw", fontFamily: (status === "playable" || status === "cancel") ? "Cinzel" : "'Jost', sans-serif" }} mode="multi">{playStr}</Textfit>
+                                                    </div>
+                                                )
+                                            }
+                                            )()}
                                         </div>
+                                        
                                     )
                                 }))}
                                 </div>

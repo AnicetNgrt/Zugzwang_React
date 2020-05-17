@@ -10,6 +10,7 @@ import { FlickeringCardType } from "../CardTypes/FlickeringCardType";
 import { ModEffNames } from "../../Consts/Modifiers";
 import { Orientation } from "../../Enums/Orientation";
 import { DisplacementCardType } from "../CardTypes/DisplacementCardType";
+import { Pawn } from "./Pawn";
 
 export class Card extends GameObject {
 
@@ -41,8 +42,12 @@ export class Card extends GameObject {
         return this.type.data.fullCircle;
     }
 
-    rotate() {
-        
+    rotate(rot:Orientation): boolean {
+        if (this.type instanceof DisplacementCardType) {
+            this.rotation = rot;
+            return this.type.rotate(rot);
+        }
+        return false;
     }
 
     pictureRotation() {
@@ -52,17 +57,31 @@ export class Card extends GameObject {
         return this.rotation;
     }
 
-    copy():Card {
+    copy(): Card {
+        var type: CardType;
+        if (this.type instanceof DisplacementCardType) {
+            type = this.type.copy();
+        } else {
+            type = this.type;
+        }
         const copy = new Card(
-            this.type, 
-            this.playedGame, 
+            type,
+            this.playedGame,
             this.playedTurn,
             CopyIdProvider.getYours(this),
-            this.shown)
+            this.shown);
+        if (this.type instanceof DisplacementCardType) {
+            copy.rotation = this.rotation;
+        }
         return copy;
     }
 
     play(gameState: GameState, actionIndex:number, player: Player, objects: ModifierObjects): ModifierConclusion {
+        for (var pa of Array.from(player.pawns.values())) {
+            if ((pa as Pawn).isPlacable && this.type.data.name !== "PlacePawn") {
+                return getFailedConclusion("player still has a pawn to place");
+            }
+        }
         if (!player.owns(this)) return getFailedConclusion("player does not own this card");
         if (this.playedGame >= this.type.data.maxGame) return getFailedConclusion("this card has been played too many times this game");
         if (this.playedTurn >= this.type.data.maxTurn) return getFailedConclusion("this card has been played too many times this turn");
@@ -70,6 +89,8 @@ export class Card extends GameObject {
         const ccl = this.type.play(gameState, actionIndex, player, objects);
         if (!ccl.success) return getFailedConclusion(ccl.reason ? ccl.reason : "unknown");
 
+        if (this.type.data.name === "PlacePawn") return ccl;
+        
         var newGs: GameState | undefined = undefined;
         var newPlayer: Player | undefined = undefined;
         var newCard: Card | undefined = undefined;

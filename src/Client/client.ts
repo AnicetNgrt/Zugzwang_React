@@ -3,7 +3,7 @@ import { Message } from 'Shared/Api/Message';
 import { User } from 'Shared/Api/User';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const socket = io("http://localhost:4443");
+//const socket = io("http://localhost:4443");
 
 export const getLocalData = async (key:string):Promise<string | null> => {
   try {
@@ -22,7 +22,7 @@ export const storeData = async (key:string, value:string) => {
   }
 }
 
-export function onMessages(onMessage:(m:Message)=>void) {
+/*export function onMessages(onMessage:(m:Message)=>void) {
   socket.on("message", function (data: Message) {
     onMessage(data);
   });
@@ -42,4 +42,4 @@ export function onLogin(onLogin: (you: User | string) =>void) {
 
 export function sendMessage(m:Message) {
   socket.emit("message", m);
-}
+}*/

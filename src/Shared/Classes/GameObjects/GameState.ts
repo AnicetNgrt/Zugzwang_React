@@ -7,6 +7,7 @@ import { Rules } from "../../Types/Rules";
 import { Board } from "./Board";
 import { Pawn } from "./Pawn";
 import { Card } from "./Card";
+import { Vec2 } from "../../Types/Vec2";
 
 export class GameState extends GameObject {
 
@@ -31,6 +32,28 @@ export class GameState extends GameObject {
             players.push(p);
         }
         return new GameState(players, CopyIdProvider.getYours(this), this.board, this.rules, this.currentPlayerIndex);
+    }
+
+    findEquivalent(obj: GameObject): GameObject | null {
+        var res: GameObject | Vec2 | undefined;
+        if (obj instanceof Pawn) {
+            for (var p of this.players) {
+                res = p.pawns.get(obj.id.toString());
+                if (res !== undefined) return (res as Pawn);
+            }
+        } else if (obj instanceof Player) {
+            for (var p of this.players) {
+                if (p.id === obj.id) return (p as Player);
+            }
+        } else if (obj instanceof Card) {
+            for (var p of this.players) {
+                res = p.hand.get(obj.id.toString());
+                if (res !== undefined) return (res as Card);
+            }
+        } else if (obj instanceof Board) {
+            if (this.board.id === obj.id) return (this.board as Board);
+        }
+        return null;
     }
 
     getStaticClassName(): string {
@@ -60,18 +83,21 @@ export class GameState extends GameObject {
                 if (!(card instanceof Card)) continue;
                 const newCard = card.copy();
                 newCard.playedTurn = 0;
-                newPlayer.replaceCardWith(card);
+                newPlayer.replaceCardWith(newCard);
             }
-            newPlayer.ap = this.rules.maxAp;
-            this.replacePlayerWith(newPlayer);
+            if(newPlayer.playing) newPlayer.turnCount++;
+            if (newPlayer.turnCount >= 1) newPlayer.ap = this.rules.maxAp; 
+            newPlayer.playing = !newPlayer.playing;
+            newGs.replacePlayerWith(newPlayer);
         }
-        newGs.currentPlayerIndex = (newGs.currentPlayerIndex + 1) % newGs.players.length;
+        //newGs.currentPlayerIndex = (newGs.currentPlayerIndex + 1) % newGs.players.length;
         return newGs;
     }
 
-    findOwner(pawn: Pawn): Player | null {
+    findOwner(obj: GameObject): Player | null {
         for (var p of this.players) {
-            if (p.owns(pawn)) return p;
+            if (obj instanceof Pawn) if (p.owns(obj as Pawn)) return p;
+            if(obj instanceof Card) if (p.owns(obj as Card)) return p;
         }
         return null;
     }

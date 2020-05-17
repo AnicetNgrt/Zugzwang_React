@@ -33,7 +33,7 @@ const PawnComponent = React.forwardRef((props: PawnProps, ref: any) => {
     setLastHeight(props.addHeight);
   }
 
-  return (
+  return ( props.pawn.isAlive &&
     <div className={"PawnDiv"+((props.selected || props.moving) ? " Selected" : "")}
       style={{
         top: "calc("+props.top+"px - "+props.addHeight+"vw)",

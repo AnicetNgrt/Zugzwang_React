@@ -4,7 +4,6 @@
     "experimentalDecorators": true,
     "jsx": "react",
     "module": "esnext",
-    "noImplicitAny": true,
     "outDir": "./build/",
     "baseUrl": "./src",
     "preserveConstEnums": true,
@@ -25,7 +24,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noImplicitAny": true
   },
   "include": [
     "./src/",

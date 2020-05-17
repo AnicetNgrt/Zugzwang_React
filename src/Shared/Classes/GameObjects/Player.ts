@@ -20,6 +20,7 @@ export class Player extends GameObject {
     name: string;
     color: string;
     playing: boolean;
+    turnCount: number = 0;
 
     constructor(
         readonly deckChecker: DeckChecker,
@@ -48,6 +49,12 @@ export class Player extends GameObject {
 
     givePawn(pawn:Pawn) {
         this.pawns.add(pawn);
+    }
+    giveCard(card: Card) {
+        this.hand.add(card);
+    }
+    remove(id: number) {
+        this.pawns.deleteFromKey(id.toString());
     }
 
     addCard(card:Card): boolean {
@@ -106,6 +113,7 @@ export class Player extends GameObject {
             this.ap,
             this.playing
         );
+        p.turnCount = this.turnCount;
         p.isFocused = this.isFocused;
         p.hand = new Pset();
         for (var ca of Array.from(this.hand.values())) {

@@ -25,7 +25,16 @@
   "w": "Pions à placer",
   "x": "Visible",
   "y": "Caché",
-  "z": "Essayer",
+  "z": "Jouer",
+  "1": "Pas assez d'AP",
+  "2": "Cette carte n'appartient pas au joueur qui joue à ce tour",
+  "3": "Limite de rejouabilité de la carte atteinte pour ce tour",
+  "4": "Annuler",
+  "5": "Limite de rejouabilité de la carte atteinte pour la partie",
+  "6": "Finir le tour",
+  "7": "Personne ne peut finir son tour ni jouer une carte sans avoir placé tous ses pions",
   "moveActionTitle": "Déplacer un pion",
-  "moveActionDesc": "Déplacez un de vos pions selon le schéma représenté par l'illustration de cette carte."
+  "moveActionDesc": "Déplacez un de vos pions selon le schéma représenté par l'illustration de cette carte.",
+  "contactActionTitle": "Poignarder",
+  "contactActionDesc": "Tuez un pion ennemi qui se situe juste à côté d'un de vos pions."
 }

@@ -25,7 +25,16 @@
   "w": "Pawns to place",
   "x": "Revealed",
   "y": "Hidden",
-  "z": "Preview",
+  "z": "Play",
+  "1": "Too expensive",
+  "2": "This card is not owned by the current player",
+  "3": "Play count's limit reached for this turn",
+  "4": "Cancel",
+  "5": "Play count's limit reached for this game",
+  "6": "End turn",
+  "7": "Players can't end their turn nor play a card until their pawns are placed on the board",
   "moveActionTitle": "Move a pawn",
-  "moveActionDesc": "Move one of your pawns according to the pattern in this card's illustration."
+  "moveActionDesc": "Move one of your pawns according to the pattern in this card's illustration.",
+  "contactActionTitle": "Stab",
+  "contactActionDesc": "Kill 1 enemy pawn placed just next to one of yours."
 }
