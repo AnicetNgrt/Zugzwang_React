@@ -41,8 +41,9 @@ export class DisplacementCardType extends ShownCardType {
                     patterns.push(reOrient(p, Orientation.SOUTH));
                     patterns.push(reOrient(p, Orientation.WEST));
                 }
-            } else if (reo === true || reo === undefined){
-                for (var p of disp.patterns) {
+            } else if (reo === true || reo === undefined) {
+                //console.log("zahdohdazoh  "+reo);
+                for (p of disp.patterns) {
                     patterns.push(reOrient(p, data.defaultRotation));
                 }
             } else {
@@ -59,7 +60,6 @@ export class DisplacementCardType extends ShownCardType {
     }
 
     copy() {
-
         const disps = [];
         for (var d of this.data.displacements) {
             const patts = [];
@@ -68,6 +68,8 @@ export class DisplacementCardType extends ShownCardType {
             }
             disps.push({ cost: d.cost, patterns: patts });
         }
+        //console.log(this);
+        //console.log(disps);
 
         return new DisplacementCardType({
             weight:this.data.weight,

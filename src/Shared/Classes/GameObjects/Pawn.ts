@@ -27,7 +27,9 @@ export class Pawn extends GameObject {
         this.isPlacable = true;
     }
 
-    distanceTo(pawn:Pawn) {
+    distanceTo(pawn: Pawn) {
+        console.log(this.pos);
+        console.log(pawn.pos);
         return Math.abs(pawn.pos.x - this.pos.x) + Math.abs(pawn.pos.y - this.pos.y);
     }
 
@@ -61,7 +63,8 @@ export class Pawn extends GameObject {
         var s = newGs.replacePlayerWith(newOw);
         ccl.effects.push({ name: ModEffNames.INTERNALREFCHANGE, old: gameState, new: newGs });
         ccl.effects.push({ name:ModEffNames.INTERNALREFCHANGE, old: owner, new: newOw });
-        
+        //console.log("here");
+        //console.log(newPa.pos);
         return ccl;
     }
 }

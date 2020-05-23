@@ -24,6 +24,8 @@ import { FlickeringCardType } from "Shared/Classes/CardTypes/FlickeringCardType"
 import { FlickeringCardTypes } from "Shared/Consts/FlickeringCardTypes";
 import { ShownCardType } from "Shared/Classes/CardTypes/ShownCardType";
 import { ShownCardTypes } from "Shared/Consts/ShownCardTypes";
+import { sounds } from "Client/Assets/sounds/sounds";
+import FinalScreenComponent from "./finalscreen.component";
 
 export function randInt(min:number, max:number) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -59,8 +61,8 @@ const rules = {
 var ciAnicet = randInt(0, colors.length - 1);
 var ciThibo = (ciAnicet + randInt(1, colors.length - 2))%colors.length;
 
-var anicet: Player = new Player((cards: Pset)=>true, "Anicet", colors[ciAnicet], 1, rules, idpr, 0, true);
-var thibo: Player = new Player((cards: Pset)=>true, "Thibo", colors[ciThibo], 2, rules, idpr, 0, false);
+var anicet: Player = new Player((cards: Pset)=>true, "Anicet", "#5b6ee1", 1, rules, idpr, 0, true);
+var thibo: Player = new Player((cards: Pset)=>true, "Guest", "#ac3232", 2, rules, idpr, 0, false);
 var players: Player[] = [anicet, thibo];
 var board: Board = Board.getFromSize(rules.boardSize, idpr);
 
@@ -95,7 +97,7 @@ export class Game {
   }
 }
 
-type HalfBakedHlight = { object: any, type: string, onClicked: (object: any, type: string) => void };
+export type HalfBakedHlight = { object: any, type: string, onClicked: (object: any, type: string) => void };
 type ModInputsRequests = {
   todo: { name: string, mi: ModifierInput }[],
   done: { name: string, mi: ModifierInput }[],
@@ -112,7 +114,8 @@ export type GameComponentState = {
   modInputs: ModifierObjects,
   stackedEffects: ModifierEffect[],
   playedCard: Card | null,
-  playableActions: Map<Action, string>
+  playableActions: Map<Action, string>,
+  winner: Player | null
 }
 
 export default class GameComponent extends React.Component {
@@ -122,19 +125,23 @@ export default class GameComponent extends React.Component {
   //readonly cardsRefs: Map<Card, React.RefObject<HTMLDivElement>>;
 
   constructor(readonly props: {
-    loc:Locs
+    loc: Locs,
+    onExit: () => void,
+    initialGameState: GameState,
+    status: Status
   }) {
     super(props);
     this.state = {
       selectedCards: [],
-      status: Status.LOCAL,
-      game: new Game(cgs),
+      status: props.status,
+      game: new Game(props.initialGameState),
       hbhls: [],
       modInputsRequests: {todo:[], done:[], onFullFilled:()=>{}, test:()=>"fail"},
       modInputs: {},
       stackedEffects: [],
       playedCard: null,
-      playableActions: new Map<Action, string>()
+      playableActions: new Map<Action, string>(),
+      winner: null
     }
 
     this.cardsRefs = new Map<number, React.RefObject<HTMLDivElement>>();
@@ -148,6 +155,7 @@ export default class GameComponent extends React.Component {
 
   componentDidMount() {
     this.onNewTick();
+    sounds.startGame.play();
   }
   
   componentDidUpdate() {
@@ -173,30 +181,33 @@ export default class GameComponent extends React.Component {
       modInputs[modInputsRequests.todo[0].name] = [object];
     }
     
+    var doSetHbhls = false;
+
     if (modInputs[modInputsRequests.todo[0].name].length === modInputsRequests.todo[0].mi.count) {
       modInputsRequests.done.push(modInputsRequests.todo[0]);
       modInputsRequests.todo.splice(0, 1);
-      this.setHbhls(modInputs, modInputsRequests);
+      doSetHbhls = true;
     }
 
     //console.log(modInputsRequests.todo);
 
     if (modInputsRequests.todo.length === 0) {
-      
       modInputsRequests.onFullFilled(modInputs);
-      this.setState({ hbhls: [] });
+      this.setState({ hbhls: [] }, ()=>{/*console.log("22222222222")*/});
       this.setState({ playedCard: null }, () => {
         //this.forceUpdate();
       });
     }
-    this.setState({ modInputsRequests: modInputsRequests, modInputs: modInputs });
+    this.setState({ modInputsRequests: modInputsRequests, modInputs: modInputs }, () => {
+      if(doSetHbhls) this.setHbhls();
+    });
   }
 
   onActionSelected(action: Action, card: Card, player: Player) {
     if (!player.playing) return alert("tu ne joues pas");
     if (this.state.modInputsRequests.todo.length !== 0 && this.state.playedCard.type.data.name !== "PlacePawn") {
       this.setState({ modInputsRequests: {todo:[], onFullFilled:this.state.modInputs.onFullFilled}, modInputs: {} });
-      this.setState({ hbhls: [] });
+      this.setState({ hbhls: [] }, ()=>{/*console.log("111111111")*/});
       return;
     }
     const mod = action.modifier;
@@ -235,6 +246,7 @@ export default class GameComponent extends React.Component {
         var comment = "fail";
         if (ccl.success) comment = "ok";
         else if (ccl.reason === "board.movePawn unsuccessful") comment = "blocked";
+        else comment = ccl.reason;
         return comment;
       }
     }
@@ -242,10 +254,12 @@ export default class GameComponent extends React.Component {
     this.setState({
       modInputsRequests: modInputsRequests,
       modInputs: addOwner ? {"owner": [player] } : {}
+    }, () => {
+      this.setHbhls();
     });
     //console.log(modInputsRequests);
     //console.log(addOwner ? { "owner": [player] } : {});
-    this.setHbhls(addOwner ? { "owner": [player] } : {}, modInputsRequests);
+    
     this.setState({ playedCard: card });
   }
 
@@ -277,7 +291,7 @@ export default class GameComponent extends React.Component {
       if (e.name === ModEffNames.CARDPGCHANGE || e.name === ModEffNames.CARDPTCHANGE || e.name === ModEffNames.APCHANGE) {
         for (var card of this.state.selectedCards) {
           if (card === undefined) {
-            console.log(this.state.selectedCards);
+            //console.log(this.state.selectedCards);
             continue;
           }
           var updated: Card | null = null;
@@ -285,10 +299,10 @@ export default class GameComponent extends React.Component {
           while (updated === null && retry<20) {
             updated = gameState.findEquivalent(card) as Card;
             retry++;
-            console.log("PROCESSING"+retry);
+            //console.log("PROCESSING"+retry);
           }
           if (retry >= 20) {
-            console.log(card);
+            //console.log(card);
             return e;
           }
           /*console.log("UPDATED");
@@ -306,7 +320,10 @@ export default class GameComponent extends React.Component {
     return null;
   }
 
-  setHbhls(modInputs: ModifierObjects, modInputsRequests: ModInputsRequests) {
+  setHbhls() {
+    const modInputsRequests = this.state.modInputsRequests;
+    const modInputs = this.state.modInputs;
+
     //console.log(modInputsRequests);
     if (modInputsRequests.todo.length === 0) {
       //console.log("ALT");
@@ -322,7 +339,10 @@ export default class GameComponent extends React.Component {
         if (!(pa instanceof Pawn)) continue;
         if (pa.isExiled || !pa.isAlive || !pa.isActive || pa.isPlacable) continue;
         const pawn = pa;
-        hbhls.push({ object: pawn, type: current.name, onClicked: () => this.fullFillMi(pawn) });
+        hbhls.push({
+          object: pawn, type: current.name, onClicked: () => {
+            this.fullFillMi(pawn);
+        } });
       }
     } else if (current.name === "patternFinalPos") {
       const pawn = modInputs["movedPawn"][0];
@@ -332,7 +352,10 @@ export default class GameComponent extends React.Component {
           //console.log(vec);
           const testRes = modInputsRequests.test({ ...modInputs, [current.name]: [vec] });
           if (testRes === "ok") {
-            hbhls.push({ object: vec, type: current.name+"ok", onClicked: () => this.fullFillMi(vec) });
+            hbhls.push({
+              object: vec, type: current.name + "ok", onClicked: () => {
+                this.fullFillMi(vec);
+            } });
           } else if (testRes === "blocked") {
             hbhls.push({ object: vec, type: current.name+"blocked", onClicked: () =>{}});
           }
@@ -343,15 +366,21 @@ export default class GameComponent extends React.Component {
         if (!(pa instanceof Pawn)) continue;
         if (!pa.isPlacable || pa.isExiled || !pa.isActive) continue;
         const pawn = pa;
-        hbhls.push({ object: pawn, type: current.name, onClicked: () => this.fullFillMi(pawn) });
+        hbhls.push({
+          object: pawn, type: current.name, onClicked: () => {
+            this.fullFillMi(pawn);
+        } });
       }
     } else if (current.name === "placementFinalPos") {
-      for (x = 0; x <= cgs.board.maxCrd.x; x++) {
-        for (y = 0; y <= cgs.board.maxCrd.y; y++) {
+      for (x = 0; x <= gs.board.maxCrd.x; x++) {
+        for (y = 0; y <= gs.board.maxCrd.y; y++) {
           const vec = { x: x, y: y };
           const testRes = modInputsRequests.test({ ...modInputs, [current.name]: [vec] });
           if (testRes === "ok") {
-            hbhls.push({ object: vec, type: current.name+"ok", onClicked: () => this.fullFillMi(vec) });
+            hbhls.push({
+              object: vec, type: current.name + "ok", onClicked: () => {
+                this.fullFillMi(vec);
+            } });
           } else if (testRes === "blocked") {
             hbhls.push({ object: vec, type: current.name+"blocked", onClicked: () =>{}});
           }
@@ -359,9 +388,11 @@ export default class GameComponent extends React.Component {
       }
     } else if (current.name === "attackedPawn") {
       const owner = modInputs["owner"][0];
-      for (var pl of cgs.players) {
+      for (var pl of gs.players) {
         if (pl.team === owner.team) continue;
         for (pa of Array.from(pl.pawns.values())) {
+          console.log("oudhazoduazodhazdoahda");
+          console.log(pa);
           if (!(pa instanceof Pawn)) continue;
           if (pa.isExiled || !pa.isAlive || !pa.isActive || pa.isPlacable) continue;
           const pawn = pa;
@@ -378,6 +409,14 @@ export default class GameComponent extends React.Component {
       console.log(hbhls);*/
     }
     //console.log(hbhls);
+    if (hbhls.length === 1) {
+      //console.log(hbhls);
+      if (hbhls[0].type === "attackingPawn" || hbhls[0].type === "movedPawn") {
+        hbhls[0].onClicked(hbhls[0].object, hbhls[0].type);
+        //console.log("ddsqdhdqdqqdqqqqqqqqqqq");
+        return;
+      }
+    }
     this.setState({ hbhls: hbhls }, () => {});
   }
 
@@ -386,8 +425,9 @@ export default class GameComponent extends React.Component {
     const modInputs = this.state.modInputs;
     modInputsRequests.todo.splice(0, 0, modInputsRequests.done[modInputsRequests.done.length - 1]);
     modInputsRequests.done.splice(modInputsRequests.done.length - 1, 1);
-    this.setState({ modInputsRequests: modInputsRequests, modInputs: modInputs });
-    this.setHbhls(modInputs, modInputsRequests);
+    this.setState({ modInputsRequests: modInputsRequests, modInputs: modInputs }, () => {
+      this.setHbhls();
+    });
     return;
   }
 
@@ -423,15 +463,25 @@ export default class GameComponent extends React.Component {
     const pl = cgs.findEquivalent(owner) as Player;
     const ca = new Card(FlickeringCardTypes.PlacePawn(), 0, 0, cgs.idProvider, false);
     pl.giveCard(ca);
+    //console.log("ohdazodhazdohazdazihdazodhazodhazd");
     this.onActionSelected(ca.type.data.actions[0], ca, pl);
   }
 
   onNewTick() {
     for (var p of this.cgs().players) {
       if (p.playing) {
-        this.handlePawnPlacement(p);
+        var needsPlacement = false;
+        for (var pa of Array.from(p.pawns.values())) {
+          if (!(pa instanceof Pawn)) continue;
+          if (pa.isPlacable) {
+            needsPlacement = true;
+          }
+        }
+        if(needsPlacement) this.handlePawnPlacement(p);
       }
     }
+    const winner = this.cgs().findWinner();
+    this.setState({ winner: winner === null ? this.state.winner:winner });
   }
 
   getLatestCard(card: Card) {
@@ -458,7 +508,10 @@ export default class GameComponent extends React.Component {
             mc.effects.push({ name: ModEffNames.ENDTURN, old: this.cgs(), new: newTurn });
             const effects = this.handleCcl(mc);
             //console.log(effects);
-            this.setState({ stackedEffects: this.state.stackedEffects.concat(effects), selectedCards: [] });
+            this.setState({ stackedEffects: this.state.stackedEffects.concat(effects), selectedCards: [] }, () => {
+              if (this.cgs().currentPlayer().team === 2) sounds.endTurn.play();
+              if(this.cgs().currentPlayer().team === 1) sounds.startTurn.play();
+            });
             this.onNewTick();
           }}
           halfBakedHlights={this.state.hbhls}
@@ -541,6 +594,13 @@ export default class GameComponent extends React.Component {
             })
           ))
         }
+        {(this.state.winner !== null && 
+          <FinalScreenComponent
+          loc={this.props.loc}
+          player={this.state.winner}
+          onExit={()=>{this.props.onExit()}}
+          ></FinalScreenComponent>
+        )}
         <BsComponent strength={10} color="#02001b"></BsComponent>
       </div>
     )

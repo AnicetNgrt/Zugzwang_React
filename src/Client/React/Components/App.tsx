@@ -7,6 +7,8 @@ import MainMenuComponent from './mainmenu/mainmenu.component';
 import SettingsMenuComponent from './settingsmenu/settingsmenu.component';
 import LobbyComponent, { Status } from './lobby/lobby.component';
 import GameComponent from './game/game.component';
+import { GameState } from 'Shared/Classes/GameObjects/GameState';
+import { sounds } from 'Client/Assets/sounds/sounds';
 
 var ipcRenderer: null | IpcRenderer = null;
 
@@ -27,23 +29,30 @@ export type AppState = {
   lang: string,
   username: string,
   fullscreen: boolean,
-  resolution: string
+  resolution: string,
+  lobby: Lobby | null,
+  playTheme: boolean
 }
+
+export type Lobby = { initial: GameState, status: Status };
 
 export default class App extends React.Component {
 
   readonly state: AppState;
+  themeSoundId: any;
 
   constructor(readonly props: AppProps) {
     super(props);
     this.state = {
       loginData: { loggedIn: false, sessionId: "" },
-      scene: "game",
+      scene: "main",
       lastScene: "main",
       lang: "en",
       username: "anonymous",
-      fullscreen: false,
-      resolution: "900"
+      fullscreen: true,
+      resolution: "1080",
+      lobby: null,
+      playTheme: true
     };
   }
 
@@ -67,7 +76,7 @@ export default class App extends React.Component {
         this.forceUpdate();
     });
     
-    /*getLocalData("fullscreen")
+    getLocalData("fullscreen")
       .then(data => {
         if (data != null) {
           this.setState({ fullscreen: JSON.parse(data) });
@@ -81,7 +90,7 @@ export default class App extends React.Component {
           this.setState({ resolution: data });
           if(ipcRenderer != null) ipcRenderer.send('resize'+data);
         }   
-    });*/
+    });
   }
 
   updateFullscreen(value: boolean) {
@@ -100,6 +109,10 @@ export default class App extends React.Component {
 
   changeScene(scene: string) {
     console.log(scene);
+    if (this.state.playTheme) this.setState({ playTheme: false });
+    if (scene === "game") {
+      sounds.menuTheme.fade(0.2, 0, 2000, this.themeSoundId);
+    }
     if (scene === "back") {
       this.setState({ scene: this.state.lastScene, lastScene: this.state.scene });
     } else {
@@ -126,6 +139,12 @@ export default class App extends React.Component {
   }
 
   render() {
+    if (this.state.scene === "main" && this.state.playTheme) {
+      this.setState({ playTheme: false }, () => {
+        this.themeSoundId = sounds.menuTheme.play();
+      });
+    }
+
     return (
       <div className="AppDiv">
         {(this.state.scene === "main" &&
@@ -172,10 +191,23 @@ export default class App extends React.Component {
           local={true}
           slots={2}
           status={Status.LOCAL}
+          onLobbyBuilt={(lobby: Lobby) => {
+            this.setState({ lobby: lobby }, () => {
+              console.log(lobby);
+              this.changeScene("game");
+            });
+          }}
         ></LobbyComponent>
         )}
-        {(this.state.scene === "game" &&
-          <GameComponent loc={this.props.locs[this.state.lang]}></GameComponent>
+        {((this.state.scene === "game" && this.state.lobby !== null) &&
+          <GameComponent
+          onExit={() => {
+            this.setState({ playTheme: true });
+            this.setState({ lobby: null, scene: "main" });
+          }}
+          initialGameState={this.state.lobby.initial}
+          status={this.state.lobby.status}
+          loc={this.props.locs[this.state.lang]}></GameComponent>
         )}
       </div>
     )

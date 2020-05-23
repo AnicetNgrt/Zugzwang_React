@@ -6,6 +6,7 @@ import { Pawn } from "../Classes/GameObjects/Pawn";
 import { Player } from "../Classes/GameObjects/Player";
 import { Vec2 } from "../Types/Vec2";
 import { Card } from "../Classes/GameObjects/Card";
+import { GameObject } from "../Classes/GameObjects/GameObject";
 
 export enum ModEffNames {
   INTERNALREFCHANGE = "internal ref change",
@@ -39,6 +40,20 @@ export function getPosesFromPatterns(patterns: Pattern[], gameState: GameState, 
   return ret;
 }
 
+function extractPlayerSafe(objects: ModifierObjects, gameState:GameState, name: string, index:number): Player | null {
+  var playerUS: GameObject | null = gameState.findEquivalent((objects[name][0] as Player));
+  if (playerUS === null) return null;
+  if (!(playerUS instanceof Player)) return null;
+  return playerUS as Player;
+}
+
+function extractPawnSafe(objects: ModifierObjects, gameState:GameState, name: string, index:number): Pawn | null {
+  var pawnUS: GameObject | null = gameState.findEquivalent((objects[name][0] as Pawn));
+  if (pawnUS === null) return null;
+  if (!(pawnUS instanceof Pawn)) return null;
+  return pawnUS as Pawn;
+}
+
 export const getFromAttackRange = (range: number): Modifier => {
   return new Modifier({
     "owner": { className: ObjectsNames.PLAYER, count: 1 },
@@ -47,16 +62,22 @@ export const getFromAttackRange = (range: number): Modifier => {
   },
     (gameState: GameState, objects: ModifierObjects): ModifierConclusion => {
       
-      const player: Player = (objects["owner"][0] as Player);
-      const attacker: Pawn = (objects["attackingPawn"][0] as Pawn);
-      const killed: Pawn = (objects["attackedPawn"][0] as Pawn);
+      var player = extractPlayerSafe(objects, gameState, "owner", 0) as Player;
+      var attacker = extractPawnSafe(objects, gameState, "attackingPawn", 0) as Pawn;
+      var killed = extractPawnSafe(objects, gameState, "attackedPawn", 0) as Pawn;
+      if (player === null || attacker === null || killed === null) return getFailedConclusion("something is null");
+
       if (!player.owns(attacker)) return getFailedConclusion("player does not own this pawn");
       const enemyPlayer = gameState.findOwner(killed);
       if (attacker.isExiled || !attacker.isAlive || !attacker.isActive || attacker.isPlacable) return getFailedConclusion("Bad pawn state");
       if (killed.isExiled || !killed.isAlive || !killed.isActive || killed.isPlacable) return getFailedConclusion("Bad pawn state");
       if (enemyPlayer === null) return getFailedConclusion("incoherent data");
       if (enemyPlayer.team === player.team) return getFailedConclusion("can't kill ally pawn");
-      if (killed.distanceTo(attacker) > range) return getFailedConclusion("too far away");
+      
+      if (killed.distanceTo(attacker) > range) {
+        console.log(gameState);
+        return getFailedConclusion("too far away");
+      }
 
       return killed.editSafe(gameState, player, (newGameState: GameState, newOwner: Player, newKilled: Pawn): ModifierConclusion => {
         //console.log(newGameState.board);

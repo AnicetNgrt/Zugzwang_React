@@ -1,13 +1,9 @@
-import io from 'socket.io-client';
-import { Message } from 'Shared/Api/Message';
-import { User } from 'Shared/Api/User';
-import AsyncStorage from '@react-native-community/async-storage';
-
+import * as ls from 'local-storage'
 //const socket = io("http://localhost:4443");
 
 export const getLocalData = async (key:string):Promise<string | null> => {
   try {
-    const value = await AsyncStorage.getItem(key)
+    const value = ls.get<string>(key);
     return value;
   } catch(e) {
     return null;
@@ -16,7 +12,7 @@ export const getLocalData = async (key:string):Promise<string | null> => {
 
 export const storeData = async (key:string, value:string) => {
   try {
-    await AsyncStorage.setItem(key, value);
+    await ls.set<string>(key, value);
   } catch (e) {
     // saving error
   }

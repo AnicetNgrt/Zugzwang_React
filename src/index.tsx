@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './Client/React/Components/App';
 import { storeData } from 'Client/client';
+import { HashRouter, Route, Switch, } from "react-router-dom";
 
 declare global {
   type Locs = { [key: string]: string }
@@ -19,13 +20,10 @@ async function launch() {
   }
 
   console.log(locs);
-
   ReactDOM.render(
     <React.StrictMode>
       <App locs={locs}/>
-    </React.StrictMode>,
-    document.getElementById('root')
-  );
+    </React.StrictMode>, document.getElementById('root'));
 }
 
 launch();

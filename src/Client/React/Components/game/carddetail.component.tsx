@@ -12,7 +12,10 @@ import { tween, keyframes, everyFrame, easing } from "popmotion";
 import { BsArrowsMove } from "react-icons/bs";
 import { Textfit } from 'react-textfit';
 import { GiVenusOfWillendorf } from "react-icons/gi";
+import { sounds } from "Client/Assets/sounds/sounds";
+import { moveToModifier } from "Shared/Consts/Modifiers";
 
+const fakeAction: Action = new Action(0, "", "", moveToModifier);
 
 class CardDetailComponent extends React.Component {
     
@@ -53,25 +56,28 @@ class CardDetailComponent extends React.Component {
 
     componentDidMount() {
         if (!this.props.cardRef) {
-            alert("whot");
             return;
         }
-        const fromRect = this.props.cardRef.current.getBoundingClientRect();
-        const from = { y: fromRect.top, x: fromRect.left };
-        const detailRect = this.detailRef.current.getBoundingClientRect();
-        var to;
-        if (this.props.owner.team === 1) {
-            to = { y: (window.innerHeight / 2) - (detailRect.height/2), x: (window.innerWidth / 4) - (detailRect.width/2) }
+        if (this.props.cardRef.current) {
+            const fromRect = this.props.cardRef.current.getBoundingClientRect();
+            const from = { y: fromRect.top, x: fromRect.left };
+            const detailRect = this.detailRef.current.getBoundingClientRect();
+            var to;
+            if (this.props.owner.team === 1) {
+                to = { y: (window.innerHeight / 2) - (detailRect.height/2), x: (window.innerWidth / 5.3) - (detailRect.width/2) }
+            } else {
+                to = { y: (window.innerHeight / 2) - (detailRect.height/2), x: (window.innerWidth / 1.235) - (detailRect.width/2) }
+            }
+            sounds.cardOpenSound.play();
+            tween({ from: from, to: to, duration: 300, ease:easing.easeInOut })
+                .start({
+                    update: (v: any) => {
+                        this.setState({ pos: v });
+                    }
+            });
         } else {
-            to = { y: (window.innerHeight / 2) - (detailRect.height/2), x: (window.innerWidth / 1.32) - (detailRect.width/2) }
+            this.setState({ pos: {x:window.innerWidth/1.8, y:window.innerWidth/10} });
         }
-        
-        tween({ from: from, to: to, duration: 300, ease:easing.easeInOut })
-            .start({
-                update: (v: any) => {
-                    this.setState({ pos: v });
-                }
-        });
     }
 
     fadeFace1(to:number) {
@@ -116,7 +122,11 @@ class CardDetailComponent extends React.Component {
                         className="Faces"
                     >
                         {(!this.state.animated && 
-                            <div className="CloseCardButton" onClick={()=>{this.props.onClickOutside()}}>
+                                <div className="CloseCardButton" onClick={() => {
+                                    sounds.cardOpenSound.play();
+                                    if (this.props.played) this.props.onActionSelected(fakeAction);
+                                    this.props.onClickOutside();
+                                }}>
                                 <h1>{"×"}</h1>
                             </div>
                         )}
@@ -124,7 +134,7 @@ class CardDetailComponent extends React.Component {
                                 <div className="Face" style={{
                                 opacity: this.state.face1Opacity > 0 ? this.state.face1Opacity : 0,
                                 transform: "rotateY(" + (180 + (90 * (this.state.face1Opacity + 1))) + "deg)",
-                                backgroundColor: this.props.color
+                                backgroundColor: 'black'
                                 }}>
                                 <div className="IllustrationContainer">
                                 <img
@@ -133,7 +143,7 @@ class CardDetailComponent extends React.Component {
                                     src={cardsImgs[this.props.card.type.data.name.toLowerCase()]}
                                     alt=""
                                 />
-                                <BsComponent strength={10} color="#000000"/>
+                                
                                 </div>
                             
                                 <div className="Stats" style={{
@@ -176,10 +186,12 @@ class CardDetailComponent extends React.Component {
                                                 onClick={() => {
                                                     if (this.shownAction.indexOf(a) !== -1) {
                                                         this.shownAction.splice(this.shownAction.indexOf(a), 1);
+                                                        sounds.cardOpenSound2.play();
                                                         this.forceUpdate();
                                                         this.forceUpdate();
                                                     } else {
                                                         this.shownAction = [...this.shownAction, a];
+                                                        sounds.cardOpenSound2.play();
                                                         this.forceUpdate();
                                                         this.forceUpdate();
                                                     }
@@ -212,7 +224,11 @@ class CardDetailComponent extends React.Component {
                                                     
                                                     <div
                                                         className={"PlayActionButton"+(status !== "playable" ? (status !== "cancel" ? " Locked" : " Cancel") : "")}
-                                                    onClick={()=>{if(status === "playable" || status === "cancel") this.props.onActionSelected(a)}}
+                                                        onClick={() => {
+                                                            if (status === "playable" || status === "cancel") this.props.onActionSelected(a);
+                                                            if (status === "playable") sounds.selectPositive.play();
+                                                            if (status === "cancel") sounds.selectCancel.play();
+                                                        }}
                                                     > 
                                                         <Textfit style={{ height: "4vw", fontFamily: (status === "playable" || status === "cancel") ? "Cinzel" : "'Jost', sans-serif" }} mode="multi">{playStr}</Textfit>
                                                     </div>

@@ -23,6 +23,8 @@ import cloud_carpetB from "./panels/cloud_panelB.png";
 
 import basic_pawn from "./pawns/basic_pawn.png";
 
+import stab_anim from "./anims/stab_anim.png";
+
 
 export const backgroundsImgs: { [key:string]:string} = {
   "default": default_background,
@@ -57,4 +59,8 @@ export const cardsLayoutsImgs: { [key:string]:string} = {
 
 export const pawns: { [key: string]: string } = {
   "basic":basic_pawn
+}
+
+export const anims: { [key: string]: string } = {
+  "stab_anim": stab_anim
 }

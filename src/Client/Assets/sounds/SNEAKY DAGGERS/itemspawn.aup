@@ -1,0 +1,89 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="itemspawn_data" version="1.3.0" audacityversion="2.3.2" sel0="0.0000000000" sel1="0.0000000000" vpos="448" h="0.0000000000" zoom="705.5330853035" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="ENCODER" value="Adobe(R) Audition(R)"/>
+		<tag name="Software" value="Edison"/>
+	</tags>
+	<wavetrack name="itemspawn" channel="2" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="0.562341" pan="0.0" colorindex="0"/>
+	<wavetrack name="Socapex - small knock" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="1.18851762" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="29620">
+				<waveblock start="0">
+					<simpleblockfile filename="e08088d3.au" len="29620" min="-0.688574" max="0.416676" rms="0.040979"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Socapex - small knock" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="1.18851762" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="29620">
+				<waveblock start="0">
+					<simpleblockfile filename="e080874d.au" len="29620" min="-0.481268" max="0.29916" rms="0.030494"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Socapex - new_hits_5" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0" colorindex="0"/>
+	<wavetrack name="Socapex - new_hits_5" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0" colorindex="0"/>
+	<wavetrack name="sword-knife-clash-43" channel="0" linked="1" mute="0" solo="0" height="151" minimized="0" isSelected="0" rate="44100" gain="0.316228" pan="0.0" colorindex="0">
+		<waveclip offset="0.84758605" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="18697">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808a34.au" len="18697" min="-0.901187" max="0.812327" rms="0.138398"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="sword-knife-clash-43" channel="1" linked="0" mute="0" solo="0" height="151" minimized="0" isSelected="0" rate="44100" gain="0.316228" pan="0.0" colorindex="0">
+		<waveclip offset="0.84758605" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="18697">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808976.au" len="18697" min="-1.011092" max="0.881215" rms="0.139636"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="sword-unsheathe5" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="48000" gain="1.0" pan="0.0" colorindex="0"/>
+	<wavetrack name="sword-unsheathe5" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="48000" gain="1.0" pan="0.0" colorindex="0"/>
+	<wavetrack name="sword-unsheathe" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="48000" gain="0.281838" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="50000">
+				<waveblock start="0">
+					<simpleblockfile filename="e08086a7.au" len="50000" min="-0.554414" max="0.561228" rms="0.086293"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="1.04166667" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="27353">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808d18.au" len="27353" min="-0.059483" max="0.047561" rms="0.009535"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="sword-unsheathe" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="48000" gain="0.281838" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="50000">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808072.au" len="50000" min="-0.572863" max="0.544822" rms="0.081869"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="1.04166667" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="27353">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808503.au" len="27353" min="-0.058711" max="0.057889" rms="0.008569"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>

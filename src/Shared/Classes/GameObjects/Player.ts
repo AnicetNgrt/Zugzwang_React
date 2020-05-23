@@ -21,12 +21,13 @@ export class Player extends GameObject {
     color: string;
     playing: boolean;
     turnCount: number = 0;
+    team: number;
 
     constructor(
         readonly deckChecker: DeckChecker,
         name: string,
         color: string,
-        readonly team: number,
+        team: number,
         readonly rules: Rules,
         readonly idProvider: IdProvider,
         ap: number,
@@ -37,6 +38,7 @@ export class Player extends GameObject {
         this.name = name;
         this.color = color;
         this.playing = playing;
+        this.team = team;
     }
     
     hasLost(): Boolean {

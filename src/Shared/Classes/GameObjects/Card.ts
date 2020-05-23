@@ -24,7 +24,8 @@ export class Card extends GameObject {
         playedGame: number,
         playedTurn: number,
         readonly idProvider: IdProvider,
-        shown:boolean
+        shown: boolean,
+        noRotate?:boolean
     ) {
         super(idProvider);
         this.shown = shown;
@@ -32,6 +33,7 @@ export class Card extends GameObject {
         this.playedTurn = playedTurn;
         if (this.type instanceof DisplacementCardType) {
             this.rotation = this.type.data.defaultRotation;
+            if(!noRotate) this.type.rotate(this.type.data.defaultRotation);
         } else {
             this.rotation = Orientation.NORTH;
         }
@@ -58,6 +60,7 @@ export class Card extends GameObject {
     }
 
     copy(): Card {
+        //console.log(this);
         var type: CardType;
         if (this.type instanceof DisplacementCardType) {
             type = this.type.copy();
@@ -69,10 +72,12 @@ export class Card extends GameObject {
             this.playedGame,
             this.playedTurn,
             CopyIdProvider.getYours(this),
-            this.shown);
+            this.shown,
+            true);
         if (this.type instanceof DisplacementCardType) {
             copy.rotation = this.rotation;
         }
+        //console.log(copy);
         return copy;
     }
 

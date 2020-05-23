@@ -36,8 +36,19 @@ export default function PlayerComponent(props: {
         )}
         <BsComponent strength={1} color={'black'}></BsComponent>
       </div>
-      <div className="CarpetContainer" style={props.mirror ? {transform:"scale(-1, 1)"} : {}}>
-        <img className="BackgroundIllustration" src={carpetsImgs.cloudPanelB} alt=""></img>
+      <div className="CarpetContainer" style={{
+        transform: props.mirror ? "scale(-1, 1)" : "",
+        boxShadow: props.player.playing ? "0 0 2vw "+props.player.color+", 0 0 2vw "+props.player.color+"" : "",
+        borderRadius:"0.5vw"
+        //boxSizing: "border-box"
+      }}>
+        <img
+          className="BackgroundIllustration"
+          src={carpetsImgs.cloudPanelB}
+          alt=""
+          style={{}}
+        ></img>
+        
       </div>
       <HandComponent
         cardsRefs={props.cardsRefs}

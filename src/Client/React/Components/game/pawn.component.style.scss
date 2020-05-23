@@ -41,6 +41,7 @@
         left:0.1vh;
         opacity: 0.25;
         width: 100%;
+        height: 9.2vh;
         pointer-events: none;
     }
 
@@ -64,7 +65,7 @@
         width: 115%;
         height: 5.4vh;
         //background-color: rgba(255, 0, 0, 0.479);
-        z-index: 1000;
+        z-index: 800;
         pointer-events: all;
         //cursor: pointer;
     }
@@ -72,6 +73,17 @@
     /*.PawnHitbox:hover ~ img {
         opacity: 0.7;
     }*/
+}
+
+.PawnDiv.Ded {
+    animation: stretch 0.5s;
+    transition: opacity 0.7s;
+    opacity: 0;
+    transform: translateY(-200%);
+    img {
+        transition: opacity 0.1s;
+        opacity: 1;
+    }
 }
 
 .ImgShadow {
@@ -82,4 +94,19 @@
 .Selected .ImgShadow {
     transition: box-shadow 0.2s ease-out, border 0.4s ease-out;
     box-shadow: 0 0 2vw rgba(255, 205, 41, 0.2), 0 1.3vw 1.3vw rgba(0, 0, 50, 1);
+}
+
+@keyframes stretch {
+    0% {
+        transform: scaleX(1) scaleY(1);
+    }
+    50% {
+        transform: scaleX(3) scaleY(0.7);
+    }
+    80% {
+        transform: scaleX(0.5) translateY(0%);
+    }
+    100% {
+        transform: scaleX(1) scaleY(1.2) translateY(-200%);
+    }
 }

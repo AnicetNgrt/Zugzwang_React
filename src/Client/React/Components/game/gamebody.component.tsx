@@ -14,9 +14,12 @@ import { ModEffNames } from "Shared/Consts/Modifiers";
 import { RandomIdProvider } from "Shared/Classes/IdProviders/RandomIdProvider";
 import { tween, easing } from 'popmotion';
 import { GameObject } from "Shared/Classes/GameObjects/GameObject";
-import { GiUsable, GiPawn, GiSmashArrows, GiCardPlay } from "react-icons/gi";
+import { GiUsable, GiPawn, GiSmashArrows, GiCardPlay, GiBouncingSword } from "react-icons/gi";
 import { GoArrowUp, GoArrowSmallDown } from "react-icons/go";
-import { mod } from "./game.component";
+import Spritesheet from 'react-responsive-spritesheet';
+import { anims } from '../../../Assets/Assets';
+import { mod, HalfBakedHlight } from "./game.component";
+import { sounds } from "Client/Assets/sounds/sounds";
 
 function placeAnim(comp: GameBodyComponent, oldPawn:Pawn, newPawn:Pawn) {
   tween({ from: comp.state.movingPawn.addHeight, to: 0, duration: 150, ease: easing.easeIn }).start(
@@ -59,9 +62,9 @@ function moveAnim(comp:GameBodyComponent, oldPawn:Pawn, newPawn:Pawn, from:Vec2,
       }
     });
 }
-
 function startMoveAnimChain(comp: GameBodyComponent, ah:number, oldPawn:Pawn, newPawn:Pawn, from:Vec2, to:Vec2) {
   comp.setState({ movingPawn: { pawn: oldPawn, pos: from, addHeight: ah } });
+  sounds.moveSound.play();
   tween({ from: ah, to: 3, duration: 300 }).start(
     {
       update: (v: any) => {
@@ -73,10 +76,6 @@ function startMoveAnimChain(comp: GameBodyComponent, ah:number, oldPawn:Pawn, ne
     }
   );
 }
-
-
-
-
 
 const placeholderPawn = new Pawn(new RandomIdProvider(4), { x: 0, y: 0 });
 
@@ -106,13 +105,22 @@ function moveUnsafe(pawn: Pawn, owner: Player, gameState: GameState, pos: Vec2):
 
 type MovingPawn = { pawn: Pawn | undefined, pos: Vec2, addHeight: number } | undefined;
 
+type HightLight = {ref: React.RefObject<HTMLDivElement>, anim?:Anim, object: any, type: string, onClicked: (object: any, type: string) => void };
+type Anim = {
+  sprite: string,
+  steps: number, onLoop: () => void,
+  onEnterFrame: { frame: number, callback: () => void }[],
+  completeLock?: boolean,
+  sound?: any
+};
+
 type GameBodyProps = {
   loc: Locs,
   initialGameState: GameState,
   onCardClicked: (card: Card, owner: Player) => void,
   onModification: (modifier: ModifierConclusion) => ModifierEffect[],
   cardsRefs: Map<number, React.RefObject<HTMLDivElement>>,
-  halfBakedHlights: { object: any, type: string, onClicked: (object: any, type: string) => void }[],
+  halfBakedHlights: HalfBakedHlight[],
   pendingEffect: ModifierEffect,
   onEffectRealized: () => void,
   onEndTurn: () => void
@@ -126,19 +134,19 @@ export default class GameBodyComponent extends React.Component {
     boardPos: Array<Array<Vec2>>;
     selectedPawn: { pawn: Pawn, addHeight: number } | undefined;
     movingPawn: MovingPawn;
-    highlights: { ref: React.RefObject<HTMLDivElement>, object: any, type: string, onClicked: (object: any, type: string) => void }[]
+    highlights: HightLight[]
   }
 
   readonly pboxes: { owner:Player, slotsRefs:React.RefObject<HTMLDivElement>[] }[];
   readonly boardRefs: Array<Array<React.RefObject<HTMLDivElement>>>;
-  readonly pawnRefs: Map<number, React.RefObject<HTMLDivElement>>;
+  readonly pawnRefs: Map<number, React.RefObject<HTMLImageElement>>;
 
   constructor(readonly props: GameBodyProps) {
     super(props);
 
     const boardPos: Vec2[][] = [];
     this.boardRefs = [];
-    this.pawnRefs = new Map<number, React.RefObject<HTMLDivElement>>();
+    this.pawnRefs = new Map<number, React.RefObject<HTMLImageElement>>();
 
     for (var i = 0; i <= props.initialGameState.board.maxCrd.y; i++) {
       this.boardRefs.push([]);
@@ -153,7 +161,7 @@ export default class GameBodyComponent extends React.Component {
     for (var player of props.initialGameState.players) {
       for (var pawn of Array.from(player.pawns.values())) {
         if (!(pawn instanceof Pawn)) continue;
-        this.pawnRefs.set(pawn.id, React.createRef<HTMLDivElement>());
+        this.pawnRefs.set(pawn.id, React.createRef<HTMLImageElement>());
       }
     }
 
@@ -181,7 +189,7 @@ export default class GameBodyComponent extends React.Component {
       boardPos: boardPos,
       selectedPawn: undefined,
       movingPawn: undefined,
-      highlights: this.hlFromHalfBaked(props.halfBakedHlights)
+      highlights: []
     }
   }
 
@@ -191,6 +199,7 @@ export default class GameBodyComponent extends React.Component {
       var ref = undefined;
       if (hbhl.object instanceof Pawn) {
         ref = this.pawnRefs.get(hbhl.object.id);
+        //console.log(JSON.stringify(ref.current.getBoundingClientRect()));
       } else if (hbhl.object instanceof Card) {
         ref = this.props.cardsRefs.get(hbhl.object.id);
       } else if (hbhl.object.x !== undefined && hbhl.object.y !== undefined) {
@@ -209,11 +218,15 @@ export default class GameBodyComponent extends React.Component {
         if (this.boardRefs === null) break;
         if (this.boardRefs[i][j].current) {
           const rect = this.boardRefs[i][j].current.getBoundingClientRect();
-          boardPos[i].push({ y: rect.top, x: rect.left });
+          boardPos[i].push({ y: rect.top, x: rect.left + rect.width/20});
         }
       } 
     }
-    this.setState({ boardPos: boardPos });
+    this.setState({ boardPos: boardPos }, () => {
+      //console.log("adpdzapidhazd");
+      this.setState({ highlights: this.hlFromHalfBaked(this.props.halfBakedHlights) });
+    });
+    
   }
 
   handlePawnMovement(effect: ModifierEffect) {
@@ -271,13 +284,33 @@ export default class GameBodyComponent extends React.Component {
   handlePawnKill(effect: ModifierEffect) {
     const cgs = this.cgs;
     const pa = cgs.findEquivalent(effect.new) as Pawn;
-    pa.isAlive = (effect.new as Pawn).isAlive;
-    cgs.board.obstructed.delete(pa.pos);
-    this.forceUpdate();
-    this.props.onEffectRealized();
+    const hls = this.state.highlights;
+    hls.push({
+      type: "noStyle", ref: this.pawnRefs.get(pa.id), object: pa, onClicked: () => { },
+      anim: {
+        sprite: anims["stab_anim"],
+        steps: 37,
+        onLoop: () => {
+          const newHls = this.state.highlights;
+          this.setState({ highlights: newHls.filter(hl => hl.object.id !== pa.id) }, () => {});
+          this.props.onEffectRealized();
+        },
+        onEnterFrame: [{
+          frame: 25,
+          callback: () => {
+            pa.isAlive = (effect.new as Pawn).isAlive;
+            cgs.board.obstructed.delete(pa.pos);
+            this.forceUpdate();
+          }
+        }],
+        sound: sounds.daggerSound
+      }
+    });
+    this.setState({ highlights: hls.filter(hl => hl.type !== "attackedPawnok") }, () => {});
   }
 
   handleEffects(effects: ModifierEffect[]) {
+    //console.log(effects);
     for (var effect of effects) {
       if (effect === undefined) {
         this.props.onEffectRealized();
@@ -306,6 +339,7 @@ export default class GameBodyComponent extends React.Component {
     this.setState({ selectedPawn: undefined });
     //console.log("RROEHDOZHAZOUDHAZOUGDHAZ");
     //console.log(newProps.halfBakedHlights);
+    //console.log(newProps);
     this.setState({ highlights: this.hlFromHalfBaked(newProps.halfBakedHlights) });
     if (newProps.pendingEffect !== this.props.pendingEffect) {
       //console.log(newProps.pendingEffect);
@@ -376,7 +410,7 @@ export default class GameBodyComponent extends React.Component {
           else if (h.type === "patternFinalPosblocked") {
             style.transform = "translate(-50%, -50%)";
             className = "HlDispTile Blocked";
-          } else if (h.type === "movedPawn") {
+          } else if (h.type === "movedPawn" || h.type === "attackingPawn") {
             style.transform = "translate(-50%, -50%)";
             className = "HlDispPawn";
           } else if (h.type === "freeMovedPawn") {
@@ -391,7 +425,10 @@ export default class GameBodyComponent extends React.Component {
           } else if (h.type === "placementFinalPosblocked") {
             style.transform = "translate(-50%, -50%)";
             className = "HlDispTile Blocked";
-          } else {
+          } else if (h.type === "attackedPawnok") { 
+            style.transform = "translate(-50%, -50%)";
+            className = "HlKilledPawn Ok";
+          }else if (h.type !== "noStyle") {
             style.transform = "translate(-50%, -50%)";
             style.border = "dashed 0.25vw yellow";
             style.borderRadius = "0.5vw";
@@ -402,10 +439,42 @@ export default class GameBodyComponent extends React.Component {
             <div
               className={"HightLight "+className}
               style={style}
-              onClick={()=>h.onClicked(h.object, h.type)}
+              onClick={() => {
+                if (!className.endsWith("Blocked")) {
+                  sounds.selectPositive.play();
+                }
+                h.onClicked(h.object, h.type);
+              }}
             >
               {((h.type === "patternFinalPosok") && <GiSmashArrows className="Icon"></GiSmashArrows>)}
-              {((h.type === "movedPawn" || h.type === "freeMovedPawn") && <GoArrowSmallDown className="Icon"></GoArrowSmallDown>)}
+              {((h.type === "movedPawn" || h.type === "freeMovedPawn" || h.type === "attackingPawn") && <GoArrowSmallDown className="Icon"></GoArrowSmallDown>)}
+              {((h.type === "attackedPawnok") && <GiBouncingSword className="Icon"></GiBouncingSword>)}
+              {h.anim &&
+                <div className="HlAnimSprite">
+                  <Spritesheet
+                  image={h.anim.sprite}
+                  widthFrame={50}
+                  heightFrame={50}
+                  steps={h.anim.steps}
+                  fps={20}
+                  style={{ imageRendering: 'pixelated' }}
+                  loop={true}
+                  onPlay={()=>{
+                    if (h.anim.sound) {
+                      h.anim.sound.play();
+                    }
+                  }}
+                  onLoopComplete={(spritesheet: any) => {
+                    if (!h.anim.completeLock) {
+                      //console.log("onLoopComp")
+                      h.anim.completeLock = true;
+                      h.anim.onLoop();
+                    }
+                  }}
+                  onEnterFrame={h.anim.onEnterFrame}
+                  />
+                </div>
+              }
             </div>
           )
         }))}

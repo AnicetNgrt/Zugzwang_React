@@ -27,31 +27,30 @@ table {
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
-    width: 100%;
-    height: 100%;
-    border: 0px;
-    margin: 0px;
+    width: 39.75vw;
+    height: 90vh;
+    //background-color: rgba(0, 128, 0, 0.658);
+    border-collapse: collapse;
 }
 
 .Tile {
     font-size: 3rem;
     color: $gray2;
     text-align: center;
-    background-color:rgba($color: #3f3f74, $alpha: 0.1);
+    background-color:rgba($color: #3f3f74, $alpha: 0.2);
 }
 
 .Darker {
-    background-color:rgba($color: #222034, $alpha: 0.1);
+    background-color:rgba($color: #222034, $alpha: 0.2);
 }
 
 td {
     padding:0;
-    border-radius: calc(1 * #{$m});
-    border: solid calc(0.5 * #{$m}) rgba($color: rgb(255, 255, 255), $alpha: 0);
-    box-shadow: 0 0 0.25vw rgba(0, 0, 0, 0.39);
+    //border-radius: 0.25vw;
+    border: solid 0vw rgba($color: #222034, $alpha: 0.5);
     white-space: nowrap;
-    width: calc(100% / 10);
-    height: calc(100% / 20);
+    //width: calc(100% / 10);
+    //height: 1vw;
 }
 
 /*.Tile:hover {

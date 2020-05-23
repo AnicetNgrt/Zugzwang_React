@@ -10,6 +10,11 @@ import { DisplacementCardTypes } from "Shared/Consts/DisplacementCardTypes";
 import { Player } from "Shared/Classes/GameObjects/Player";
 import CardDetailComponent from "../game/carddetail.component";
 import { Action } from "Shared/Classes/Other/Action";
+import { GameState } from "Shared/Classes/GameObjects/GameState";
+import { Board } from "Shared/Classes/GameObjects/Board";
+import { Lobby } from "../App";
+import { Pawn } from "Shared/Classes/GameObjects/Pawn";
+import { ShownCardTypes } from "Shared/Consts/ShownCardTypes";
 //import Draggable from 'react-draggable';
 
 const idpr = new RandomIdProvider(4);
@@ -18,31 +23,25 @@ const rules = {
   maxPawn: 4,
   maxWeight: 10,
   boardSize: { x: 10, y: 15 },
-  maxAp: 4
+  maxAp: 4,
 }
 
 const availableCards: Card[][] = [[
-  new Card(DisplacementCardTypes.knight(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.smallRivers(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.clockMaker(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.knight(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.smallRivers(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.apollo(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.knight(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.smallRivers(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.clockMaker(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.knight(), 0, 0, idpr, true)
+  new Card(DisplacementCardTypes.apollo(), 0, 999, idpr, true),
+  new Card(DisplacementCardTypes.smallRivers(), 0, 999, idpr, true),
+  new Card(DisplacementCardTypes.clockMaker(), 0, 999, idpr, true),
+  new Card(DisplacementCardTypes.knight(), 0, 999, idpr, true),
+  new Card(ShownCardTypes.sneakydaggers(), 0, 999, idpr, true)
 ],
 [
-  new Card(DisplacementCardTypes.apollo(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.clockMaker(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.knight(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.smallRivers(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.clockMaker(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.apollo(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.smallRivers(), 0, 0, idpr, true),
-  new Card(DisplacementCardTypes.apollo(), 0, 0, idpr, true),
-]];
+  new Card(DisplacementCardTypes.apollo(), 0, 999, idpr, true),
+  new Card(DisplacementCardTypes.smallRivers(), 0, 999, idpr, true),
+  new Card(DisplacementCardTypes.clockMaker(), 0, 999, idpr, true),
+  new Card(DisplacementCardTypes.knight(), 0, 999, idpr, true),
+  new Card(ShownCardTypes.sneakydaggers(), 0, 999, idpr, true)
+  ]];
+
+console.log(availableCards);
 
 export enum Status {
   HOST = "host",
@@ -57,7 +56,8 @@ type LobbyProps = {
   username: string,
   slots: number,
   local: boolean,
-  status: string
+  status: Status,
+  onLobbyBuilt: (lobby: Lobby) => void
 };
 
 type LobbyPlayer = {
@@ -90,7 +90,7 @@ export default class LobbyComponent extends React.Component {
     super(props);
     this.state = {
       players: [{
-        player: new Player((any:any) => true, props.username, colors[0], 0, rules, idpr, rules.maxAp, false),
+        player: new Player((any:any) => true, props.username, colors[0], 1, rules, idpr, 0, false),
         local: true,
         ready: false,
         order: 1
@@ -116,7 +116,7 @@ export default class LobbyComponent extends React.Component {
   fillPlayerSlot(name: string, index: number, color: string, local:boolean) {
     const players = this.state.players;
     players.splice(index, 1, {
-      player: new Player(cards => true, name, color, index, rules, idpr, rules.maxAp, false),
+      player: new Player(cards => true, name, color, index+1, rules, idpr, 0, false),
       local: local,
       ready: false,
       order: index + 1
@@ -188,10 +188,15 @@ export default class LobbyComponent extends React.Component {
                   onClick={() => {
                     if (this.props.status === Status.LOCAL) {
                       const order = v.order;
+                      const team = v.player.team;
                       for (var p of a) {
-                        if (p && p.order === 1) p.order = order; 
+                        if (p && p.order === 1) {
+                          p.order = order;
+                          p.player.team = team;
+                        }
                       }
                       v.order = 1;
+                      v.player.team = 1;
                       this.setState({ players: a });
                     }
                   }}
@@ -260,33 +265,52 @@ export default class LobbyComponent extends React.Component {
         {(this.props.status === Status.LOCAL && this.allReady()) &&
           <LobbyButtonComponent
           text={this.props.loc["v"]}
-          emoji={"▷"} position={{ x: '78%', y: '2%' }}
-          onClick={() => { this.props.onSceneRequest("back");}}
+          emoji={"▷"} position={{ x: '78%', y: '90%' }}
+          onClick={() => {
+            const players:Player[] = [];
+            for (let i = 1; i < 3; i++) {
+              for (let p of this.state.players) {
+                if (p.order === 1) p.player.playing = true;
+                if (p.order === i) players.push(p.player);
+              }
+            }
+            for (let p of players) {
+              for (let i = 0; i < 3; i++) {
+                p.givePawn(new Pawn(idpr, { x: 1, y: 1 }));
+              }
+            }
+            const board: Board = Board.getFromSize(rules.boardSize, idpr);
+            const initial = new GameState(players, idpr, board, rules, 0);
+            this.props.onLobbyBuilt({initial:initial, status:this.props.status});
+          }}
           ></LobbyButtonComponent>
       }
 
       {this.state.selectedCards.length > 0 && 
           this.state.selectedCards.map((v, i, a) => (
-            this.state.players.map(p => (
-              p.player.color === v.color &&
-              <CardDetailComponent
-                playableActions={new Map<Action, string>()}
-                played={false}
-                loc={this.props.loc}
-                cardRef={this.cardRef}
-                color={p.player.color}
-                card={v.card}
-                owner={p.player}
-                onActionSelected={()=>{}}
-                onClickOutside={() => {
-                this.setState({
-                  selectedCard: (() => {
-                    const selected = this.state.selectedCards;
-                    delete selected[i];
-                    return selected;
-                })()});
-              }}></CardDetailComponent>
-            ))
+            this.state.players.map(p => {
+              if(p === null) return <div></div>
+              return (
+                p.player.color === v.color &&
+                <CardDetailComponent
+                  playableActions={new Map<Action, string>()}
+                  played={false}
+                  loc={this.props.loc}
+                  cardRef={this.cardRef}
+                  color={p.player.color}
+                  card={v.card}
+                  owner={p.player}
+                  onActionSelected={()=>{}}
+                  onClickOutside={() => {
+                  this.setState({
+                    selectedCard: (() => {
+                      const selected = this.state.selectedCards;
+                      delete selected[i];
+                      return selected;
+                  })()});
+                }}></CardDetailComponent>
+              )
+            })
           ))
       }
     </div>  

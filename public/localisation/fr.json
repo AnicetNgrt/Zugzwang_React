@@ -33,6 +33,8 @@
   "5": "Limite de rejouabilité de la carte atteinte pour la partie",
   "6": "Finir le tour",
   "7": "Personne ne peut finir son tour ni jouer une carte sans avoir placé tous ses pions",
+  "8": "gagne",
+  "9": "Revenir au menu principal",
   "moveActionTitle": "Déplacer un pion",
   "moveActionDesc": "Déplacez un de vos pions selon le schéma représenté par l'illustration de cette carte.",
   "contactActionTitle": "Poignarder",

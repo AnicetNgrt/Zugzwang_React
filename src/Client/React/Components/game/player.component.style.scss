@@ -71,6 +71,7 @@
         text-align: center;
         box-shadow: 0 0 0.25vw #45283c;
         pointer-events: all;
+        cursor: pointer;
         h1 {
             font-family: 'Cinzel';
             font-weight: 900;
@@ -98,6 +99,7 @@
     left: 0%;
     width: 100%;
     pointer-events: none;
+    box-sizing: content-box;
 }
 
 .BackgroundIllustration {

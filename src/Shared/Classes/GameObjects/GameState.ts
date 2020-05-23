@@ -60,6 +60,23 @@ export class GameState extends GameObject {
         return ObjectsNames.GAMESTATE;
     }
 
+    findWinner(): Player | null {
+        const survived:Player[] = [];
+        for (var p of this.players) {
+            var survivor = false;
+            for (var pa of Array.from(p.pawns.values())) {
+                if (!(pa instanceof Pawn)) continue;
+                if (pa.isAlive) {
+                    survivor = true;
+                    break;
+                }
+            }
+            if (survivor) survived.push(p);
+        }
+        if (survived.length !== 1) return null;
+        return survived[0];
+    }
+
     replacePlayerWith(young: Player): boolean {
         /*console.log("YOUNG");
         console.log(young);
@@ -73,6 +90,13 @@ export class GameState extends GameObject {
             }
         }
         return false;
+    }
+
+    currentPlayer(): Player {
+        for (var player of this.players) {
+            if (player.playing) return player;
+        }
+        return this.players[0];
     }
 
     nextTurnState(): GameState {

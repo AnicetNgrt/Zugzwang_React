@@ -33,6 +33,8 @@
   "5": "Play count's limit reached for this game",
   "6": "End turn",
   "7": "Players can't end their turn nor play a card until their pawns are placed on the board",
+  "8": "wins",
+  "9": "Back to main menu",
   "moveActionTitle": "Move a pawn",
   "moveActionDesc": "Move one of your pawns according to the pattern in this card's illustration.",
   "contactActionTitle": "Stab",

@@ -3,6 +3,7 @@ import "./lobbycardselector.component.style.scss";
 import Draggable from "react-draggable";
 import { Card } from "Shared/Classes/GameObjects/Card";
 import CardComponent from "../game/card.component";
+import { sounds } from "Client/Assets/sounds/sounds";
 
 export default class LobbyCardSelectorComponent extends React.Component {
 
@@ -61,11 +62,18 @@ export default class LobbyCardSelectorComponent extends React.Component {
                   {(this.state.clicked === card &&
                     <div className={"ClickedCard"} style={{boxShadow:(this.props.hand.indexOf(card) !== -1 ? "0 0 0.5vw white" : "none")}}>
                     <div className={"CardButton SelectButton" + ((this.props.selectable(card) || this.props.hand.indexOf(card) !== -1) ? "" : " NotSelectable")}
-                      onClick={() => { this.props.onSelect(card); this.setState({ clicked: null }); }}
+                      onClick={() => {
+                        sounds.cardOpenSound.play();
+                        this.props.onSelect(card);
+                        this.setState({ clicked: null });
+                      }}
                     >{(this.props.hand.indexOf(card) !== -1 ? "- " : "+ ")}<span className="CardWeight">{card.type.data.weight+"w"}</span></div>
                     <div
                       className={"CardButton SeeButton" + ((this.props.selectable(card) || this.props.hand.indexOf(card) !== -1) ? "" : " NotSelectable")}
-                      onClick={()=>this.props.onCardSeen(card)}
+                      onClick={() => {
+                        sounds.cardOpenSound2.play();
+                        this.props.onCardSeen(card);
+                      }}
                     >⋯</div>
                       <div className={"CardButton DeSelectButton"} onClick={()=>this.setState({clicked:null})}>↩</div>
                     </div>
@@ -75,7 +83,16 @@ export default class LobbyCardSelectorComponent extends React.Component {
                       ref={this.cardsRefs.get(card)}
                       card={card}
                       selected={this.props.hand.indexOf(card) !== -1}
-                      onClick={() => (this.state.clicked === card ? this.setState({ clicked: null }) : this.setState({ clicked: card }))}
+                      onClick={() => {
+                        if (this.state.clicked === card) {
+                          sounds.selectPositive.play();
+                          this.setState({ clicked: null });
+                        }
+                        else {
+                          sounds.selectPositive.play();
+                          this.setState({ clicked: card });
+                        }
+                      }}
                       selectable={this.props.selectable(card)}
                       arrow={'⨀'}
                       onStartHover={() => this.props.onCardStartHover(card)}

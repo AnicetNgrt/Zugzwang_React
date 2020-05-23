@@ -1,0 +1,87 @@
+.FinalScreenDiv {
+    animation: fadein 2s ease-out;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    //background-color: rgba(0, 0, 0, 0.288);
+}
+
+.FsLine {
+    animation: fadein 2s ease-in-out;
+    //animation: horizontalExpend 20s;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    height: 2vh;
+    //width: 100vw;
+    background: linear-gradient(90deg, #ffe8d39a 0%, #eec39a 30%, #ffc853 50%, #eec39a 70%, #ffe8d39a 100%); 
+    //background-color: #ffe8d3c2;
+    box-shadow: 0 0 0.5vw #eec39a;
+}
+
+.WinTitle {
+    animation: fadein 4s ease-in-out;
+    top: 50%;
+    left: 50%;
+    position: relative;
+    transform: translate(-50%, -50%);
+    padding-left: 1vw;
+    padding-right: 1vw;
+    border-radius: 0.5vw;
+
+    .WinTitlePlayerName {
+        font-family: "Cinzel";
+        font-weight: 900;
+        font-size: 8vw;
+        position: absolute;
+        transform: translate(-50%, -90%);
+        left: 50%;
+    }
+
+    .WinTitleSub {
+        font-family: "Cinzel";
+        font-weight: 900;
+        font-size: 5vw;
+        position: absolute;
+        transform: translate(-50%, 0%);
+        left: 50%;
+        color: #eec39a;
+    }
+    //box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.26);
+    text-shadow: 0 0 1vw black;
+    //background-color: rgba(0, 0, 0, 0.185);
+}
+
+.WinExitButton {
+    animation: fadein 4s ease-in-out;
+    font-family: "Cinzel";
+    font-weight: 900;
+    font-size: 2.5vw;
+    text-align: center;
+    position: absolute;
+    transform: translate(-50%, -90%);
+    background-color: #ceafa654;
+    color: rgba(255, 255, 255, 0.562);
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    border-radius: 0.5vw;
+    left: 50%;
+    top: 80%;
+    cursor: pointer;
+}
+
+.WinExitButton:hover {
+    transition: all 0.2s;
+    background-color: #ceafa686;
+    color: rgb(255, 255, 255);
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

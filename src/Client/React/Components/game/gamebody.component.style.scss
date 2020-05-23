@@ -32,6 +32,7 @@
     //background-color: #e7ff9259;
     box-sizing: content-box;
     //border-radius: 0.5vw;
+    cursor: pointer;
 
     &.Pair {
         background-color: #00fdf015;
@@ -41,9 +42,10 @@
 .HlPlacementTile.Ok:hover {
     transition: all 0.1s;
     transform: translate(-50%, -65%);
-    background-color: #02755c;
-    border: solid 0.1vw #00fd8780;
-    box-shadow: 0 0 1vw #00ca765e, inset 0 0 0.25vw #00ca7654;
+    border-radius: 0.15vw;
+    background-color: #02755c52;
+    border: solid 0.1vw #69ffb9af;
+    box-shadow: 0 0 1vw #00ca7686, inset 0 0 0.25vw #00ca7686;
 }
 
 .HlPlacementTile.Hover {
@@ -62,8 +64,9 @@
     width: 100%;
     height: 100%;
     //background-color: #e7ff9259;
-    box-sizing: content-box;
+    box-sizing: border-box;
     border-radius: 0.5vw;
+    cursor: pointer;
 
     .Icon {
         animation: idle 1s ease-in-out infinite;
@@ -82,7 +85,7 @@
 .HlDispTile.Ok:hover {
     .Icon {
         transition: color 0.2s, text-shadow 0.2s;
-        animation: spin 1s ease-in-out infinite;
+        animation: spinAndFly 1s ease-in-out infinite;
         width: 110%;
         height: 110%;
         left:-5%;
@@ -93,7 +96,7 @@
 
 .HlDispTile.Blocked {
     border: dashed 0.25vw #fd000079;
-    box-sizing: content-box;
+    box-sizing: border-box;
     border-radius: 0.5vw;
 }
 
@@ -104,6 +107,7 @@
     //background-color: #e7ff9259;
     box-sizing: content-box;
     border-radius: 0.5vw;
+    cursor: pointer;
 
     .Icon {
         animation: idle 1s ease-in-out infinite;
@@ -123,7 +127,7 @@
 .HlDispPawn:hover {
     .Icon {
         transition: color 0.2s, text-shadow 0.2s;
-        animation: spin 1s ease-in-out infinite;
+        animation: spinAndFly 1s ease-in-out infinite;
         width: 110%;
         height: 110%;
         left:-5%;
@@ -131,6 +135,54 @@
         filter: drop-shadow( 0 0 0.25vw rgba(0, 0, 0, 0.8));
     }
 }
+
+.HlKilledPawn {
+    animation: fadein 0.4s;
+    border: solid 0.25vw #ff3c00a8;
+    box-shadow: 0 0 0.5vw #ca2f00, inset 0 0 0.5vw #ca2f0081;
+    //background-color: #e7ff9259;
+    box-sizing: content-box;
+    border-radius: 0.5vw;
+    cursor: pointer;
+
+    .Icon {
+        animation: idle 1s ease-in-out infinite;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        //background-color: red;
+        top:-40%;
+        left:-10%;
+        color: #ff9100ee;
+        filter: drop-shadow( 0 0 0.25vw #ff3c00);
+    }
+}
+
+.HlKilledPawn:hover {
+    .Icon {
+        transition: color 0.2s, text-shadow 0.2s;
+        animation: spinAndFly 1s ease-in-out infinite;
+        width: 110%;
+        height: 110%;
+        top:-40%;
+        left:-10%;
+        color: #fde400ee;
+        filter: drop-shadow( 0 0 0.25vw rgba(0, 0, 0, 0.8));
+    }
+}
+
+.HlAnimSprite {
+    position: absolute;
+    transform: translate(-49%, -63.1%);
+    text-align: center;
+    width: 20vh;
+    height: 20vh;
+    z-index: 1000;
+    //background-color: rgba(255, 0, 0, 0.212);
+}
+
 
 @keyframes fadein {
     0% {
@@ -141,7 +193,7 @@
     }
 }
 
-@keyframes spin {
+@keyframes spinAndFly {
     0% {
         transform: rotateY(0deg) translate(0%, -40%);
     }
