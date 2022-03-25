@@ -130,7 +130,7 @@
   },
   "devDependencies": {
     "electron-packager": "^14.2.1",
-    "electron": "^9.0.0",
+    "electron": "^13.6.6",
     "foreman": "^3.0.1",
     "node-sass": "^4.14.0",
     "react": "^16.8.6",
