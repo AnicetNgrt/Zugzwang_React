@@ -1,16 +1,15 @@
-import { Howl, Howler } from "howler";
-const menuTheme = require("./Into Uncertainty - JAY MAN.ogg");
-const moveSound = require("./PAWN MOVEMENT/movementSound3.mp3");
-const daggerSound = require("./SNEAKY DAGGERS/attackEffect.mp3");
-const cardOpenSound = require("./CARD HANDLING/cardSlide1.mp3");
-const cardOpenSound2 = require("./CARD HANDLING/cardSlide2.mp3");
-const endTurn = require("./nextTurn.mp3");
-const startTurn = require("./startTurn.mp3");
-const startGame = require("./ilodJAYMAN_edit_startGame.mp3");
-const selectNeutral = require("./UI/select.mp3");
-const selectCancel = require("./UI/cancel.mp3");
-const selectPositive = require("./UI/valid.mp3");
-
+import { Howl } from "howler";
+import menuTheme from "./Into Uncertainty - JAY MAN.ogg";
+import moveSound from "./PAWN MOVEMENT/movementSound3.mp3";
+import daggerSound from "./SNEAKY DAGGERS/attackEffect.mp3";
+import cardOpenSound from "./CARD HANDLING/cardSlide1.mp3";
+import cardOpenSound2 from "./CARD HANDLING/cardSlide2.mp3";
+import endTurn from "./nextTurn.mp3";
+import startTurn from "./startTurn.mp3";
+import startGame from "./ilodJAYMAN_edit_startGame.mp3";
+import selectNeutral from "./UI/select.mp3";
+// (selectCancel and selectPositive previously required separate files but the original
+//  code aliased them all to selectNeutral; preserved that behaviour below.)
 
 export const sounds: any = {
   menuTheme: new Howl({
@@ -78,4 +77,4 @@ export const sounds: any = {
     loop: false,
     volume: 0.5
   }),
-}
+};

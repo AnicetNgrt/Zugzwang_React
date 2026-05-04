@@ -15,7 +15,7 @@ import { RandomIdProvider } from "Shared/Classes/IdProviders/RandomIdProvider";
 import { tween, easing } from 'popmotion';
 import { GameObject } from "Shared/Classes/GameObjects/GameObject";
 import { GiUsable, GiPawn, GiSmashArrows, GiCardPlay, GiBouncingSword } from "react-icons/gi";
-import { GoArrowUp, GoArrowSmallDown } from "react-icons/go";
+import { GoArrowUp, GoArrowDown } from "react-icons/go";
 import Spritesheet from 'react-responsive-spritesheet';
 import { anims } from '../../../Assets/Assets';
 import { mod, HalfBakedHlight } from "./game.component";
@@ -335,7 +335,7 @@ export default class GameBodyComponent extends React.Component {
     }
   }
 
-  componentWillReceiveProps(newProps:any) {
+  UNSAFE_componentWillReceiveProps(newProps:any) {
     this.setState({ selectedPawn: undefined });
     //console.log("RROEHDOZHAZOUDHAZOUGDHAZ");
     //console.log(newProps.halfBakedHlights);
@@ -447,7 +447,7 @@ export default class GameBodyComponent extends React.Component {
               }}
             >
               {((h.type === "patternFinalPosok") && <GiSmashArrows className="Icon"></GiSmashArrows>)}
-              {((h.type === "movedPawn" || h.type === "freeMovedPawn" || h.type === "attackingPawn") && <GoArrowSmallDown className="Icon"></GoArrowSmallDown>)}
+              {((h.type === "movedPawn" || h.type === "freeMovedPawn" || h.type === "attackingPawn") && <GoArrowDown className="Icon"></GoArrowDown>)}
               {((h.type === "attackedPawnok") && <GiBouncingSword className="Icon"></GiBouncingSword>)}
               {h.anim &&
                 <div className="HlAnimSprite">

@@ -105,7 +105,7 @@ export default class LobbyComponent extends React.Component {
     this.cardRef = React.createRef<HTMLDivElement>();
   }
   
-  componentWillReceiveProps(nextProps: LobbyProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: LobbyProps) {
     if (nextProps.username !== this.props.username) {
       const players = this.state.players;
       if(players[0]) players[0].player.name = nextProps.username;
