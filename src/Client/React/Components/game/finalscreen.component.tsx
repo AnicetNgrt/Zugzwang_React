@@ -37,8 +37,19 @@ export default class FinalScreenComponent extends React.Component {
           <h1 className="WinTitlePlayerName">{this.props.player.name}</h1>
           <h1 className="WinTitleSub">{this.props.loc["8"]}</h1>
         </div>
-        <div className="WinExitButton"
-        onClick={()=>this.props.onExit()}>{this.props.loc["9"]}</div>
+        <div
+          className="WinExitButton"
+          role="button"
+          tabIndex={0}
+          aria-label={this.props.loc["9"]}
+          onClick={() => this.props.onExit()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              this.props.onExit();
+            }
+          }}
+        >{this.props.loc["9"]}</div>
       </div>
     )
   }

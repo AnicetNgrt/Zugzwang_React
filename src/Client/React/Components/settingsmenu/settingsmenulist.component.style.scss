@@ -14,106 +14,119 @@
         height: fit-content;
         margin-right: 1.5vw;
         font-size: 3vw;
-        color: rgba($color: white, $alpha: 0.5);
-        text-shadow: 0 0 0.5vw rgba($color: black, $alpha: 0.5);
+        color: rgba(255, 255, 255, 0.5);
+        text-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.5);
+        transition: color $dur-base $ease-out;
+    }
+
+    .emoji:active {
+        cursor: grabbing;
     }
 
     .list {
-        border-radius: 0.5vw;
+        border-radius: $radius-md;
         display: inline-block;
-        background-color: rgba($color: white, $alpha: 0.7);
-        box-shadow: 0 0 0.5vw rgba($color: white, $alpha: 1);
+        background-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 0 0.5vw rgba(255, 255, 255, 0.6);
         width:fit-content;
         height: fit-content;
         max-height: 46vh;
+
         .listTitle {
             font-family: 'Cinzel';
             font-weight: 900;
             font-size: 2.5vw;
-            color: rgba($color: #0a0027, $alpha: 1);
-            text-align: left; 
-            padding-left: 0.5vw;
-            padding-right: 0.5vw;
+            color: rgba(10, 0, 39, 1);
+            text-align: left;
+            padding: 0.2vw 0.6vw 0;
         }
 
         .listBody {
-            width:fit-content;
-            max-height: 17vh;
-            overflow-y: auto;
+            width: fit-content;
             max-height: 38vh;
-            background-color: rgba($color: black, $alpha: 0.7);
-            box-shadow: inset 0 0 0.5vw rgba($color: black, $alpha: 1);
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            box-shadow: inset 0 0 0.5vw rgba(0, 0, 0, 1);
             margin: 0.5vw;
-            padding: 0.5vw;
-            padding-bottom: 0.2vw;
-            border-radius: 0.4vw ;
+            padding: 0.5vw 0.5vw 0.2vw;
+            border-radius: $radius-sm;
 
             .listElement {
-                background-color: rgba($color: white, $alpha: 0.7);
-                padding-left: 0.5vw;
-                padding-right: 0.5vw;
-                border-radius: 0.2vw ;
+                background-color: rgba(255, 255, 255, 0.7);
+                padding: 0.1vw 0.5vw;
+                border-radius: $radius-sm;
                 margin-bottom: 0.5vw;
                 height: fit-content;
                 cursor: pointer;
+                transition:
+                    background-color $dur-base $ease-out,
+                    box-shadow $dur-base $ease-out,
+                    transform $dur-base $ease-out;
+                @include focus-ring($accent);
 
                 .listElementTitle {
                     display: inline-block;
-                    font-family: 'Jost', sans-serif;
-                    font-weight: 300;
+                    font-family: 'Cinzel';
+                    font-weight: 500;
                     font-size: 3vw;
-                    color: rgba($color: #0a0027, $alpha: 1);
+                    color: rgba(10, 0, 39, 1);
                     text-align: left;
                     margin-right: 0.5vw;
                 }
 
                 .listElementDesc {
                     float: right;
-                    font-family: 'Jost', sans-serif;
-                    font-weight: 300;
-                    font-size: 0.8vw;
+                    font-family: 'Cinzel';
+                    font-weight: 400;
+                    font-size: 0.9vw;
                     max-width: 12vw;
-                    color: rgba($color: #0a0027, $alpha: 1);
+                    color: rgba(10, 0, 39, 0.75);
                     text-align: left;
                 }
             }
 
             .listElement:hover {
-                color: rgba($color: black, $alpha: 1);
-                transition: background-color 0.2s;
-                background-color: rgba($color: rgb(255, 255, 255), $alpha: 1);
+                color: rgba(0, 0, 0, 1);
+                background-color: rgba(255, 255, 255, 1);
+                transform: translateX(2px);
             }
 
             .listElement:active {
-                color: rgba($color: black, $alpha: 1);
-                transition: background-color 0.2s;
-                background-color: rgba($color: yellow, $alpha: 1);
-                box-shadow: 0 0 0.5vw rgba($color: yellow, $alpha: 1);
+                color: rgba(0, 0, 0, 1);
+                background-color: $accent;
+                box-shadow: 0 0 0.5vw rgba($accent, 0.9);
+                transform: translateX(0);
+                transition-duration: $dur-fast;
             }
 
+            // Selected state: distinct from hover and active
             .selected {
-                background-color: rgba($color: yellow, $alpha: 1);
+                background-color: $accent;
+                box-shadow:
+                    inset 0 0 0 0.15vw rgba(0, 0, 0, 0.4),
+                    0 0 0.6vw rgba($accent, 0.5);
             }
 
             .selected:hover {
-                background-color: rgba($color: yellow, $alpha: 1);
+                background-color: $accent;
+                transform: none;
             }
         }
     }
 
-    
+
     .emoji:hover {
         animation: spin 1s ease-in-out infinite;
-        color: rgba($color: white, $alpha: 1);
+        color: rgba(255, 255, 255, 1);
     }
-    
+
     .emoji:active {
         animation: spin 0.5s ease-in-out infinite;
-        color: rgba($color: yellow, $alpha: 1);
+        color: $accent;
     }
 }
 
 @keyframes spin {
-    from {transform:rotate(0deg);}
-    to {transform:rotate(360deg);}
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
 }
