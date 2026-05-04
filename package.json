@@ -1,120 +1,48 @@
 {
   "name": "patherns",
   "author": "Anicet Nougaret",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "nothing yet",
   "private": true,
-  "dependencies": {
-    "@babel/core": "7.9.0",
-    "@electron/typescript-definitions": "^8.7.4",
-    "@kennethormandy/react-fittext": "^0.6.0",
-    "@material-ui/icons": "^4.9.1",
-    "@react-native-community/async-storage": "^1.10.3",
-    "@svgr/webpack": "4.3.3",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "@typegoose/typegoose": "^7.0.0",
-    "@types/jest": "^24.9.1",
-    "@types/mongoose": "^5.7.14",
-    "@types/node": "^12.12.37",
-    "@types/react": "^16.9.34",
-    "@types/react-beautiful-dnd": "^12.1.2",
-    "@types/react-dom": "^16.9.7",
-    "@types/socket.io-client": "^1.4.32",
-    "@types/tweenjs": "^1.0.0",
-    "@typescript-eslint/eslint-plugin": "^2.10.0",
-    "@typescript-eslint/parser": "^2.10.0",
-    "alm": "^2.39.1",
-    "babel-eslint": "10.1.0",
-    "babel-jest": "^24.9.0",
-    "babel-loader": "8.1.0",
-    "babel-plugin-named-asset-import": "^0.3.6",
-    "babel-preset-react-app": "^9.1.2",
-    "camelcase": "^5.3.1",
-    "case-sensitive-paths-webpack-plugin": "2.3.0",
-    "css-loader": "3.4.2",
-    "dotenv": "8.2.0",
-    "dotenv-expand": "5.1.0",
-    "electron-browser-storage": "^1.0.6",
-    "electron-simple-window-manager": "^1.1.1",
-    "electron-store": "^5.1.1",
-    "eslint": "^6.6.0",
-    "eslint-config-react-app": "^5.2.1",
-    "eslint-loader": "3.0.3",
-    "eslint-plugin-flowtype": "4.6.0",
-    "eslint-plugin-import": "2.20.1",
-    "eslint-plugin-jsx-a11y": "6.2.3",
-    "eslint-plugin-react": "7.19.0",
-    "eslint-plugin-react-hooks": "^1.6.1",
-    "file-loader": "4.3.0",
-    "fs-extra": "^8.1.0",
-    "howler": "^2.2.0",
-    "html-webpack-plugin": "4.0.0-beta.11",
-    "identity-obj-proxy": "3.0.0",
-    "jest": "24.9.0",
-    "jest-environment-jsdom-fourteen": "1.0.1",
-    "jest-resolve": "24.9.0",
-    "jest-watch-typeahead": "0.4.2",
-    "local-storage": "^2.0.0",
-    "mini-css-extract-plugin": "0.9.0",
-    "mongoose": "^5.9.11",
-    "optimize-css-assets-webpack-plugin": "5.0.3",
-    "pnp-webpack-plugin": "1.6.4",
-    "popmotion": "^8.7.3",
-    "postcss-flexbugs-fixes": "4.1.0",
-    "postcss-loader": "3.0.0",
-    "postcss-normalize": "8.0.1",
-    "postcss-preset-env": "6.7.0",
-    "postcss-safe-parser": "4.0.1",
-    "react": "^16.13.1",
-    "react-app-polyfill": "^1.0.6",
-    "react-aspect-ratio": "^1.0.42",
-    "react-beautiful-dnd": "^13.0.0",
-    "react-dev-utils": "^10.2.1",
-    "react-dnd": "^10.0.2",
-    "react-dnd-html5-backend": "^10.0.2",
-    "react-dom": "^16.13.1",
-    "react-draggable": "^4.3.1",
-    "react-fittext": "^1.0.0",
-    "react-icons": "^3.10.0",
-    "react-image-tint": "^1.0.2",
-    "react-native-easy-dnd": "^1.0.2",
-    "react-responsive-spritesheet": "^2.3.9",
-    "react-router-dom": "^5.2.0",
-    "react-textfit": "^1.1.0",
-    "react-z-index": "^3.0.0",
-    "resolve": "1.15.0",
-    "resolve-url-loader": "3.1.1",
-    "sass-loader": "8.0.2",
-    "semver": "6.3.0",
-    "socket.io-client": "^2.3.0",
-    "style-loader": "0.23.1",
-    "terser-webpack-plugin": "2.3.5",
-    "ts-pnp": "1.1.6",
-    "tweenjs": "^1.0.2",
-    "typescript-react-draggable": "^1.0.0",
-    "url-loader": "2.3.0",
-    "webpack": "4.42.0",
-    "webpack-dev-server": "3.10.3",
-    "webpack-manifest-plugin": "2.2.0",
-    "workbox-webpack-plugin": "4.3.1",
-    "xml-js": "^1.6.11"
-  },
+  "main": "./electron-start.js",
+  "homepage": ".",
   "scripts": {
-    "pack": "electron-builder build --dir",
-    "dist": "npm run build && electron-builder build",
-    "postinstall": "install-app-deps",
-    "start": "nf start -p 3000",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "eject": "node scripts/eject.js",
+    "dev": "vite",
+    "build": "tsc -p tsconfig.build.json && vite build",
+    "preview": "vite preview",
     "electron": "electron .",
-    "electron-start": "node src/electron-wait-react.js",
-    "react-start": "set BROWSER=nul && node scripts/start.js"
+    "electron:dev": "concurrently -k \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "pack": "npm run build && electron-builder build --dir",
+    "dist": "npm run build && electron-builder build",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "howler": "^2.2.4",
+    "local-storage": "^2.0.0",
+    "popmotion": "8.7.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-draggable": "^4.4.6",
+    "react-icons": "^5.2.1",
+    "react-image-tint": "^1.0.2",
+    "react-responsive-spritesheet": "^2.3.9",
+    "react-textfit": "^1.1.1"
+  },
+  "devDependencies": {
+    "@hello-pangea/dnd": "^16.6.0",
+    "@types/howler": "^2.2.11",
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-textfit": "^1.1.4",
+    "@vitejs/plugin-react": "^4.3.0",
+    "concurrently": "^8.2.2",
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3",
+    "sass": "^1.77.2",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11",
+    "wait-on": "^7.2.0"
   },
   "browserslist": {
     "production": [
@@ -126,72 +54,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "electron-packager": "^14.2.1",
-    "electron": "^9.0.0",
-    "foreman": "^3.0.1",
-    "node-sass": "^4.14.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "typescript": "^3.8.3"
-  },
-  "homepage": ".",
-  "main": "./electron-start.js",
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
-    ],
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "setupFilesAfterEnv": [],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
-    ],
-    "testEnvironment": "jest-environment-jsdom-fourteen",
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
-    ],
-    "modulePaths": [
-      "C:\\Users\\mr003\\Documents\\programmation\\ZwangReact\\zwang\\src"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ],
-    "watchPlugins": [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
     ]
   }
 }

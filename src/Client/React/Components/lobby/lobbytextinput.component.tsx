@@ -21,7 +21,7 @@ export default class LobbyTextInputComponent extends React.Component {
     this.state = {value: props.currentValue, valid:false};
   }
 
-  componentWillReceiveProps(nextProps: TextInputProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: TextInputProps) {
     if (nextProps.currentValue !== this.props.currentValue)
       this.setState({ value: nextProps.currentValue });
   }

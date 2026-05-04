@@ -20,7 +20,7 @@ export default class SettingsMenuSwitchComponent extends React.Component {
     this.state = { toggled: props.toggled };
   }
 
-  componentWillReceiveProps(nextProps: SwitchProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: SwitchProps) {
     if (nextProps.toggled !== this.props.toggled)
       this.setState({ toggled: nextProps.toggled });
   }

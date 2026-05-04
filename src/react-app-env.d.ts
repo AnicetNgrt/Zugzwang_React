@@ -39,6 +39,26 @@ declare module '*.webp' {
     export default src;
 }
 
+declare module '*.mp3' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.ogg' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.wav' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.scss' {
+  const content: string;
+  export default content;
+}
+
 declare module '*.svg' {
   import * as React from 'react';
 
