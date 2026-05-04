@@ -34,13 +34,27 @@ export default class SettingsMenuSwitchComponent extends React.Component {
           top: this.props.position.y,
           left: this.props.position.x
         }}>
-          <h1 className={"emoji"}>
+          <h1 className={"emoji"} aria-hidden="true">
             {this.props.emoji}
           </h1>
-          <h1 className={"text"} onClick={() => {
-            this.setState({ toggled: !this.state.toggled });
-            this.props.onClick(!this.state.toggled);
-          }}>
+          <h1
+            className={"text"}
+            role="switch"
+            tabIndex={0}
+            aria-checked={this.state.toggled}
+            aria-label={this.props.text}
+            onClick={() => {
+              this.setState({ toggled: !this.state.toggled });
+              this.props.onClick(!this.state.toggled);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                this.setState({ toggled: !this.state.toggled });
+                this.props.onClick(!this.state.toggled);
+              }
+            }}
+          >
             {" " + this.props.text}
             <div className="switchDiv">
               <div className={"switchCircle" + (this.state.toggled ? " on" : " off")}></div>

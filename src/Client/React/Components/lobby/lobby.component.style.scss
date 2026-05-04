@@ -8,8 +8,7 @@
 
     .Players {
         position: absolute;
-        //background-color: blue;
-        top:1vh;
+        top: 1vh;
         left: 44vw;
         width: fit-content;
         height: fit-content;
@@ -18,15 +17,21 @@
     .PlayersTitle {
         cursor: grab;
         font-family: 'Cinzel';
-        color: rgba($color: #3f3f74, $alpha: 1);
-        background-color: #222034;
-        border-radius: 0.5vw;
-        padding-left: 0.5vw;
-        padding-right: 0.5vw;
+        // Lifted from #3f3f74 (low contrast on #222034) to a brighter accent
+        color: rgba($yellow4, 0.95);
+        background-color: rgba(34, 32, 52, 0.9);
+        border-radius: $radius-md;
+        padding: 0.1vw 0.6vw;
         font-weight: 900;
-        font-size: 1.1vw;
+        font-size: 1.2vw;
+        letter-spacing: 0.05vw;
         width: fit-content;
-        margin-bottom: 0.1vw;
+        margin-bottom: 0.3vw;
+        box-shadow: 0 0 0.4vw rgba(0, 0, 0, 0.5);
+    }
+
+    .PlayersTitle:active {
+        cursor: grabbing;
     }
 
     .AddPlayerSlot {
@@ -35,25 +40,39 @@
         width:fit-content;
         height: fit-content;
         text-align: center;
-        border-radius: 0.5vw;
+        border-radius: $radius-md;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
         box-shadow: 0 0 0.3vw black;
         background-color: rgb(50, 161, 83);
+        cursor: pointer;
+        transition:
+            background-color $dur-base $ease-out,
+            box-shadow $dur-base $ease-out,
+            transform $dur-base $ease-out;
+        @include focus-ring(rgb(20, 255, 59));
+
         .AddPlus {
             font-size: 2.5vw;
             font-family: 'Cinzel';
-            color: rgba($color: #eec39a, $alpha: 1);
+            color: rgba(238, 195, 154, 1);
             font-weight: 900;
+            transition: color $dur-base $ease-out;
         }
     }
 
     .AddPlayerSlot:hover {
-        box-shadow: 0 0 0.5vw rgba($color: #14ff3b, $alpha: 1);
+        box-shadow: 0 0 0.7vw rgba(20, 255, 59, 1);
         background-color: white;
+        transform: translateY(-1px);
         .AddPlus {
             color: #0fa742;
         }
+    }
+
+    .AddPlayerSlot:active {
+        transform: translateY(0);
+        transition-duration: $dur-fast;
     }
 
     .PlayerSlot {
@@ -62,73 +81,84 @@
         width:fit-content;
         height: fit-content;
         vertical-align: top;
-        border-radius: 0.5vw;
+        border-radius: $radius-md;
         box-shadow: 0 0 0.3vw black;
         background-color: rgba(0, 0, 0, 0.541);
+        overflow: hidden;
     }
 
     .Player {
-        padding-left: 0.5vw;
-        padding-right: 0.5vw;
-        border-top-left-radius: 0.5vw;
-        border-top-right-radius: 0.5vw;
+        padding: 0.1vw 0.6vw;
         text-align: center;
         font-family: 'Cinzel';
-        color: rgba($color: #eec39a, $alpha: 1);
+        color: rgba(238, 195, 154, 1);
         font-weight: 900;
         font-size: 2.5vw;
+        // Improve legibility against arbitrary player colors
+        text-shadow: 0 0 0.4vw rgba(0, 0, 0, 0.6);
+        cursor: pointer;
+        transition: color $dur-base $ease-out, filter $dur-base $ease-out;
     }
 
     .Player:hover {
-        color: rgba($color: white, $alpha: 1);
+        color: rgba(255, 255, 255, 1);
+        filter: brightness(1.1);
     }
 
     .PlayFirst {
         margin-top: 0.25vw;
-        padding-left: 0.5vw;
-        padding-right: 0.5vw;
+        padding: 0.1vw 0.6vw;
         text-align: center;
         font-family: 'Cinzel';
-        color: rgba($color: #000000, $alpha: 1);
+        color: rgba(0, 0, 0, 1);
         background-color: #eec39a;
         font-weight: 600;
         font-size: 1.2vw;
+        cursor: pointer;
+        transition:
+            background-color $dur-base $ease-out,
+            color $dur-base $ease-out;
 
         &.SecondPlayer {
-            color: rgba($color: #eec39a, $alpha: 1);
-            background-color: black;
+            color: rgba(238, 195, 154, 1);
+            background-color: rgba(0, 0, 0, 0.85);
         }
     }
 
     .SecondPlayer:hover {
-        color: rgba($color: #000000, $alpha: 1);
+        color: rgba(0, 0, 0, 1);
         background-color: #eec39a;
     }
 
     .Ready {
         margin-top: 0.25vw;
-        padding-left: 0.5vw;
-        padding-right: 0.5vw;
-        border-bottom-left-radius: 0.5vw;
-        border-bottom-right-radius: 0.5vw;
+        padding: 0.1vw 0.6vw;
         text-align: center;
         font-family: 'Cinzel';
-        color: rgba($color: white, $alpha: 1);
+        color: rgba(255, 255, 255, 1);
         background-color: rgb(18, 87, 55);
         font-weight: 600;
         font-size: 1.8vw;
+        transition:
+            background-color $dur-base $ease-out,
+            color $dur-base $ease-out;
+
+        &.Toggable {
+            cursor: pointer;
+        }
 
         &.Toggable:hover {
-            background-color:rgb(50, 161, 83);
+            background-color: rgb(50, 161, 83);
         }
 
         &.Toggled {
-            background-color:rgb(50, 161, 83);
+            background-color: rgb(50, 161, 83);
         }
 
+        // Tone down the previous "blood red" hover to a softer warning red
         &.Toggled:hover {
-            background-color:rgb(204, 61, 85);
-            color: rgb(224, 125, 125);
+            background-color: rgb(168, 76, 92);
+            color: rgba(255, 255, 255, 0.95);
         }
     }
 }
@@ -139,14 +169,10 @@
     top: 50%;
     left: 50%;
     pointer-events: none;
-    /*@include md {
-      width: calc(385px * 2);
-    }
-    @include xl {
-        width: calc(385px * 3.2);
-    }
-    @include xxl {
-        width: calc(385px * 5);
-    }*/
     width:100%;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }

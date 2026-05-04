@@ -8,7 +8,6 @@
     width:fit-content;
     height: fit-content;
     text-align: center;
-    
 
     .emoji {
         cursor: grab;
@@ -18,8 +17,13 @@
         vertical-align: bottom;
         margin-right: 1.5vw;
         font-size: 3vw;
-        color: rgba($color: white, $alpha: 0.5);
-        text-shadow: 0 0 0.5vw rgba($color: black, $alpha: 0.5);
+        color: rgba(255, 255, 255, 0.5);
+        text-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.5);
+        transition: color $dur-base $ease-out, text-shadow $dur-base $ease-out;
+    }
+
+    .emoji:active {
+        cursor: grabbing;
     }
 
     .text {
@@ -28,42 +32,50 @@
         font-size: 2.5vw;
         cursor: pointer;
         display: inline-block;
-        border-radius: 0.5vw;
-        color: rgba($color: #0a0027, $alpha: 1);
-        background-color: rgba($color: white, $alpha: 0.7);
-        box-shadow: 0 0 0.5vw rgba($color: white, $alpha: 1);
-        width:max-content;
+        border-radius: $radius-md;
+        color: rgba(10, 0, 39, 1);
+        background-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 0 0.5vw rgba(255, 255, 255, 0.6);
+        width: max-content;
         text-align: center;
         height: fit-content;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
+        transition:
+            background-color $dur-base $ease-out,
+            color $dur-base $ease-out,
+            box-shadow $dur-base $ease-out,
+            transform $dur-base $ease-out;
+        @include focus-ring($accent);
     }
 
     .text:hover {
-        color: rgba($color: black, $alpha: 1);
-        transition: background-color 0.2s;
-        background-color: rgba($color: rgb(255, 255, 255), $alpha: 1);
+        color: rgba(0, 0, 0, 1);
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 0.8vw rgba(255, 255, 255, 0.9);
+        transform: translateY(-1px);
     }
-    
+
     .text:active {
-        color: rgba($color: black, $alpha: 1);
-        transition: background-color 0.2s;
-        background-color: rgba($color: yellow, $alpha: 1);
-        box-shadow: 0 0 0.5vw rgba($color: yellow, $alpha: 1);
+        color: rgba(0, 0, 0, 1);
+        background-color: $accent;
+        box-shadow: 0 0 0.8vw rgba($accent, 0.9);
+        transform: translateY(0);
+        transition-duration: $dur-fast;
     }
-    
+
     .emoji:hover {
         animation: spin 1s ease-in-out infinite;
-        color: rgba($color: white, $alpha: 1);
+        color: rgba(255, 255, 255, 1);
     }
-    
+
     .emoji:active {
         animation: spin 0.5s ease-in-out infinite;
-        color: rgba($color: yellow, $alpha: 1);
+        color: $accent;
     }
 }
 
 @keyframes spin {
-    from {transform:rotate(0deg);}
-    to {transform:rotate(360deg);}
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
 }

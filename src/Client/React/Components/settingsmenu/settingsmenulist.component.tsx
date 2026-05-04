@@ -26,11 +26,23 @@ export default function SettingsMenuListComponent(props: {
           <h1 className={"listTitle"}>
             {" "+props.text}
           </h1>
-          <div className={"listBody"}>
+          <div className={"listBody"} role="listbox" aria-label={props.text}>
 
             {(props.content.map(element => (
-              <div className={"listElement" + (element.id === props.selectedId ? " selected" : "")}
-                onClick={() => props.onElementClick(element.id)}>
+              <div
+                key={element.id}
+                className={"listElement" + (element.id === props.selectedId ? " selected" : "")}
+                role="option"
+                tabIndex={0}
+                aria-selected={element.id === props.selectedId}
+                onClick={() => props.onElementClick(element.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    props.onElementClick(element.id);
+                  }
+                }}
+              >
                 <h1 className={"listElementTitle"} style={{fontSize:props.fontSize}}>{element.title}</h1>
                 <p className={"listElementDesc"}>{element.desc}</p>
               </div>

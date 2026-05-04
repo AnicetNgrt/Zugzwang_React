@@ -1,22 +1,20 @@
+@import "../../../styles.scss";
+
 .FinalScreenDiv {
     animation: fadein 2s ease-out;
     position: absolute;
     width: 100vw;
     height: 100vh;
-    //background-color: rgba(0, 0, 0, 0.288);
 }
 
 .FsLine {
     animation: fadein 2s ease-in-out;
-    //animation: horizontalExpend 20s;
     top: 50%;
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
     height: 2vh;
-    //width: 100vw;
-    background: linear-gradient(90deg, #ffe8d39a 0%, #eec39a 30%, #ffc853 50%, #eec39a 70%, #ffe8d39a 100%); 
-    //background-color: #ffe8d3c2;
+    background: linear-gradient(90deg, #ffe8d39a 0%, #eec39a 30%, #ffc853 50%, #eec39a 70%, #ffe8d39a 100%);
     box-shadow: 0 0 0.5vw #eec39a;
 }
 
@@ -28,7 +26,7 @@
     transform: translate(-50%, -50%);
     padding-left: 1vw;
     padding-right: 1vw;
-    border-radius: 0.5vw;
+    border-radius: $radius-md;
 
     .WinTitlePlayerName {
         font-family: "Cinzel";
@@ -37,6 +35,7 @@
         position: absolute;
         transform: translate(-50%, -90%);
         left: 50%;
+        letter-spacing: 0.1vw;
     }
 
     .WinTitleSub {
@@ -47,10 +46,9 @@
         transform: translate(-50%, 0%);
         left: 50%;
         color: #eec39a;
+        letter-spacing: 0.3vw;
     }
-    //box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.26);
     text-shadow: 0 0 1vw black;
-    //background-color: rgba(0, 0, 0, 0.185);
 }
 
 .WinExitButton {
@@ -62,26 +60,33 @@
     position: absolute;
     transform: translate(-50%, -90%);
     background-color: #ceafa654;
-    color: rgba(255, 255, 255, 0.562);
-    padding-left: 0.5vw;
-    padding-right: 0.5vw;
-    border-radius: 0.5vw;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0.1vw 0.7vw;
+    border-radius: $radius-md;
     left: 50%;
     top: 80%;
     cursor: pointer;
+    transition:
+        background-color $dur-base $ease-out,
+        color $dur-base $ease-out,
+        box-shadow $dur-base $ease-out,
+        transform $dur-base $ease-out;
+    @include focus-ring(#eec39a);
 }
 
 .WinExitButton:hover {
-    transition: all 0.2s;
-    background-color: #ceafa686;
+    background-color: #ceafa6c0;
     color: rgb(255, 255, 255);
+    box-shadow: 0 0 0.8vw rgba(238, 195, 154, 0.6);
+    transform: translate(-50%, calc(-90% - 1px));
+}
+
+.WinExitButton:active {
+    transform: translate(-50%, -90%);
+    transition-duration: $dur-fast;
 }
 
 @keyframes fadein {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
 }
