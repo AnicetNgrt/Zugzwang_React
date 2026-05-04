@@ -1,41 +1,26 @@
-import * as ls from 'local-storage'
-//const socket = io("http://localhost:4443");
+/**
+ * Local renderer-side persistence helpers.
+ *
+ * Networking lives in `socketClient.ts`; this file is intentionally limited to
+ * synchronous-by-nature key/value storage so it can be imported from anywhere
+ * without dragging in the socket transport.
+ */
 
-export const getLocalData = async (key:string):Promise<string | null> => {
+import * as ls from "local-storage";
+
+export const getLocalData = async (key: string): Promise<string | null> => {
   try {
     const value = ls.get<string>(key);
     return value;
-  } catch(e) {
+  } catch (e) {
     return null;
   }
-}
+};
 
-export const storeData = async (key:string, value:string) => {
+export const storeData = async (key: string, value: string) => {
   try {
     await ls.set<string>(key, value);
   } catch (e) {
     // saving error
   }
-}
-
-/*export function onMessages(onMessage:(m:Message)=>void) {
-  socket.on("message", function (data: Message) {
-    onMessage(data);
-  });
-}
-
-export function onConnectionConfirmed(onConnectionConfirmed: ()=>void) {
-  socket.on("ConnectionConfirmed", () => {
-    onConnectionConfirmed();
-  })
-}
-
-export function onLogin(onLogin: (you: User | string) =>void) {
-  socket.on("Login", (logined: User | string) => {
-    onLogin(logined);
-  });
-}
-
-export function sendMessage(m:Message) {
-  socket.emit("message", m);
-}*/
+};

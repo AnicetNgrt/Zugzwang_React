@@ -9,6 +9,7 @@ import LobbyComponent, { Status } from './lobby/lobby.component';
 import GameComponent from './game/game.component';
 import { GameState } from 'Shared/Classes/GameObjects/GameState';
 import { sounds } from 'Client/Assets/sounds/sounds';
+import ConnectionStatusBanner from './connectionStatus/connectionstatus.component';
 
 var ipcRenderer: null | IpcRenderer = null;
 
@@ -147,6 +148,7 @@ export default class App extends React.Component {
 
     return (
       <div className="AppDiv">
+        <ConnectionStatusBanner />
         {(this.state.scene === "main" &&
           <MainMenuComponent
           loc={this.props.locs[this.state.lang]}
