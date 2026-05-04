@@ -108,6 +108,7 @@
     "start": "nf start -p 3000",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
+    "test:ci": "node scripts/test.js --watchAll=false --ci",
     "eject": "node scripts/eject.js",
     "electron": "electron .",
     "electron-start": "node src/electron-wait-react.js",
@@ -166,6 +167,7 @@
       "^.+\\.module\\.(css|sass|scss)$"
     ],
     "modulePaths": [
+      "<rootDir>/src",
       "C:\\Users\\mr003\\Documents\\programmation\\ZwangReact\\zwang\\src"
     ],
     "moduleNameMapper": {
