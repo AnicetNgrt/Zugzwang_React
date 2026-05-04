@@ -35,6 +35,8 @@
   "7": "Players can't end their turn nor play a card until their pawns are placed on the board",
   "8": "wins",
   "9": "Back to main menu",
+  "loginSubmit": "Log in",
+  "loginGuest": "Continue as guest",
   "moveActionTitle": "Move a pawn",
   "moveActionDesc": "Move one of your pawns according to the pattern in this card's illustration.",
   "contactActionTitle": "Stab",

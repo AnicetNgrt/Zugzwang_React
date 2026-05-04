@@ -35,6 +35,8 @@
   "7": "Personne ne peut finir son tour ni jouer une carte sans avoir placé tous ses pions",
   "8": "gagne",
   "9": "Revenir au menu principal",
+  "loginSubmit": "Connexion",
+  "loginGuest": "Continuer en invité",
   "moveActionTitle": "Déplacer un pion",
   "moveActionDesc": "Déplacez un de vos pions selon le schéma représenté par l'illustration de cette carte.",
   "contactActionTitle": "Poignarder",

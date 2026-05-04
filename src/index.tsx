@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './Client/React/Components/App';
-import { storeData } from 'Client/client';
 import { HashRouter, Route, Switch, } from "react-router-dom";
 
 declare global {
@@ -9,9 +8,6 @@ declare global {
 }
 
 async function launch() {
-  // setting test private local data
-  await storeData("loginData", JSON.stringify({ loggedIn: true, sessionId: "" }));
-
   // initialising public/moddable local data
   let locs:{[key:string]:Locs} = {};
   let locSettings = await (await fetch('localisation/localisations_settings.json')).json();
