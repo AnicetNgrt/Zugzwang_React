@@ -45,8 +45,8 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       loginData: { loggedIn: false, sessionId: "" },
-      scene: "main",
-      lastScene: "main",
+      scene: "login",
+      lastScene: "login",
       lang: "en",
       username: "anonymous",
       fullscreen: true,
@@ -60,7 +60,14 @@ export default class App extends React.Component {
     // initialising local private data
     getLocalData("loginData")
       .then(data => {
-        if (data != null) this.setState({ loginData: JSON.parse(data) });
+        if (data != null) {
+          const parsed = JSON.parse(data);
+          this.setState({
+            loginData: parsed,
+            scene: parsed.loggedIn ? "main" : "login",
+            lastScene: parsed.loggedIn ? "main" : "login"
+          });
+        }
         this.forceUpdate();
     });
     
@@ -120,6 +127,33 @@ export default class App extends React.Component {
     }
   }
 
+  handleLogin(username: string) {
+    const trimmed = username.trim();
+    const finalUsername = trimmed.length > 0 ? trimmed : "Guest";
+    const sessionId =
+      Date.now().toString(36) +
+      Math.random().toString(36).slice(2, 10);
+    const loginData = { loggedIn: true, sessionId };
+    storeData("loginData", JSON.stringify(loginData));
+    storeData("username", finalUsername);
+    this.setState({
+      loginData,
+      username: finalUsername,
+      scene: "main",
+      lastScene: "login"
+    });
+  }
+
+  handleLogout() {
+    const loginData = { loggedIn: false, sessionId: "" };
+    storeData("loginData", JSON.stringify(loginData));
+    this.setState({
+      loginData,
+      scene: "login",
+      lastScene: "login"
+    });
+  }
+
   changeSettings(name: string, value: any) {
     if (name === "language") {
       this.setState({ lang: value });
@@ -145,6 +179,20 @@ export default class App extends React.Component {
       });
     }
 
+    const loggedIn = this.state.loginData.loggedIn;
+
+    if (!loggedIn) {
+      return (
+        <div className="AppDiv">
+          <LoginMenuComponent
+            loc={this.props.locs[this.state.lang]}
+            currentUsername={this.state.username}
+            onLogin={(username: string) => this.handleLogin(username)}
+          ></LoginMenuComponent>
+        </div>
+      );
+    }
+
     return (
       <div className="AppDiv">
         {(this.state.scene === "main" &&
@@ -152,11 +200,6 @@ export default class App extends React.Component {
           loc={this.props.locs[this.state.lang]}
           onSceneRequest={(scene:string)=>this.changeScene(scene)}
         ></MainMenuComponent>
-        )}
-        {(this.state.scene === "login" &&
-          <LoginMenuComponent
-          loc={this.props.locs[this.state.lang]}
-        ></LoginMenuComponent>  
         )}
         {(this.state.scene === "settings" &&
           <SettingsMenuComponent

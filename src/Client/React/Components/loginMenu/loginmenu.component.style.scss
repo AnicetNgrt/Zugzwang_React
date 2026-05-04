@@ -39,5 +39,68 @@
 }
 
 .Subtitle {
-    color: rgb(255, 229, 142);   
+    color: rgb(255, 229, 142);
+}
+
+.LoginForm {
+    position: absolute;
+    top: 45%;
+    left: 13%;
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    font-family: 'Archive';
+    font-weight: 200;
+
+    .LoginLabel {
+        color: rgb(255, 229, 142);
+        font-size: 18px;
+        margin-bottom: 6px;
+        text-shadow: 0 0 10px #0a0027;
+    }
+
+    .LoginInput {
+        font-family: 'Archive';
+        font-size: 20px;
+        padding: 8px 10px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        background-color: rgba($color: rgb(255, 229, 142), $alpha: 1);
+        color: rgba($color: #13004b, $alpha: 0.9);
+        box-shadow: 0 0 20px #0a0027;
+        margin-bottom: 12px;
+    }
+
+    .LoginInput:focus {
+        background-color: rgba($color: white, $alpha: 1);
+    }
+
+    .LoginSubmit {
+        font-family: 'Archive';
+        font-size: 22px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 12px;
+        color: rgba($color: #13004b, $alpha: 0.8);
+        background-color: rgba($color: rgb(255, 229, 142), $alpha: 1);
+        box-shadow: 0 0 20px #0a0027;
+    }
+
+    .LoginSubmit:hover:enabled {
+        color: black;
+        transition: background-color 0.2s;
+        background-color: white;
+    }
+
+    .LoginSubmit:active:enabled {
+        color: black;
+        background-color: rgb(121, 217, 255);
+    }
+
+    .LoginSubmit:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
 }
