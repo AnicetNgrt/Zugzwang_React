@@ -96,7 +96,7 @@
     "typescript-react-draggable": "^1.0.0",
     "url-loader": "2.3.0",
     "webpack": "4.42.0",
-    "webpack-dev-server": "3.10.3",
+    "webpack-dev-server": "5.2.5",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "4.3.1",
     "xml-js": "^1.6.11"
