@@ -5,7 +5,7 @@
   "description": "nothing yet",
   "private": true,
   "dependencies": {
-    "@babel/core": "7.9.0",
+    "@babel/core": "7.29.6",
     "@electron/typescript-definitions": "^8.7.4",
     "@kennethormandy/react-fittext": "^0.6.0",
     "@material-ui/icons": "^4.9.1",
